@@ -1,0 +1,7 @@
+.stickyNavBar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    margin-top: 0px !important;
+    z-index: 10;
+}

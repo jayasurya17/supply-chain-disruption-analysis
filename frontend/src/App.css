@@ -1,0 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+.yearButton:hover{
+    width: 200px;
+    transition: 1s;
+}
