@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
+`use strict`
 
-'use strict'
+import mongoose from 'mongoose'
 
 const DisasterData = new mongoose.Schema({
     year: {
