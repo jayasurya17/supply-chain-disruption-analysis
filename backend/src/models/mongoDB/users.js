@@ -12,9 +12,9 @@ const Users = new mongoose.Schema({
 		maxlength: 50,
 		required: true,
 	},
-	userName: {
+	role: {
 		type: String,
-		maxlength: 15,
+		enum: ['admin', 'user'],
 		required: true,
 	},
 	city: {

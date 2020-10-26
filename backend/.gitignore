@@ -3,3 +3,6 @@
 
 # env file
 .env
+
+# eslintignore file
+.eslintignore
