@@ -1,0 +1,12 @@
+#description {
+    font-family: 'Roboto';
+    font-size: 20px;
+}
+#food {
+    background-image: url("crops.jpg");
+    background-size: cover;
+}
+#medicine {
+    background-image: url("medicine.jpg");
+    background-size: cover;
+}
