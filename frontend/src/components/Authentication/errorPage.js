@@ -4,6 +4,8 @@ class ErrorPage extends Component {
 
     render() {
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('redirect');
         return (
             <div className="row p-5 m-5">
                 <div className="col-md-4 text-center">
