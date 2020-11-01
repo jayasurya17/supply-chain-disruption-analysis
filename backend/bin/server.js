@@ -12,7 +12,7 @@ import constants from '../src/utils/constants'
 let usersRouter = require('../src/modules/user/router/users')
 
 // database connections
-require('../src/models/mongoDB/index') // TODO
+require('../src/models/mongoDB/index')
 
 let app = express()
 

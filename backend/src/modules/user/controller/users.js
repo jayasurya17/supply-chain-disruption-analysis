@@ -30,20 +30,8 @@ exports.createUser = async (req, res) => {
 
 		let userObj = req.body
 
-		let nameLength = req.body.name.length > 5 ? 5 : req.body.name.length
+		userObj['role'] = constants.ROLES.USER;
 
-		let userName
-
-		let userData = true
-
-		filter = {}
-		while (userData) {
-			userName =
-				req.body.name.replace(" ","").slice(0, nameLength) + uuidv1().slice(0, 15 - nameLength)
-			filter.userName = userName
-			userData = await Users.findOne(filter)
-		}
-		userObj['userName'] = userName
 		let newUser = new Users(userObj)
 		createdUser = await newUser.save()
 		createdUser = createdUser.toJSON()
@@ -74,9 +62,6 @@ exports.loginUser = async (req, res) => {
 				$or: [
 					{
 						email: req.body.loginId
-					},
-					{
-						userName: req.body.loginId
 					}
 				]
 			})
@@ -101,13 +86,9 @@ exports.loginUser = async (req, res) => {
 					token : token,
 					date: Date.now()
 				}
-				if (user.jwtToken.length === 4) {
-					await Users.findByIdAndUpdate(user._id, { $pop: { jwtToken: -1 } });
-				}
 				await Users.findByIdAndUpdate(user._id, {
-					$push: {
-						jwtToken: tokenObj
-					}, isActive: true
+						jwtToken: tokenObj,
+					    isActive: true
 				});
 				isAuth = true
 				return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(user)
