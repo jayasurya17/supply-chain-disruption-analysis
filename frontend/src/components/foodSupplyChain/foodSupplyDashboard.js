@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../common/navbar';
+import Navbar from '../Common/navbar';
 import './foodSupplyDashboard.css';
 import Select from 'react-select';
 import InputRange from 'react-input-range';

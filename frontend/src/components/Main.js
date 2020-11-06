@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 
-import Landing from './common/landing';
-import AdminDashboard from './admin/dashboard';
+import Landing from './Common/Landing';
+import AdminDashboard from './Admin/dashboard';
 import Dashboard from './dashboard/dashboard';
-import ErrorPage from './authentication/errorPage';
+import ErrorPage from './Authentication/errorPage';
 import FoodSupplyDashboard from './foodSupplyChain/foodSupplyDashboard';
 
 //Create a Main Component
