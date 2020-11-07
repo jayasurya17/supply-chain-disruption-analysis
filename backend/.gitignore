@@ -6,3 +6,6 @@
 
 # eslintignore file
 .eslintignore
+
+# datasets
+datasets/
