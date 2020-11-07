@@ -2,7 +2,6 @@
 
 import AnalyzedFoodProductionData from '../../../models/mongoDB/analyzedFoodProductionData'
 import constants from '../../../utils/constants'
-import mongoose from 'mongoose'
 
 /**
  * Get analyzed data based on selected category, commodity and year range for food production data.
@@ -11,25 +10,28 @@ import mongoose from 'mongoose'
  */
 exports.getHistoricalData = async (req, res) => {
 	try {
-		let category = req.params.category,
-			commodity = req.params.commodity,
-			startYear = Number(req.params.startYear),
-			endYear = Number(req.params.endYear)
+		let category = req.query.category,
+			commodity = req.query.commodity,
+			startYear = req.query.startYear,
+			endYear = req.query.endYear
 
-		let values = AnalyzedFoodProductionData.find({
+			if(startYear > endYear) {
+				return res.status(422).send("Start year should be less than or equal to end year")
+			}
+
+		let values = await AnalyzedFoodProductionData.find({
 			category: category, commodity: commodity, year: {
 				$gte: startYear, $lte: endYear
 			}
 		})
 
 		if (values && values.length > 0) {
-			details = details.toJSON()
-			return res.status(200).send(values)
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
 		} else {
-			return res.status(204).json()
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
 		}
 	} catch (error) {
-		console.log(`Error while getting food production category filter values ${error}`)
+		console.log(`Error while getting analyzed food production data ${error}`)
 		return res
 			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
 			.send(error.message)
