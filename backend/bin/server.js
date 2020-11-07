@@ -10,6 +10,8 @@ import constants from '../src/utils/constants'
 
 // router for modules
 let usersRouter = require('../src/modules/user/router/users')
+let filtersRouter = require('../src/modules/filter/router/filters')
+let analysisRouter = require('../src/modules/analyzedData/router/analyzedData')
 
 // database connections
 require('../src/models/mongoDB/index')
@@ -31,12 +33,14 @@ app.use(cors({ origin: frontendUrl, credentials: false }));
 
 // base routes for modules
 app.use('/users', usersRouter)
+app.use('/filters', filtersRouter)
+app.use('/analysis', analysisRouter)
 
 // Ping route to check health of instance for load balancer
 app.get('/ping', (req, res) => {
 	return res
-      .status(constants.STATUS_CODE.SUCCESS_STATUS)
-      .send()
+		.status(constants.STATUS_CODE.SUCCESS_STATUS)
+		.send()
 })
 
 // catch 404 and forward to error handler
