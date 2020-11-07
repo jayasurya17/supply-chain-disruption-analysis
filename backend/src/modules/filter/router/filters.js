@@ -6,7 +6,6 @@ import filterController from '../controller/filters'
 import validator from '../validator'
 import validation from 'express-validation'
 
-// router.post('/categories', filterController.getCategories)
 router.get('/categories', filterController.getCategories)
 router.get('/commoditiesByCategory', validation(validator['commoditiesByCategory']), filterController.getCommoditiesByCategory)
 

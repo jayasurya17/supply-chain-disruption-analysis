@@ -10,14 +10,7 @@ import constants from '../../../utils/constants'
  */
 exports.getCategories = async (req, res) => {
 	try {
-		// console.log(req.body);
-		// let data = new AnalyzedFoodProductionData(req.body)
-		// let resData = await data.save()
-		// resData = resData.toJSON()
-
 		let resData = await AnalyzedFoodProductionData.find().distinct('category')
-
-		console.log(resData);
 
 		if (resData && resData.length > 0) {
 			return res.status(200).send(resData)
@@ -41,12 +34,9 @@ exports.getCategories = async (req, res) => {
  */
 exports.getCommoditiesByCategory = async (req, res) => {
 	try {
-		console.log(req, req.query)
 		let category = req.query.category
-		console.log(category)
 
 		let values = await AnalyzedFoodProductionData.find({ category: category }).distinct('commodity')
-		console.log(values.length)
 
 		if (values && values.length > 0) {
 			return res.status(200).send(values)
