@@ -13,9 +13,9 @@ exports.getCategories = async (req, res) => {
 		let resData = await AnalyzedFoodProductionData.find().distinct('category')
 
 		if (resData && resData.length > 0) {
-			return res.status(200).send(resData)
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(resData)
 		} else {
-			return res.status(204).json()
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
 		}
 	} catch (error) {
 		console.log(`Error while getting food production category filter values ${error}`)
@@ -39,9 +39,9 @@ exports.getCommoditiesByCategory = async (req, res) => {
 		let values = await AnalyzedFoodProductionData.find({ category: category }).distinct('commodity')
 
 		if (values && values.length > 0) {
-			return res.status(200).send(values)
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
 		} else {
-			return res.status(204).json()
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
 		}
 	} catch (error) {
 		console.log(`Error while getting list of commodities based on selected category ${error}`)

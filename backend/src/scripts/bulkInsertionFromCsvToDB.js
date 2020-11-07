@@ -17,7 +17,7 @@ let csvStream = fastcsv
         disasterTypeArr = disasterTypes
     }
     csvData.push({
-      year: data[0],
+      year: Number(data[0]),
       month: data[1],
       state: data[2],
       category: data[3],
