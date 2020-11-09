@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import CanvasJSReact from '../Common/lib/canvasjs.react'
 var CanvasJSChart = CanvasJSReact.CanvasJSChart
 
-class ChartComponent extends Component {
+class DisasterChartComponent extends Component {
   render () {
     let dataPoints1 = [],
       dataPoints2 = []
@@ -28,7 +28,7 @@ class ChartComponent extends Component {
       },
       data: [
         {
-          type: 'spline',
+          type: 'bar',
           name: 'Commodity 1',
           showInLegend: true,
           dataPoints: dataPoints1
@@ -53,4 +53,4 @@ class ChartComponent extends Component {
   }
 }
 
-export default ChartComponent
+export default DisasterChartComponent
