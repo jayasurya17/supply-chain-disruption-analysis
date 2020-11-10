@@ -50,3 +50,29 @@ exports.getCommoditiesByCategory = async (req, res) => {
 			.send(error.message)
 	}
 }
+
+
+
+
+/**
+ * Get list of all disasters for food production data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getAllDisasters = async (req, res) => {
+	try {
+
+		let values = await AnalyzedFoodProductionData.find().distinct('disasterType')
+
+		if (values && values.length > 0) {
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting list of commodities based on selected category ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}

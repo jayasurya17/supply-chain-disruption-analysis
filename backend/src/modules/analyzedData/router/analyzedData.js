@@ -8,5 +8,6 @@ import validation from 'express-validation'
 
 router.get('/historicalData', validation(validator['getHistoricalData']), analysisController.getHistoricalData)
 router.get('/historicalDataByState', validation(validator['getHistoricalDataByState']), analysisController.getHistoricalDataByState)
+router.get('/disastersByState', validation(validator['disastersByState']), analysisController.getDisastersByState)
 
 module.exports = router

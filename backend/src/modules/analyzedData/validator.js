@@ -25,5 +25,15 @@ module.exports = {
 		model: "getHistoricalDataByState",
 		group: "AnalyzedData",
 		description: "Get analyzed data based on selected category, commodity, state and year range for food production data"
+	},
+	disastersByState: {
+		query: {
+			disaster: Joi.string().required(),
+			startYear: Joi.string().required(),
+			endYear: Joi.string().required(),
+		},
+		model: "disastersByState",
+		group: "Filter",
+		description: "Get number of disasters that happened in each state for food production data"
 	}
 }

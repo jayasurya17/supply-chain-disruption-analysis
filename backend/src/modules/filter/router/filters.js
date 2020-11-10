@@ -8,5 +8,6 @@ import validation from 'express-validation'
 
 router.get('/categories', filterController.getCategories)
 router.get('/commoditiesByCategory', validation(validator['commoditiesByCategory']), filterController.getCommoditiesByCategory)
+router.get('/allDisasters', filterController.getAllDisasters)
 
 module.exports = router
