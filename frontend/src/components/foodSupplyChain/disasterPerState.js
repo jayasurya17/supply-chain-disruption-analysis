@@ -13,7 +13,8 @@ class DisasterBasedAnalysis extends Component {
 			allDisasters: [],
 			yearRange: { min: 1980, max: 2020 },
 			selectedDisaster: null,
-			disasterCount: {}
+			disasterCount: {},
+			isFetched: false
 		}
 	}
 
@@ -27,7 +28,8 @@ class DisasterBasedAnalysis extends Component {
 				axios.get(`/analysis/disastersByState?disaster=${allDisastersResponse.data[0]}&startYear=${this.state.yearRange.min}&endYear=${this.state.yearRange.max}`)
 					.then((disastersByStateResponse) => {
 						this.setState({
-							disasterCount: disastersByStateResponse.data
+							disasterCount: disastersByStateResponse.data,
+							isFetched: true
 						})
 					})
 			})
@@ -47,11 +49,11 @@ class DisasterBasedAnalysis extends Component {
 
 	updateGraph = () => {
 		axios.get(`/analysis/disastersByState?disaster=${this.state.selectedDisaster}&startYear=${this.state.yearRange.min}&endYear=${this.state.yearRange.max}`)
-		.then((disastersByStateResponse) => {
-			this.setState({
-				disasterCount: disastersByStateResponse.data
+			.then((disastersByStateResponse) => {
+				this.setState({
+					disasterCount: disastersByStateResponse.data
+				})
 			})
-		})
 	}
 
 	render() {
@@ -87,7 +89,7 @@ class DisasterBasedAnalysis extends Component {
 							onChange={this.onChangeDisaster}
 							value={this.state.selectedDisaster}
 						>
-						{allDisasters}
+							{allDisasters}
 						</select>
 					</div>
 					<div className='col-md-3 offset-md-1'>
@@ -96,7 +98,11 @@ class DisasterBasedAnalysis extends Component {
 				</div>
 
 				<div className='m-5'>
-					<DisasterStateComponent disasterCount={this.state.disasterCount} />
+					{
+						this.state.isFetched === true ?
+							<DisasterStateComponent disasterCount={this.state.disasterCount} /> :
+							null
+					}
 				</div>
 			</div>
 		)
