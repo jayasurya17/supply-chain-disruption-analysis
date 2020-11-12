@@ -11,7 +11,8 @@ let csvData = [];
 let csvStream = fastcsv
   .parse()
   .on("data", function(data) {
-    let disasterTypes = data[8].split(",")
+    console.log("data-->", data.length, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8])
+    let disasterTypes = data[7].split(",")
     let disasterTypeArr = [];
     if(disasterTypes.length >= 1 && disasterTypes[0].length >= 1) {
         disasterTypeArr = disasterTypes
@@ -22,10 +23,10 @@ let csvStream = fastcsv
       state: data[2],
       category: data[3],
       commodity: data[4],
-      dataItem: data[5],
-      unit: data[6],
-      value: data[7],
-      disasterType: disasterTypeArr
+      unit: data[5],
+      value: data[6],
+      disasterType: disasterTypeArr,
+      yearlyValue: data[8]
     });
   })
   .on("end", function() {

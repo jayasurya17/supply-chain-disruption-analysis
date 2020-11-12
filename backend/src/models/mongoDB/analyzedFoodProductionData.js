@@ -23,12 +23,16 @@ const AnalyzedFoodProductionData = new mongoose.Schema({
         type: String,
         required: true
     },
-    dataItem: {
+    unit: {
         type: String,
         required: true
     },
     value: {
-        type: String,
+        type: Number,
+        required: true
+    },
+    yearlyValue: {
+        type: Number,
         required: true
     },
     disasterType: [{
