@@ -21,7 +21,7 @@ class DisastersTable extends Component {
                             <th scope="row">Earthquake</th>
                             <td>Natural</td>
                             <td>Geophysical</td>
-                            <td>Ground movement, Tsunami</td>
+                            <td>Ground movement</td>
                         </tr>
                         <tr>
                             <th scope="row">Volcanic activity</th>

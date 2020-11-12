@@ -104,16 +104,26 @@ def get_states(location):
 
 	return ",".join(filteredStates)
 
+def replace_disaster_type(row):
+	if row['Disaster Type'] in set(['Extreme temperature', 'Storm']):
+		return row['Disaster Subtype']
+	return row['Disaster Type']
+
+def get_unique_disasters(values):
+	values = set(values)
+	return ",".join(list(values))
 
 def filterDisasterData(disasterData):
 	disasterData['Location'] = disasterData['Location'].str.upper() 
 	disasterData['Location'] = disasterData['Location'].fillna('')
 	disasterData = disasterData.assign(State = lambda x: get_states(x['Location']))
 	disasterData['States'] = disasterData['Location'].apply(get_states)
+	disasterData['Types'] = disasterData.apply(lambda x: replace_disaster_type(x), axis = 1)
+	disasterData['Disaster Type'] = disasterData['Types']
+	disasterData = disasterData[~disasterData['Disaster Type'].isna()]
 	disasterData = disasterData[['Year', 'Start Month','States', 'Disaster Type']].copy()
 	disasterData['Start Month'] = disasterData['Start Month'].fillna(0)
 	disasterData['Start Month'] = disasterData['Start Month'].astype(int)
-
 
 	disasterData['States'] = disasterData['States'].str.split(',')
 	disasterData = (disasterData
@@ -127,7 +137,7 @@ def filterDisasterData(disasterData):
 	disasterData = disasterData.rename(columns={"Start Month": "Month"})
 
 	disasterData = disasterData.groupby(['Year', 'Month', 'State'])['Disaster Type'].apply(list).reset_index()
-	disasterData['Disaster Type'] = disasterData['Disaster Type'].apply(lambda x: ",".join(x))
+	disasterData['Disaster Type'] = disasterData['Disaster Type'].apply(lambda x: get_unique_disasters(x))
 	return disasterData
 
 
