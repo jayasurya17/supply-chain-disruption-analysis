@@ -128,7 +128,7 @@ exports.getStatesByCategoryAndCommodityAndUnit = async (req, res) => {
 }
 
 /**
- * Get list of unites based on selected category and commodity for food production data.
+ * Get list of units based on selected category and commodity for food production data.
  * @param  {Object} req request object
  * @param  {Object} res response object
  */
@@ -151,3 +151,107 @@ exports.getUnits = async (req, res) => {
 			.send(error.message)
 	}
 }
+
+/**
+ * Get list of category filter values based on disaster type for food production data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getCategoriesByDisasterType = async (req, res) => {
+	try {
+		let disasterType = req.query.disasterType
+
+		let resData = await AnalyzedFoodProductionData.find({ disasterType: disasterType }).distinct('category')
+
+		if (resData && resData.length > 0) {
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(resData)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting food production category filter values based on disaster type ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+/**
+ * Get list of commodities based on selected category and disaster type for food production data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getCommoditiesByCategoryAndDisasterType = async (req, res) => {
+	try {
+		let category = req.query.category,
+			disasterType = req.query.disasterType
+
+		let resData = await AnalyzedFoodProductionData.find({ disasterType: disasterType, category, category }).distinct('commodity')
+	
+		if (resData && resData.length > 0) {
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(resData)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting list of commodities based on selected category and disaster type ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+/**
+ * Get list of units based on selected category, commodity and disaster type for food production data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getUnitsByCategoryAndCommodityAndDisasterType = async (req, res) => {
+	try {
+		let category = req.query.category,
+			commodity = req.query.commodity,
+			disasterType = req.query.disasterType
+
+		let values = await AnalyzedFoodProductionData.find({ disasterType: disasterType, category: category, commodity: commodity }).distinct('unit')
+
+		if (values && values.length > 0) {
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting list of units based on selected category, commodity and disaster type ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+/**
+ * Get list of states based on selected category, commodity, unit and disaster type for food production data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getStatesByCategoryAndCommodityAndUnitAndDisasterType = async (req, res) => {
+	try {
+		let category = req.query.category,
+			commodity = req.query.commodity,
+			unit = req.query.unit,
+			disasterType = req.query.disasterType
+
+		let values = await AnalyzedFoodProductionData.find({ disasterType: disasterType, category: category, commodity: commodity, unit: unit }).distinct('state')
+
+		if (values && values.length > 0) {
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+
+	} catch (error) {
+		console.log(`Error while getting list of states based on selected category, commodity, unit and disaster type ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
