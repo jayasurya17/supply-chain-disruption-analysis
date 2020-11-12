@@ -5,6 +5,7 @@ import './foodSupplyDashboard.css'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import DisasterStateComponent from './disasterStateComponent'
+import DisasterTable from './disastersTable'
 
 class DisasterBasedAnalysis extends Component {
 	constructor() {
@@ -57,6 +58,29 @@ class DisasterBasedAnalysis extends Component {
 	}
 
 	render() {
+		if (this.state.isFetched === false) {
+			return (
+				<div>
+					<Navbar />
+					<div className='row m-5'>
+						<div className='col-md-3'>
+							<p id='year'>Year range</p>
+						</div>
+						<div className='col-md-9'>
+							<InputRange
+								maxValue={2020}
+								minValue={1980}
+								value={this.state.yearRange}
+								onChange={this.onChangeYear}
+							/>
+						</div>
+					</div>
+					<div className="text-center">
+						<img src="loading.gif" className="w-25" />
+					</div>
+				</div>
+			)
+		}
 		var allDisasters = []
 		for (var disaster of this.state.allDisasters) {
 			allDisasters.push(<option value={disaster}>{disaster}</option>)
@@ -81,7 +105,7 @@ class DisasterBasedAnalysis extends Component {
 
 				<div className='row m-5'>
 					<div className='col-md-3'>
-						<p id='year'>Type of disaster</p>
+						<p id='year'>Type of disaster *</p>
 					</div>
 					<div className='col-md-3'>
 						<select
@@ -98,12 +122,10 @@ class DisasterBasedAnalysis extends Component {
 				</div>
 
 				<div className='m-5'>
-					{
-						this.state.isFetched === true ?
-							<DisasterStateComponent disasterCount={this.state.disasterCount} /> :
-							null
-					}
+					<DisasterStateComponent disasterCount={this.state.disasterCount} />
 				</div>
+
+				<DisasterTable />
 			</div>
 		)
 	}
