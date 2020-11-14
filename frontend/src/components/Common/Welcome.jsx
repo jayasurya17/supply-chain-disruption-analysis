@@ -32,6 +32,7 @@ const Welcome = (props) => {
   // Dispatch and Operations
   const dispatch = useDispatch();
   const signUp = operations.dispatchSignUp(dispatch);
+  const logIn = operations.dispatchLogIn(dispatch);
 
   const onSignUpValuesChange = (changedFields, allFields) => {
     setSignUpDetails(allFields);
@@ -41,15 +42,22 @@ const Welcome = (props) => {
     setLoginDetails(allFields);
   };
 
-  const onFinish = (values) => {
-    console.log('Success:', values);
-    const user = values;
-    user.name = user.fname + ' ' + user.lname;
-    delete user.fname;
-    delete user.lname;
-    signUp(user);
-    //props.history.push('/dashboard');
-  };
+  /* Triggered when submit button of form is clicked and also the form is valid */
+const onSignUpClick = (values) => {
+	console.log('Success:', values);
+	const user = values;
+	user.name = user.fname + ' ' + user.lname;
+	delete user.fname;
+	delete user.lname;
+	signUp(user);
+	//props.history.push('/dashboard');
+};
+
+const onLoginClick = (values) => {
+	console.log('Success:', values);
+	const user = values;
+	logIn(user);
+};
 
   return (
     <div className="content">
@@ -70,7 +78,7 @@ const Welcome = (props) => {
             initialValues={{
               remember: true,
             }}
-            onFinish={onFinish}
+            onFinish={onSignUpClick}
             onValuesChange = {onSignUpValuesChange}
           >
             <Form.Item
@@ -164,6 +172,7 @@ const Welcome = (props) => {
             </Form.Item>
           </Form>
         </TabPane>
+
         <TabPane tab="Log In" key="2">
           <Form
               {...layout}
@@ -171,16 +180,16 @@ const Welcome = (props) => {
               initialValues={{
                 remember: true,
               }}
-              onFinish={onFinish}
+              onFinish={onLoginClick}
               onValuesChange={onLoginValuesChange}
             >
               <Form.Item
                 label="Email"
-                name="username"
+                name="loginId"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your username!',
+                    message: 'Please input your username (Email)!',
                   },
                 ]}
               >

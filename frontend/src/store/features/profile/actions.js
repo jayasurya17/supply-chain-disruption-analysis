@@ -3,6 +3,18 @@ const signUp = (user) => ({
 	user,
 });
 
+const logIn = (user) => ({
+	type: 'PROFILE_LOGIN',
+	user,
+});
+
+const setUser = (user) => ({
+    type: 'PROFILE_SETUSER',
+    user,
+});
+
 export {
-	signUp,
+    logIn,
+    setUser,
+    signUp,
 };

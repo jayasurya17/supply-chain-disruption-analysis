@@ -4,6 +4,8 @@ import Users from '../../../models/mongoDB/users'
 import constants from '../../../utils/constants'
 import mongoose from 'mongoose'
 import uuidv1 from 'uuid/v1'
+import bcrypt from 'bcrypt';
+
 import { updatePassword } from '../../../utils/updateHashPassword'
 
 /**
@@ -76,19 +78,21 @@ exports.loginUser = async (req, res) => {
 		}
 
 		if (user) {
-			const validate = await user.validatePassword(req.body.password)
-			if (validate) {
+
+			const isValidUser = await bcrypt.compare(req.body.password, user.password);
+
+			if (isValidUser) {
 				const token = user.generateToken()
 				user = user.toJSON()
 				delete user.password
-				user.token = token
+				//user.token = token
 				let tokenObj = {
 					token : token,
 					date: Date.now()
-				}
+                }
 				await Users.findByIdAndUpdate(user._id, {
 						jwtToken: tokenObj,
-					    isActive: true
+						isActive: true
 				});
 				isAuth = true
 				return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(user)
