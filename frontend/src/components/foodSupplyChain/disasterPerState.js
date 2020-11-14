@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Navbar from '../Common/navbar'
+import Navbar from '../Common/foodSupplyNavbar'
 import './foodSupplyDashboard.css'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'

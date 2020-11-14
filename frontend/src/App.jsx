@@ -7,7 +7,7 @@ import Welcome from './components/Common/Welcome';
 
 import backendURL from './constants/connection'
 
-axios.defaults.baseURL = `${backendURL}:9000`;
+axios.defaults.baseURL = `${backendURL}`;
 
 //App Component
 const App = () => (

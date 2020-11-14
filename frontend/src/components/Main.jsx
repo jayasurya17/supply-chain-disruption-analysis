@@ -1,29 +1,26 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Spin } from 'antd';
 
 import Landing from './Common/Landing';
 import AdminDashboard from './Admin/dashboard';
 import Dashboard from './dashboard/dashboard';
 import ErrorPage from './Authentication/errorPage';
 import FoodSupplyDashboard from './foodSupplyChain/foodSupplyDashboard';
-import Welcome from './Common/Welcome';
+import Login from './Common/Welcome';
 import Navbar from './Common/navbar';
 import DisasterBasedAnalysis from './foodSupplyChain/disasterBasedAnalysis'
 import DisasterPerStateAnalysis from './foodSupplyChain/disasterPerState'
 
 //Create a Main Component
 const Main = (props) => {
-	console.log(props);
+    
 	return (
 			<div>
 					{/*Render Different Component based on Route*/}
-					<Navbar 
-						
-					/>
-					{/* <Route path="/" component={Landing} /> */}
+					<Navbar />
+					<Route path="/" component={Landing} />
 					<Switch>
-						<Route
+						{/* <Route
 							exact
 							path="/"
 							render={() => (
@@ -31,7 +28,8 @@ const Main = (props) => {
 									<Spin />
 								</div>
 							)}
-						/>
+						/> */}
+						<Route path="/login" component={Login} exact={true} />
 						<Route path="/dashboard" component={Dashboard} exact={true} />
 						<Route path="/admin/dashboard" component={AdminDashboard} exact={true} />
 
