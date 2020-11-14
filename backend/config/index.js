@@ -1,4 +1,4 @@
-    `use strict`
+`use strict`;
 
 let common = require('./env/common')
 

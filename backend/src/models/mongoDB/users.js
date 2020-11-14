@@ -1,7 +1,7 @@
 `use strict`
 
 import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcrypt'
 import config from '../../../config'
 import jwt from 'jsonwebtoken'
 require('mongoose-type-email');

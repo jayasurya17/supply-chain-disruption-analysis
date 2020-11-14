@@ -1,6 +1,6 @@
 `use strict`
 
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcrypt';
 
 export function updatePassword(password) {
     console.log('in update password')

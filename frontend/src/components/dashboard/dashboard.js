@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Navbar from '../Common/navbar';
 import './dashboard.css';
 
 class Dashboard extends Component {
@@ -7,9 +6,7 @@ class Dashboard extends Component {
     render() {
 
         return (
-            <div>
-                <Navbar />
-                
+            <div>                
                 <div className="row ml-5 mr-5">
                     <a href="food-supply-chain" id="food" className="col-md-6 text-center p-5 shadow rounded text-decoration-none text-dark">
                         <p className="display-4 font-weight-bold text-dark">Food supply chain analysis</p>
