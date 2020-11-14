@@ -189,6 +189,19 @@ def replace_months(df):
 def reorder(df):
 	column_names = ['Year', 'Month', 'State', 'Category', 'Commodity', 'Unit',	'Value', 'Disaster Type', 'Yearly Value', 'End Month', 'End Year']
 	df = df.reindex(columns=column_names)
+	df = df.rename(columns={
+		'Year': 'year', 
+		'Month': 'month', 
+		'State': 'month', 
+		'Category': 'category', 
+		'Commodity': 'commodity', 
+		'Unit': 'unit',	
+		'Value': 'value', 
+		'Disaster Type': 'disasterType', 
+		'Yearly Value': 'yearlyValue', 
+		'End Month': 'endMonth', 
+		'End Year': 'endYear'
+		})
 	return df
 
 
@@ -246,7 +259,7 @@ if __name__ == "__main__":
 	save_to_csv(mergedData, 'datasets/processed_data.csv')
 	print (mergedData)
 
-	rowsWithoutDisaster = mergedData['Disaster Type'].isna().sum()
+	rowsWithoutDisaster = mergedData['disasterType'].isna().sum()
 	r, c = mergedData.shape
 	percentWithDisaster = ((r - rowsWithoutDisaster) / r) * 100
 	print ("\n\nPercentage of rows with disaster:", percentWithDisaster)
