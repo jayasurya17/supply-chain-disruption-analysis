@@ -105,7 +105,6 @@ class FoodSupplyHoliday extends Component {
 
         return (
             <div>
-                <Navbar />
                 <div className="row m-5">
                     <div className="col-md-2">
                         <p id="year">Year range</p>
