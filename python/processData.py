@@ -109,9 +109,40 @@ def replace_disaster_type(row):
 		return row['Disaster Subtype']
 	return row['Disaster Type']
 
-def get_unique_disasters(values):
-	values = set(values)
-	return ",".join(list(values))
+def split_disasters_and_end_month(row):
+
+	endMonths = []
+	endYears = []
+	months = {1: 'JAN', 2: 'FEB', 3: 'MAR', 4: 'APR', 5: 'MAY', 6: 'JUN', 7: 'JUL', 8: 'AUG', 9: 'SEP', 10: 'OCT', 11: 'NOV', 12: 'DEC' }
+	unique_disasters = set([])
+
+	for index in range(len(row['Disaster Type'])):
+		typeOfDisaster = row['Disaster Type'][index]
+		month = row['End Month'][index]
+		year = row['End Year'][index]
+
+		if typeOfDisaster in unique_disasters:
+			continue
+		
+		unique_disasters.add( row['Disaster Type'][index])
+		if math.isnan(month):
+			endMonths.append(months[row['Month']])
+		elif int(month) in months:
+			endMonths.append(months[month])
+		else:
+			endMonths.append(months[row['Month']])
+
+
+		if math.isnan(year):
+			endYears.append(str(row['Year']))
+		else:
+			endYears.append(str(year))
+
+	row['End Month'] = ",".join(endMonths)
+	row['Disaster Type'] = ",".join(list(unique_disasters))
+	row['End Year'] = str("-".join(endYears))
+	return row
+
 
 def filterDisasterData(disasterData):
 	disasterData['Location'] = disasterData['Location'].str.upper() 
@@ -121,23 +152,26 @@ def filterDisasterData(disasterData):
 	disasterData['Types'] = disasterData.apply(lambda x: replace_disaster_type(x), axis = 1)
 	disasterData['Disaster Type'] = disasterData['Types']
 	disasterData = disasterData[~disasterData['Disaster Type'].isna()]
-	disasterData = disasterData[['Year', 'Start Month','States', 'Disaster Type']].copy()
-	disasterData['Start Month'] = disasterData['Start Month'].fillna(0)
+	disasterData = disasterData[['Year', 'Start Month','States', 'Disaster Type', 'End Month', 'End Year']].copy()
+	disasterData = disasterData[~disasterData['Start Month'].isna()]
 	disasterData['Start Month'] = disasterData['Start Month'].astype(int)
 
 	disasterData['States'] = disasterData['States'].str.split(',')
 	disasterData = (disasterData
-		 .set_index(['Year', 'Start Month', 'Disaster Type'])['States']
+		 .set_index(['Year', 'Start Month', 'Disaster Type', 'End Month', 'End Year'])['States']
 		 .apply(pd.Series)
 		 .stack()
 		 .reset_index()
-		 .drop('level_3', axis=1)
+		 .drop('level_5', axis=1)
 		 .rename(columns={0:'State'}))
 	
 	disasterData = disasterData.rename(columns={"Start Month": "Month"})
-
-	disasterData = disasterData.groupby(['Year', 'Month', 'State'])['Disaster Type'].apply(list).reset_index()
-	disasterData['Disaster Type'] = disasterData['Disaster Type'].apply(lambda x: get_unique_disasters(x))
+	disasterData1 = disasterData.groupby(['Year', 'Month', 'State'])['Disaster Type'].apply(list).reset_index()
+	disasterData2 = disasterData.groupby(['Year', 'Month', 'State'])['End Month'].apply(list).reset_index()
+	disasterData3 = disasterData.groupby(['Year', 'Month', 'State'])['End Year'].apply(list).reset_index()
+	disasterData = pd.merge(disasterData1, disasterData2, how='inner', on=['Year', 'Month', 'State'])
+	disasterData = pd.merge(disasterData, disasterData3, how='inner', on=['Year', 'Month', 'State'])
+	disasterData = disasterData.apply(lambda x: split_disasters_and_end_month(x), axis = 1)
 	return disasterData
 
 
@@ -153,7 +187,7 @@ def replace_months(df):
 
 
 def reorder(df):
-	column_names = ['Year', 'Month', 'State', 'Category', 'Commodity', 'Unit',	'Value', 'Disaster Type', 'Yearly Value']
+	column_names = ['Year', 'Month', 'State', 'Category', 'Commodity', 'Unit',	'Value', 'Disaster Type', 'Yearly Value', 'End Month', 'End Year']
 	df = df.reindex(columns=column_names)
 	return df
 
