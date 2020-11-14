@@ -24,5 +24,6 @@ module.exports = {
 	ROLES: {
 		ADMIN: 'admin',
 		USER: 'user'
-	}
+	},
+	ALL_CATEGORIES : 'All'
 }

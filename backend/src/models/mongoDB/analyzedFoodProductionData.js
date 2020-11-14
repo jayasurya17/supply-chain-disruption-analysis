@@ -4,39 +4,39 @@ import mongoose from 'mongoose'
 
 const AnalyzedFoodProductionData = new mongoose.Schema({
     year: {
-		type: String,
+        type: Number,
         required: true
     },
     month: {
-		type: String,
+        type: String,
         required: true
     },
     state: {
-		type: String,
+        type: String,
         required: true
     },
     category: {
-		type: String,
+        type: String,
         required: true
     },
     commodity: {
-		type: String,
-        required: true
-    },
-    dataItem: {
-		type: String,
+        type: String,
         required: true
     },
     unit: {
-		type: String,
+        type: String,
         required: true
     },
     value: {
-		type: String,
+        type: Number,
+        required: true
+    },
+    yearlyValue: {
+        type: Number,
         required: true
     },
     disasterType: [{
-		type: String,
+        type: String,
         required: true
     }],
 }, { versionKey: false })
