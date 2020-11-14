@@ -11,9 +11,8 @@ module.exports = {
 		group: "Filter",
 		description: "Get list of commodities based on selected category for food production data"
 	},
-	filterByCategoryAndCommodity: {
+	filterByCommodity: {
 		query: {
-			category: Joi.string().required(),
 			commodity: Joi.string().required(),
 		},
 		model: "filterByCategoryAndCommodity",

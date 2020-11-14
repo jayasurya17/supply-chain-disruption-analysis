@@ -134,10 +134,9 @@ exports.getStatesByCategoryAndCommodityAndUnit = async (req, res) => {
  */
 exports.getUnits = async (req, res) => {
 	try {
-		let category = req.query.category,
-			commodity = req.query.commodity
+		let commodity = req.query.commodity
 
-		let values = await AnalyzedFoodProductionData.find({ category: category, commodity: commodity }).distinct('unit')
+		let values = await AnalyzedFoodProductionData.find({ commodity: commodity }).distinct('unit')
 
 		if (values && values.length > 0) {
 			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
