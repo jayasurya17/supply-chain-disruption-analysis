@@ -11,30 +11,26 @@ module.exports = {
 		group: "Filter",
 		description: "Get list of commodities based on selected category for food production data"
 	},
-	filterByCategoryAndCommodity: {
+	filterByCommodity: {
 		query: {
-			category: Joi.string().required(),
 			commodity: Joi.string().required(),
 		},
 		model: "filterByCategoryAndCommodity",
 		group: "Filter",
 		description: "Get data filtered based on selected category for food production data"
 	},
-	statesByCategoryAndCommodityAndUnit: {
+	statesByCommodityAndUnit: {
 		query: {
-			categoryOne: Joi.string().required(),
 			commodityOne: Joi.string().required(),
 			unitOne: Joi.string().required(),
-			categoryTwo: Joi.string(),
 			commodityTwo: Joi.string(),
 			unitTwo: Joi.string(),
-			categoryThree: Joi.string(),
 			commodityThree: Joi.string(),
 			unitThree: Joi.string()
 		},
-		model: "statesByCategoryAndCommodityAndUnit",
+		model: "statesByCommodityAndUnit",
 		group: "Filter",
-		description: "Get states filtered based on selected category, commodity and unit for food production data"
+		description: "Get states filtered based on selected commodity and unit for food production data"
 	},
 	categoriesByDisasterType: {
 		query: {
