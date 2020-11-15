@@ -88,21 +88,18 @@ exports.getAllDisasters = async (req, res) => {
  * @param  {Object} req request object
  * @param  {Object} res response object
  */
-exports.getStatesByCategoryAndCommodityAndUnit = async (req, res) => {
+exports.getStatesByCommodityAndUnit = async (req, res) => {
 	try {
-		let categoryOne = req.query.categoryOne,
-			commodityOne = req.query.commodityOne,
+		let commodityOne = req.query.commodityOne,
 			unitOne = req.query.unitOne,
-			categoryTwo = req.query.categoryTwo,
 			commodityTwo = req.query.commodityTwo,
 			unitTwo = req.query.unitTwo,
-			categoryThree = req.query.categoryThree,
 			commodityThree = req.query.commodityThree,
 			unitThree = req.query.unitThree
 
-		let valuesOne = await AnalyzedFoodProductionData.find({ category: categoryOne, commodity: commodityOne, unit: unitOne}).distinct('state')
-		let valuesTwo = await AnalyzedFoodProductionData.find({ category: categoryTwo, commodity: commodityTwo, unit: unitTwo}).distinct('state')
-		let valuesThree = await AnalyzedFoodProductionData.find({ category: categoryThree, commodity: commodityThree, unit: unitThree}).distinct('state')
+		let valuesOne = await AnalyzedFoodProductionData.find({ commodity: commodityOne, unit: unitOne}).distinct('state')
+		let valuesTwo = await AnalyzedFoodProductionData.find({ commodity: commodityTwo, unit: unitTwo}).distinct('state')
+		let valuesThree = await AnalyzedFoodProductionData.find({ commodity: commodityThree, unit: unitThree}).distinct('state')
 
 		let intersection = valuesOne
 
@@ -120,7 +117,7 @@ exports.getStatesByCategoryAndCommodityAndUnit = async (req, res) => {
 			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
 		}
 	} catch (error) {
-		console.log(`Error while getting list of states based on selected category, commodity and unit ${error}`)
+		console.log(`Error while getting list of states based on selected commodity and unit ${error}`)
 		return res
 			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
 			.send(error.message)
