@@ -1,7 +1,11 @@
 import * as R from 'ramda';
 
-const selectors = {
+const user = state => R.pathOr({}, ['profile', 'user'], state);
+const route = state => R.pathOr('', ['profile', 'route'], state);
 
+const selectors = {
+    route,
+    user,
 };
 
 export default selectors;

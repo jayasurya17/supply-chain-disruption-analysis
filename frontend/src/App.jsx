@@ -11,12 +11,12 @@ axios.defaults.baseURL = `${backendURL}`;
 
 //App Component
 const App = () => (
-  <BrowserRouter>
-    <Switch>
-    <Route path="/welcome" component={Welcome} exact={true} />
-      <Route component={Main} path="/" />
-    </Switch>
-  </BrowserRouter>
+	<BrowserRouter>
+		<Switch>
+			<Route path="/welcome" component={Welcome} exact={true} />
+			<Route component={Main} path="/" />
+		</Switch>
+  	</BrowserRouter>
 );
 //Export the App component so that it can be used in index.js
 export default App;

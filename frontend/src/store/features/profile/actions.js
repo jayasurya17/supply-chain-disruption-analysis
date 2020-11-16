@@ -13,8 +13,14 @@ const setUser = (user) => ({
     user,
 });
 
+const setRoute = (route) => ({
+    type: 'PROFILE_SETROUTE',
+    route,
+})
+
 export {
     logIn,
     setUser,
     signUp,
+    setRoute,
 };

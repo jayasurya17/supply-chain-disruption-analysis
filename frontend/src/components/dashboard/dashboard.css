@@ -2,13 +2,15 @@
     font-family: 'Roboto';
     font-size: 20px;
 }
-#food {
+#food-supply-chain {
     background-image: url("crops.jpg");
     background-size: cover;
     height: 50vh;
+    cursor: pointer;
 }
 #medicine {
     background-image: url("medicine.jpg");
     background-size: cover;
     height: 50vh;
+    cursor: pointer;
 }
