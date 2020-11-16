@@ -26,33 +26,30 @@ class DisasterBasedAnalysis extends Component {
 					allDisasters: allDisastersResponse.data,
 					selectedDisaster: allDisastersResponse.data[0]
 				})
-				axios.get(`/analysis/disastersByState?disaster=${allDisastersResponse.data[0]}&startYear=${this.state.yearRange.min}&endYear=${this.state.yearRange.max}`)
-					.then((disastersByStateResponse) => {
-						this.setState({
-							disasterCount: disastersByStateResponse.data,
-							isFetched: true
-						})
-					})
+                this.updateGraph(allDisastersResponse.data[0], this.state.yearRange.min, this.state.yearRange.max)
 			})
 	}
 
 	onChangeDisaster = (e) => {
+        this.updateGraph(e.target.value, this.state.yearRange.min, this.state.yearRange.max)
 		this.setState({
 			selectedDisaster: e.target.value
 		})
 	}
 
 	onChangeYear = (e) => {
-		this.setState({
-			yearRange: e
-		})
+        this.updateGraph(this.state.selectedDisaster, e.min, e.max)
+        this.setState({
+            yearRange: e
+        })
 	}
 
-	updateGraph = () => {
-		axios.get(`/analysis/disastersByState?disaster=${this.state.selectedDisaster}&startYear=${this.state.yearRange.min}&endYear=${this.state.yearRange.max}`)
+	updateGraph = (disaster, startYear, endYear) => {
+		axios.get(`/analysis/disastersByState?disaster=${disaster}&startYear=${startYear}&endYear=${endYear}`)
 			.then((disastersByStateResponse) => {
 				this.setState({
-					disasterCount: disastersByStateResponse.data
+					disasterCount: disastersByStateResponse.data,
+                    isFetched: true
 				})
 			})
 	}
@@ -116,9 +113,9 @@ class DisasterBasedAnalysis extends Component {
 							{allDisasters}
 						</select>
 					</div>
-					<div className='col-md-3 offset-md-1'>
+					{/* <div className='col-md-3 offset-md-1'>
 						<button className="btn btn-success w-100" onClick={this.updateGraph}>Update Graph</button>
-					</div>
+					</div> */}
 				</div>
 
 				<div className='m-5'>

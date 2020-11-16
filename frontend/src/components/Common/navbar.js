@@ -18,7 +18,7 @@ class Navbar extends Component {
 				<div className='col-md-2 offset-md-8'>
 					<a
 						href={
-							'login?redirect=' + encodeURIComponent(window.location.pathname)
+							'/welcome?redirect=' + encodeURIComponent(window.location.pathname)
 						}
 						className='text-secondary text-decoration-none'
 					>

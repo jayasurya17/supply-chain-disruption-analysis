@@ -1,6 +1,7 @@
 import { 
 	logIn, 
-	signUp 
+    signUp,
+    setRoute,
 } from './actions';
 
 const dispatchSignUp = dispatch => (user) => {
@@ -11,9 +12,14 @@ const dispatchLogIn = dispatch => (user) => {
 	dispatch(logIn(user));
 }
 
+const dispatchSetRoute = dispatch => (route) => {
+    dispatch(setRoute(route));
+}
+
 const operations = {
 	dispatchLogIn,
-	dispatchSignUp,
+    dispatchSignUp,
+    dispatchSetRoute,
 };
 
 export default operations;
