@@ -6,6 +6,12 @@ const reducers = (state = { }, action) => {
             user: action.user,
         }
     }
+    case 'PROFILE_SETROUTE': {
+        return {
+            ...state,
+            route: action.route,
+        }
+    }
     default:
         return state;
     }
