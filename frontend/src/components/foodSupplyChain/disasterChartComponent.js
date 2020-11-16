@@ -3,54 +3,68 @@ import CanvasJSReact from '../Common/lib/canvasjs.react'
 var CanvasJSChart = CanvasJSReact.CanvasJSChart
 
 class DisasterChartComponent extends Component {
-  render () {
-    let dataPoints1 = [],
-      dataPoints2 = []
-    for (
-      var year = this.props.yearRange.min;
-      year <= this.props.yearRange.max;
-      year++
-    ) {
-      dataPoints1.push({ y: Math.floor(Math.random() * 50) + 150, x: year })
-      //dataPoints2.push({y: Math.floor(Math.random() * 50) + 150, x: year})
-    }
-    const options = {
-      animationEnabled: true,
-      // title:{
-      // 	text: "Number of New Customers"
-      // },
-      axisY: {
-        title: 'Quantity',
-        gridThickness: 0
-      },
-      toolTip: {
-        shared: true
-      },
-      data: [
-        {
-          type: 'bar',
-          name: 'Commodity 1',
-          showInLegend: true,
-          dataPoints: dataPoints1
-        }
-        // {
-        // 	type: "spline",
-        // 	name: "Commodity 2",
-        // 	showInLegend: true,
-        // 	dataPoints: dataPoints2
-        // }
-      ]
-    }
+    render() {
+        let graphData = [],
+            dataPoints = [],
+            dataPoint,
+            index,
+            monthIndex = { 'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4, 'MAY': 5, 'JUN': 6, 'JUL': 7, 'AUG': 8, 'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12 },
+            isDisasterMarked = false
 
-    return (
-      <div>
-        <CanvasJSChart
-          options={options}
-          /* onRef={ref => this.chart = ref} */
-        />
-      </div>
-    )
-  }
+        for (var commodity in this.props.production) {
+            dataPoints = []
+            for (var month in this.props.production[commodity]) {
+                index++
+                dataPoint = { y: Math.floor(this.props.production[commodity][month]), x: monthIndex[month] }
+                if (month in this.props.disasters) {
+                    if (isDisasterMarked === false) {
+                        dataPoint.indexLabel = this.props.disasters[month].join(",")
+                    }
+                    dataPoint.markerType = "cross"
+                    dataPoint.markerColor = "red"
+                    dataPoint.markerSize = 12
+                }
+                dataPoints.push(dataPoint)
+            }
+            isDisasterMarked = true
+            graphData.push(
+                {
+                    type: 'spline',
+                    name: commodity,
+                    showInLegend: true,
+                    dataPoints: dataPoints
+                }
+            )
+        }
+        const options = {
+            animationEnabled: true,
+            axisY: {
+                title: 'Quantity',
+                gridThickness: 0
+            },
+            axisX: {
+                title: 'Month of year',
+                gridThickness: 0,
+                interval: 1,
+                minimum: 0,
+                // maximum: 12
+            },
+            toolTip: {
+                shared: true
+            },
+            data: graphData
+        }
+        console.log(options)
+
+        return (
+            <div>
+                <CanvasJSChart
+                    options={options}
+                /* onRef={ref => this.chart = ref} */
+                />
+            </div>
+        )
+    }
 }
 
 export default DisasterChartComponent

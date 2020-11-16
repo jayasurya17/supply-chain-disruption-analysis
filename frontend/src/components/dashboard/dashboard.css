@@ -5,8 +5,10 @@
 #food {
     background-image: url("crops.jpg");
     background-size: cover;
+    height: 50vh;
 }
 #medicine {
     background-image: url("medicine.jpg");
     background-size: cover;
+    height: 50vh;
 }

@@ -20,15 +20,7 @@ const Main = (props) => {
 					<Navbar />
 					<Route path="/" component={Landing} />
 					<Switch>
-						{/* <Route
-							exact
-							path="/"
-							render={() => (
-								<div styleName="spinner">
-									<Spin />
-								</div>
-							)}
-						/> */}
+                        
 						<Route path="/login" component={Login} exact={true} />
 						<Route path="/dashboard" component={Dashboard} exact={true} />
 						<Route path="/admin/dashboard" component={AdminDashboard} exact={true} />
