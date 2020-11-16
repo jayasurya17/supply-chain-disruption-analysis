@@ -10,13 +10,10 @@ import constants from '../../../utils/constants'
  */
 exports.getHistoricalData = async (req, res) => {
 	try {
-		let categoryOne = req.body.categoryOne,
-			commodityOne = req.body.commodityOne,
+		let commodityOne = req.body.commodityOne,
 			unitOne = req.body.unitOne,
-			categoryTwo = req.body.categoryTwo,
 			commodityTwo = req.body.commodityTwo,
 			unitTwo = req.body.unitTwo,
-			categoryThree = req.body.categoryThree,
 			commodityThree = req.body.commodityThree,
 			unitThree = req.body.unitThree,
 			state = req.body.state,
@@ -31,7 +28,6 @@ exports.getHistoricalData = async (req, res) => {
 			[{
 				$match:
 				{
-					category: categoryOne,
 					commodity: commodityOne,
 					unit: unitOne,
 					state: state,
@@ -57,7 +53,6 @@ exports.getHistoricalData = async (req, res) => {
 			[{
 				$match:
 				{
-					category: categoryTwo,
 					commodity: commodityTwo,
 					unit: unitTwo,
 					state: state,
@@ -82,7 +77,6 @@ exports.getHistoricalData = async (req, res) => {
 			[{
 				$match:
 				{
-					category: categoryThree,
 					commodity: commodityThree,
 					unit: unitThree,
 					state: state,

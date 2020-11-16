@@ -5,13 +5,10 @@ import Joi from 'joi'
 module.exports = {
 	getHistoricalData: {
 		body: {
-			categoryOne: Joi.string().required(),
 			commodityOne: Joi.string().required(),
 			unitOne: Joi.string().required(),
-			categoryTwo: Joi.string(),
 			commodityTwo: Joi.string(),
 			unitTwo: Joi.string(),
-			categoryThree: Joi.string(),
 			commodityThree: Joi.string(),
 			unitThree: Joi.string(),
 			state: Joi.string().required(),
