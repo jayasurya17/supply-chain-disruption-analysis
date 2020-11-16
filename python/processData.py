@@ -192,7 +192,7 @@ def reorder(df):
 	df = df.rename(columns={
 		'Year': 'year', 
 		'Month': 'month', 
-		'State': 'month', 
+		'State': 'state', 
 		'Category': 'category', 
 		'Commodity': 'commodity', 
 		'Unit': 'unit',	

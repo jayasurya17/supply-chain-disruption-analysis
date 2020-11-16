@@ -26,7 +26,9 @@ let csvStream = fastcsv
       unit: data[5],
       value: data[6],
       disasterType: disasterTypeArr,
-      yearlyValue: data[8]
+      yearlyValue: data[8],
+      endMonth: data[9],
+      endYear: Number(data[10])
     });
   })
   .on("end", function() {

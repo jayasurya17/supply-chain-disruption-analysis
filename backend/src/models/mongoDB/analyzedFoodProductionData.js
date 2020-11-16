@@ -39,6 +39,14 @@ const AnalyzedFoodProductionData = new mongoose.Schema({
         type: String,
         required: true
     }],
+    endYear: {
+        type: Number,
+        required: true
+    },
+    endMonth: {
+        type: String,
+        required: true
+    },
 }, { versionKey: false })
 
 export default mongoose.model('analyzedFoodProductionData', AnalyzedFoodProductionData)

@@ -206,3 +206,151 @@ exports.getDisastersByState = async (req, res) => {
 			.send(error.message)
 	}
 }
+
+/**
+ * Get analyzed data based selected categories, commodities, units, state for food production data for a given year.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getYearlyDisasterData = async (req, res) => {
+	try {
+		let commodityOne = req.query.commodityOne,
+			unitOne = req.query.unitOne,
+			commodityTwo = req.query.commodityTwo,
+			unitTwo = req.query.unitTwo,
+			commodityThree = req.query.commodityThree,
+			unitThree = req.query.unitThree,
+			state = req.query.state,
+			year = req.query.year
+
+		let valuesOne = await AnalyzedFoodProductionData.find({
+			commodity: commodityOne,
+			unit: unitOne,
+			state: state,
+			year: year
+		})
+
+		let valuesTwo = await AnalyzedFoodProductionData.find({
+			commodity: commodityTwo,
+			unit: unitTwo,
+			state: state,
+			year: year
+		})
+
+		let valuesThree = await AnalyzedFoodProductionData.find({
+			commodity: commodityThree,
+			unit: unitThree,
+			state: state,
+			year: year
+		})
+
+		console.log("result length-->", valuesOne.length, valuesTwo.length, valuesThree.length)
+
+		let response = {
+			production: {},
+			disasters: {}
+		}
+
+		if (valuesOne && valuesOne.length > 0) {
+			let productionData = {}
+			for (let i = 0; i < valuesOne.length; i++) {
+				productionData[valuesOne[i].month] = valuesOne[i].value
+			}
+			response.production[commodityOne] = productionData
+		}
+
+		if (valuesTwo && valuesTwo.length > 0) {
+			let productionData = {}
+			for (let i = 0; i < valuesTwo.length; i++) {
+				productionData[valuesTwo[i].month] = valuesTwo[i].value
+			}
+			response.production[commodityTwo] = productionData
+		}
+
+		if (valuesThree && valuesThree.length > 0) {
+			let productionData = {}
+			for (let i = 0; i < valuesThree.length; i++) {
+				productionData[valuesThree[i].month] = valuesThree[i].value
+			}
+			response.production[commodityThree] = productionData
+		}
+
+		let disasterValues = await AnalyzedFoodProductionData.find({ state: state, year: year })
+
+		let valueOne = await AnalyzedFoodProductionData.aggregate(
+			[{
+				$match:
+				{
+					commodity: commodityOne,
+					unit: unitOne,
+					state: state,
+					year: year
+				}
+			}
+			]);
+
+		let valueTwo = await AnalyzedFoodProductionData.aggregate(
+			[{
+				$match:
+				{
+					commodity: commodityTwo,
+					unit: unitTwo,
+					state: state,
+					year: year
+				}
+			}
+			]);
+
+		let valueThree = await AnalyzedFoodProductionData.aggregate(
+			[{
+				$match:
+				{
+					commodity: commodityThree,
+					unit: unitThree,
+					state: state,
+					year: year
+				}
+			}
+			]);
+
+		console.log("disasterValues-->", disasterValues)
+
+		console.log("valueOne-->", valueOne.length)
+
+		console.log("valueTwo-->", valueTwo.length)
+
+		console.log("valueThree-->", valueThree.length)
+
+		if (valueOne && valueOne.length > 0) {
+			for (let i = 0; i < valueOne.length; i++) {
+				if (valueOne[i].disasterType.length > 0) {
+					response.disasters[valueOne[i].month] = []
+					response.disasters[valueOne[i].month].push.apply(response.disasters[valueOne[i].month], valueOne[i].disasterType)
+				}
+			}
+		}
+
+		// if(valueTwo && valueTwo.length > 0) { 
+		// 	for(let i = 0; i < valueTwo.length; i++) {
+		// 		if(valueTwo[i].disasterType.length > 0) {
+		// 			response.disasters[valueTwo[i].month].push.apply(response.disasters[valueTwo[i].month], valueTwo[i].disasterType)
+		// 		}
+		// 	}
+		// }
+
+		// if(valueThree && valueThree.length > 0) { 
+		// 	for(let i = 0; i < valueThree.length; i++) {
+		// 		if(valueThree[i].disasterType.length > 0) {
+		// 			response.disasters[valueThree[i].month].push.apply(response.disasters[valueThree[i].month], valueThree[i].disasterType)
+		// 		}
+		// 	}
+		// }
+
+		return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(response)
+	} catch (error) {
+		console.log(`Error while getting yearly analyzed food production data ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
