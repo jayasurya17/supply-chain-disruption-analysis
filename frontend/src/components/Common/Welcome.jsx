@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Tabs, Form, Input, Button, Typography, Row, Col, DatePicker } from 'antd';
 import * as R from 'ramda';
@@ -26,21 +26,10 @@ function callback(key) {
 
 const Welcome = (props) => {
 
-  const [signUpDetails, setSignUpDetails] = useState({});
-  const [loginDetails , setLoginDetails] = useState({});
-
   // Dispatch and Operations
   const dispatch = useDispatch();
   const signUp = operations.dispatchSignUp(dispatch);
   const logIn = operations.dispatchLogIn(dispatch);
-
-  const onSignUpValuesChange = (changedFields, allFields) => {
-    setSignUpDetails(allFields);
-  };
-
-  const onLoginValuesChange = (changedFields, allFields) => {
-    setLoginDetails(allFields);
-  };
 
   /* Triggered when submit button of form is clicked and also the form is valid */
 const onSignUpClick = (values) => {
@@ -89,7 +78,6 @@ const onLoginClick = (values) => {
               remember: true,
             }}
             onFinish={onSignUpClick}
-            onValuesChange = {onSignUpValuesChange}
           >
             <Form.Item
               label="First Name"
@@ -191,7 +179,6 @@ const onLoginClick = (values) => {
                 remember: true,
               }}
               onFinish={onLoginClick}
-              onValuesChange={onLoginValuesChange}
             >
               <Form.Item
                 label="Email"

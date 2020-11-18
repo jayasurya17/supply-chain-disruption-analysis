@@ -73,7 +73,7 @@ class DisasterBasedAnalysis extends Component {
 						</div>
 					</div>
 					<div className="text-center">
-						<img src="loading.gif" className="w-25" />
+						<img src="loading.gif" alt="loading" className="w-25" />
 					</div>
 				</div>
 			)

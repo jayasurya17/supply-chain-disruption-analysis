@@ -10,7 +10,6 @@ import AdminDashboard from './Admin/dashboard';
 import Dashboard from './dashboard/dashboard';
 import ErrorPage from './Authentication/errorPage';
 import FoodSupplyDashboard from './foodSupplyChain/foodSupplyDashboard';
-import Login from './Common/Welcome';
 import Navbar from './Common/navbar';
 import DisasterBasedAnalysis from './foodSupplyChain/disasterBasedAnalysis'
 import DisasterPerStateAnalysis from './foodSupplyChain/disasterPerState'
@@ -45,7 +44,7 @@ const Main = (props) => {
         if (
             !R.isEmpty(route) && 
             !R.isNil(route) && 
-            props.location.pathname != route /* Without this condition, same address is pushed twice and thus forward button disappears */
+            props.location.pathname !== route /* Without this condition, same address is pushed twice and thus forward button disappears */
         ) {
             console.log(props.location.pathname, route, 'pushing into history');
             props.history.push(route);
