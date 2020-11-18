@@ -10,15 +10,15 @@ import constants from '../../../utils/constants'
  */
 exports.getHistoricalData = async (req, res) => {
 	try {
-		let commodityOne = req.body.commodityOne,
-			unitOne = req.body.unitOne,
-			commodityTwo = req.body.commodityTwo,
-			unitTwo = req.body.unitTwo,
-			commodityThree = req.body.commodityThree,
-			unitThree = req.body.unitThree,
-			state = req.body.state,
-			startYear = req.body.startYear,
-			endYear = req.body.endYear
+		let commodityOne = req.query.commodityOne,
+			unitOne = req.query.unitOne,
+			commodityTwo = req.query.commodityTwo,
+			unitTwo = req.query.unitTwo,
+			commodityThree = req.query.commodityThree,
+			unitThree = req.query.unitThree,
+			state = req.query.state,
+			startYear = Number(req.query.startYear),
+			endYear = Number(req.query.endYear)
 
 		if (startYear > endYear) {
 			return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Start year should be less than or equal to end year")
