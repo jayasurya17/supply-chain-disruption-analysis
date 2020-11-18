@@ -5,7 +5,7 @@ import * as R from 'ramda';
 
 import ProfileSelectors from '../store/features/profile/selectors';
 import ProfileOperations from '../store/features/profile/operations';
-import Landing from './Common/Landing';
+import Welcome from '../components/Common/Welcome';
 import AdminDashboard from './Admin/dashboard';
 import Dashboard from './dashboard/dashboard';
 import ErrorPage from './Authentication/errorPage';
@@ -19,7 +19,8 @@ import { useEffect } from 'react';
 //Create a Main Component
 const Main = (props) => {
     const {
-        route,user,
+        route,
+        user,
     } = useSelector(
         state => ({
             user: ProfileSelectors.user(state),
@@ -31,11 +32,12 @@ const Main = (props) => {
     // Dispatch Operations
     const dispatch = useDispatch();
     const setRoute = ProfileOperations.dispatchSetRoute(dispatch);
+    const getUser = ProfileOperations.dispatchGetUser(dispatch);
 
     // Effects
     // First time mount (Similar to Componentdidmount)
     useEffect(() => {
-        setRoute('/dashboard');
+        getUser();
     }, []);
 
     /* When redux is updated, we change the actual page in the browser using the browser. */
@@ -63,10 +65,10 @@ const Main = (props) => {
 	return (
 			<div>
 					{/*Render Different Component based on Route*/}
-					<Navbar />
+					<Navbar user={user} location={props.location.pathname} />
 					{/* <Route path="/" component={Landing} /> */}
 					<Switch>
-                        
+                        <Route path="/welcome" component={Welcome} exact={true} />
 						<Route path="/dashboard" component={Dashboard} exact={true} />
 						<Route path="/admin/dashboard" component={AdminDashboard} exact={true} />
 

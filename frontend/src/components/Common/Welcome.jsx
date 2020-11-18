@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Tabs, Form, Input, Button, Typography, Row, Col, DatePicker } from 'antd';
-import { Redirect } from 'react-router'
-import moment from 'moment';
+import * as R from 'ramda';
+
 
 import operations from '../../store/features/profile/operations';
 
@@ -55,8 +55,18 @@ const onSignUpClick = (values) => {
 
 const onLoginClick = (values) => {
 	console.log('Success:', values);
-	const user = values;
-	logIn(user);
+    const user = values;
+    
+    let redirectURL;
+    if(!R.isNil(props.location.search) && !R.isEmpty(props.location.search)) {
+        let temp = decodeURIComponent(props.location.search);
+        let s = temp.split('=');
+        redirectURL = s[1];
+    }
+	logIn({
+        user,
+        redirectURL,
+    });
 };
 
   return (

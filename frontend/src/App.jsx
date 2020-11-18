@@ -1,19 +1,19 @@
 import React from 'react';
-import './App.css';
-import Main from './components/Main';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import axios from 'axios';
-import Welcome from './components/Common/Welcome';
+
 
 import backendURL from './constants/connection'
+import './App.css';
+import Main from './components/Main';
 
 axios.defaults.baseURL = `${backendURL}`;
+axios.defaults.withCredentials = true;
 
 //App Component
 const App = () => (
 	<BrowserRouter>
 		<Switch>
-			<Route path="/welcome" component={Welcome} exact={true} />
 			<Route component={Main} path="/" />
 		</Switch>
   	</BrowserRouter>
