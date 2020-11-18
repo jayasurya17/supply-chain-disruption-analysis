@@ -4,7 +4,7 @@ import Joi from 'joi'
 
 module.exports = {
 	getHistoricalData: {
-		body: {
+		query: {
 			commodityOne: Joi.string().required(),
 			unitOne: Joi.string().required(),
 			commodityTwo: Joi.string(),
