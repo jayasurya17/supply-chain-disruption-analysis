@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Tooltip } from 'antd';
 
 import './dashboard.css';
 import ProfileOperations from '../../store/features/profile/operations';
@@ -15,14 +16,19 @@ const Dashboard = () => {
     };
 
     return (
-        <div>                
+        <div className="containers">                
             <div className="row ml-5 mr-5">
-                <div onClick={onClick} href="food-supply-chain" id="food-supply-chain" className="col-md-6 text-center p-5 shadow rounded text-decoration-none text-dark">
-                    <p className="display-4 font-weight-bold text-dark">Food supply chain analysis</p>
-                </div>
-                <div href="" id="medicine" className="col-md-6 text-center p-5 shadow rounded text-decoration-none text-dark">
-                    <p className="display-4 font-weight-bold text-white">Medical supply chain analysis</p>
-                </div>
+                <Tooltip title="This Option shows various anaysis regarding the food supply chain.">
+                    <div onClick={onClick} href="food-supply-chain" id="food-supply-chain" className="col-md-6 text-center p-5 shadow rounded text-decoration-none text-dark">
+                        <p className="display-4 font-weight-bold text-dark">Food supply chain analysis</p>
+                    </div>
+                </Tooltip>  
+
+                <Tooltip title="This Option shows various anaysis regarding the medicine supply chain.">
+                    <div href="" id="medicine" className="col-md-6 text-center p-5 shadow rounded text-decoration-none text-dark">
+                        <p className="display-4 font-weight-bold text-white">Medical supply chain analysis</p>
+                    </div>
+                </Tooltip>
             </div>
 
             <div className="m-5" id="description">

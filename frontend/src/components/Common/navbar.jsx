@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons'
+import { Button, Dropdown, Menu, message } from 'antd';
 
 import ProfileOperations from '../../store/features/profile/operations';
 import './navbar.css';
-import { Button, Dropdown } from 'antd';
 
 const Navbar = (props) => {
     // Dispatch Operations
@@ -19,6 +19,22 @@ const Navbar = (props) => {
         setRoute('/welcome?redirect=' + encodeURIComponent(window.location.pathname));
     }
 
+    const handleMenuClick =(e) => {
+        message.info('Click on menu item.');
+        console.log('click', e);
+      }
+
+    const menu = (
+        <Menu onClick={handleMenuClick}>
+          <Menu.Item key="1" icon={<UserOutlined />}>
+            Update Profile
+          </Menu.Item>
+          <Menu.Item key="2" icon={<UserOutlined />}>
+            Log Out
+          </Menu.Item>
+        </Menu>
+    );
+
     return (
         <div className='row text-center border-bottom pt-4 pb-2 stickyNavBar bg-light'>
             <div className='col-md-2'>
@@ -30,7 +46,7 @@ const Navbar = (props) => {
                 {
                     (props.user && 
                     props.user.name) ? 
-                    (<Dropdown.Button icon={<UserOutlined />}>
+                    (<Dropdown.Button icon={<UserOutlined />} overlay={menu}>
                         {`Hi ${props.user.name} !`}
                     </Dropdown.Button>)  :
                     (<Button onClick={onLoginClick}>

@@ -5,7 +5,6 @@ import * as R from 'ramda';
 
 
 import operations from '../../store/features/profile/operations';
-
 import './Welcome.css';
 
 const { Title } = Typography;
