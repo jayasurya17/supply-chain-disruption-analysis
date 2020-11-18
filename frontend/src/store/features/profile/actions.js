@@ -3,9 +3,9 @@ const signUp = (user) => ({
 	user,
 });
 
-const logIn = (user) => ({
+const logIn = (payload) => ({
 	type: 'PROFILE_LOGIN',
-	user,
+    payload,
 });
 
 const setUser = (user) => ({
@@ -16,11 +16,16 @@ const setUser = (user) => ({
 const setRoute = (route) => ({
     type: 'PROFILE_SETROUTE',
     route,
-})
+});
+
+const getUser = () => ({
+    type: 'PROFILE_GETUSER',
+});
 
 export {
     logIn,
     setUser,
     signUp,
     setRoute,
+    getUser,
 };

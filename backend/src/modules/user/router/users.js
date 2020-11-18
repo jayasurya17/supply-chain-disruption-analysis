@@ -13,6 +13,11 @@ import {ensureUser} from '../../../middlewares/userTokenValidator'
 
 router.post('/signup', validation(validator['signup']), userController.createUser)
 router.post('/login', validation(validator['login']), userController.loginUser)
+router.post(
+    '/validateToken', 
+    passport.authenticate('jwt', { session: false }), /* Authenticate if the token is even valid (Preliminary check) */
+    ensureUser, userController.validateToken, /* enusure if there is a user like that in the system. */
+    );
 router.get('/profile/:userId', validation(validator['getProfile']), passport.authenticate('jwt', { session: false }), ensureUser, userController.getUserProfile)
 router.put('/profile/', upload.single('image'), validation(validator['updateProfile']) , passport.authenticate('jwt', { session: false }), ensureUser, userController.updateUserProfile)
 router.delete('/deactivateAccount/:userId', validation(validator['deactivateProfile']) , passport.authenticate('jwt', { session: false }), ensureUser, userController.deactivateUserProfile)

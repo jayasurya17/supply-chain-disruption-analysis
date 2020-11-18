@@ -7,14 +7,12 @@ class DisasterChartComponent extends Component {
         let graphData = [],
             dataPoints = [],
             dataPoint,
-            index,
             monthIndex = { 'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4, 'MAY': 5, 'JUN': 6, 'JUL': 7, 'AUG': 8, 'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12 },
             isDisasterMarked = false
 
         for (var commodity in this.props.production) {
             dataPoints = []
             for (var month in this.props.production[commodity]) {
-                index++
                 dataPoint = { y: Math.floor(this.props.production[commodity][month]), x: monthIndex[month] }
                 if (month in this.props.disasters) {
                     if (isDisasterMarked === false) {

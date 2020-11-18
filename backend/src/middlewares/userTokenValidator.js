@@ -7,7 +7,7 @@ import { verify } from 'jsonwebtoken'
 import constants from '../utils/constants'
 
 export async function ensureUser(req, res, next) {
-	const token = getToken(req)
+    const token = getToken(req)
 	if (!token) {
 		return res.status(constants.STATUS_CODE.UNAUTHORIZED_ERROR_STATUS).send()
 	}

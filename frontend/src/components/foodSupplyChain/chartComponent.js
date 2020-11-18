@@ -4,8 +4,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart
 
 class ChartComponent extends Component {
   render () {
-    let dataPoints1 = [],
-      dataPoints2 = []
+    let dataPoints1 = []
     for (
       var year = this.props.yearRange.min;
       year <= this.props.yearRange.max;

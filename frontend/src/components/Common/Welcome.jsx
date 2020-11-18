@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Tabs, Form, Input, Button, Typography, Row, Col, DatePicker } from 'antd';
-import { Redirect } from 'react-router'
-import moment from 'moment';
+import * as R from 'ramda';
+
 
 import operations from '../../store/features/profile/operations';
 
@@ -26,21 +26,10 @@ function callback(key) {
 
 const Welcome = (props) => {
 
-  const [signUpDetails, setSignUpDetails] = useState({});
-  const [loginDetails , setLoginDetails] = useState({});
-
   // Dispatch and Operations
   const dispatch = useDispatch();
   const signUp = operations.dispatchSignUp(dispatch);
   const logIn = operations.dispatchLogIn(dispatch);
-
-  const onSignUpValuesChange = (changedFields, allFields) => {
-    setSignUpDetails(allFields);
-  };
-
-  const onLoginValuesChange = (changedFields, allFields) => {
-    setLoginDetails(allFields);
-  };
 
   /* Triggered when submit button of form is clicked and also the form is valid */
 const onSignUpClick = (values) => {
@@ -55,8 +44,18 @@ const onSignUpClick = (values) => {
 
 const onLoginClick = (values) => {
 	console.log('Success:', values);
-	const user = values;
-	logIn(user);
+    const user = values;
+    
+    let redirectURL;
+    if(!R.isNil(props.location.search) && !R.isEmpty(props.location.search)) {
+        let temp = decodeURIComponent(props.location.search);
+        let s = temp.split('=');
+        redirectURL = s[1];
+    }
+	logIn({
+        user,
+        redirectURL,
+    });
 };
 
   return (
@@ -79,7 +78,6 @@ const onLoginClick = (values) => {
               remember: true,
             }}
             onFinish={onSignUpClick}
-            onValuesChange = {onSignUpValuesChange}
           >
             <Form.Item
               label="First Name"
@@ -181,7 +179,6 @@ const onLoginClick = (values) => {
                 remember: true,
               }}
               onFinish={onLoginClick}
-              onValuesChange={onLoginValuesChange}
             >
               <Form.Item
                 label="Email"

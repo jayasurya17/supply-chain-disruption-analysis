@@ -7,22 +7,30 @@ import {
 import * as R from 'ramda';
 import axios from 'axios';
 import { message } from 'antd';
+import Cookies from 'universal-cookie';
 
 import {
+    setRoute,
     setUser,
 } from './actions'
 import backendURL from '../../../constants/connection';
+const cookies = new Cookies();
 
 function* logIn(action) {
     try {
-        const result = yield call(axios.post, backendURL + '/users/login', action.user);
+        
+        const result = yield call(axios.post, backendURL + '/users/login', action.payload.user);
         message.loading('Logging in', 3);
         console.log(result);
         if (!R.isNil(result) && !R.isEmpty(result)) {
             if(result.status === 200) {
                 message.success('Login successful!', 2);
                 yield put(setUser(result.data));
-                /* User has to redirected to the home page after successful login. */
+                if (!R.isNil(action.payload.redirectURL) && !R.isEmpty(action.payload.redirectURL)) {
+                    yield put(setRoute(action.payload.redirectURL));
+                } else {
+                    yield put(setRoute('/dashboard'));
+                }
             } else {
                 
             }
@@ -49,17 +57,41 @@ function* signUp(action) {
     }
 }
 
+function* getUser(action) {
+    try {
+        const result = yield call(axios.post, backendURL + '/users/validateToken', {}, {
+            headers: {
+            'Authorization': 'Bearer ' + cookies.get('access_token'),
+        }});
+        if (!R.isNil(result) && !R.isEmpty(result)) 
+        {
+            if(result.status === 200) {
+                yield put(setUser(result.data));
+                yield put(setRoute('/dashboard'));
+            }
+        }
+    } catch(error) {
+        cookies.remove('access_token');
+        yield put(setRoute('/welcome'));
+    }
+}
+
 function* watchLogIn() {
-  yield takeEvery('PROFILE_LOGIN', logIn);
+    yield takeEvery('PROFILE_LOGIN', logIn);
 }
 
 function* watchSignUp() {
-  yield takeEvery('PROFILE_SIGNUP', signUp);
+    yield takeEvery('PROFILE_SIGNUP', signUp);
+}
+
+function* watchGetUser() {
+    yield takeEvery('PROFILE_GETUSER', getUser);
 }
 
 export default function* rootSaga() {
   yield all([
     watchLogIn(),
     watchSignUp(),
+    watchGetUser(),
   ]);
 }
