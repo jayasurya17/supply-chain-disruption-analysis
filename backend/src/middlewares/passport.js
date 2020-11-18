@@ -13,7 +13,7 @@ opts.secretOrKey = config.token;
 
 passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
 	(async () => {
-		const user = await Users.findById(mongoose.Types.ObjectId(jwt_payload.id))
+        const user = await Users.findById(mongoose.Types.ObjectId(jwt_payload.id))
 		if (user) {
 			return done(null, true)
 		} else {

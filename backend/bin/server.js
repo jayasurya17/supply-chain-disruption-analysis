@@ -28,7 +28,10 @@ app.use(cookieParser())
 app.use('/public/', express.static('./public/'))
 
 // use cors to allow cross origin resource sharing
-app.use(cors({ origin: 'http://localhost:3000', credentials: false }))
+app.use(cors({ 
+    origin: 'http://localhost:3000', 
+    credentials: true,
+}))
 
 // base routes for modules
 app.use('/users', usersRouter)

@@ -91,11 +91,14 @@ exports.loginUser = async (req, res) => {
 					date: Date.now()
                 }
 				await Users.findByIdAndUpdate(user._id, {
-						jwtToken: tokenObj,
-						isActive: true
+						jwtToken: token,
+						isActive: true,
 				});
-				isAuth = true
-				return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(user)
+                isAuth = true
+
+                res.cookie('access_token', token);
+                res.status(constants.STATUS_CODE.SUCCESS_STATUS)
+                return res.send(user);
 			}
 		}
 		if (!isAuth) {
@@ -109,6 +112,26 @@ exports.loginUser = async (req, res) => {
 			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
 			.send(error.message)
 	}
+}
+
+exports.validateToken = async (req, res) => {
+    try {
+
+        let user;
+        user = await Users.findOne({
+            _id: req.userId
+        });
+        user = user.toJSON();
+        delete user.password;
+
+        res.status(constants.STATUS_CODE.SUCCESS_STATUS);
+        return res.send(user);
+    } catch(error) {
+        console.log(error);
+        return res
+            .status(constants.STATUS_CODE.UNAUTHORIZED_ERROR_STATUS)
+            .send(constants.MESSAGES.AUTHORIZATION_FAILED)
+    }
 }
 
 /**
