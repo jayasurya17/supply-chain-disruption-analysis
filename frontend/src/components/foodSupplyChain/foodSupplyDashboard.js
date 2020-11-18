@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Navbar from "../Common/foodSupplyNavbar";
 import "./foodSupplyDashboard.css";
 import Select from "react-select";
 import InputRange from "react-input-range";
@@ -127,7 +126,6 @@ class FoodSupplyHoliday extends Component {
 
     return (
       <div>
-        <Navbar />
         <div className="row m-5">
           <div className="col-md-2">
             <p id="year">Year range</p>

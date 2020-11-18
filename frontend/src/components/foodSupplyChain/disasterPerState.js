@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Navbar from '../Common/foodSupplyNavbar'
 import './foodSupplyDashboard.css'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
@@ -58,7 +57,6 @@ class DisasterBasedAnalysis extends Component {
 		if (this.state.isFetched === false) {
 			return (
 				<div>
-					<Navbar />
 					<div className='row m-5'>
 						<div className='col-md-3'>
 							<p id='year'>Year range</p>
@@ -85,7 +83,6 @@ class DisasterBasedAnalysis extends Component {
 
 		return (
 			<div>
-				<Navbar />
 				<div className='row m-5'>
 					<div className='col-md-3'>
 						<p id='year'>Year range</p>

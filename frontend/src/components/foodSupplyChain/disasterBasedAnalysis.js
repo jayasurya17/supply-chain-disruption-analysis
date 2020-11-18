@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Navbar from '../Common/foodSupplyNavbar'
 import './foodSupplyDashboard.css'
 import Select from 'react-select'
 import InputRange from 'react-input-range'
@@ -198,7 +197,6 @@ class DisasterBasedAnalysis extends Component {
 
         return (
             <div>
-                <Navbar />
                 <div className='row mt-5 ml-5 mr-5'>
                     <div className='col-md-2'>
                         <p id='year'>Year</p>
