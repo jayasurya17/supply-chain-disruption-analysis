@@ -16,7 +16,7 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="containers">                
+        <div className="HomeContainer">
             <div className="row ml-5 mr-5">
                 <Tooltip title="This Option shows various anaysis regarding the food supply chain.">
                     <div onClick={onClick} href="food-supply-chain" id="food-supply-chain" className="col-md-6 text-center p-5 shadow rounded text-decoration-none text-dark">

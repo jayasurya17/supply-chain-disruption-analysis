@@ -4,6 +4,7 @@ import { Tabs } from 'antd';
 import FoodSupplyDashboard from './foodSupplyDashboard';
 import DisasterBasedAnalysis from './disasterBasedAnalysis';
 import DisasterPerStateAnalysis from './disasterPerState';
+import './FoodSupplyHome.css'
 
 const { TabPane } = Tabs;
 
@@ -14,7 +15,7 @@ const FoodSupplyHome = () => {
     }
 
     return (
-        <div>
+        <div className="foodSupplyHomeContainer">
             <Tabs defaultActiveKey="1" onChange={callback}>
                 <TabPane tab="Food Supply chain home page" key="1">
                     <FoodSupplyDashboard />

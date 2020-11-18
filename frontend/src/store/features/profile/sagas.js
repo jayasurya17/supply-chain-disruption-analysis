@@ -59,18 +59,23 @@ function* signUp(action) {
 
 function* getUser(action) {
     try {
-        const result = yield call(axios.post, backendURL + '/users/validateToken', {}, {
-            headers: {
-            'Authorization': 'Bearer ' + cookies.get('access_token'),
-        }});
-        if (!R.isNil(result) && !R.isEmpty(result)) 
-        {
-            if(result.status === 200) {
-                yield put(setUser(result.data));
-                yield put(setRoute('/dashboard'));
+        if(!R.isNil(cookies.get('access_token')) && !R.isEmpty(cookies.get('access_token'))) {
+            const result = yield call(axios.post, backendURL + '/users/validateToken', {}, {
+                headers: {
+                'Authorization': 'Bearer ' + cookies.get('access_token'),
+            }});
+            if (!R.isNil(result) && !R.isEmpty(result)) 
+            {
+                if(result.status === 200) {
+                    yield put(setUser(result.data));
+                    yield put(setRoute('/dashboard'));
+                }
             }
+        } else {
+            yield put(setRoute('/dashboard')); /* If there is no access token, whenever there is a getUser call, we will default to /dashboard. */
         }
     } catch(error) {
+        /* This case will occur when there is an access token, but it is either corrupted or expired. */
         cookies.remove('access_token');
         yield put(setRoute('/welcome'));
     }
