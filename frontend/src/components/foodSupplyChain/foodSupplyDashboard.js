@@ -1,23 +1,24 @@
-import React, { Component } from "react";
-import axios from "axios";
-import "./foodSupplyDashboard.css";
-import Select from "react-select";
-import InputRange from "react-input-range";
-import "react-input-range/lib/css/index.css";
-import ChartComponent from "./chartComponent";
-import listOfStates from "../../constants/stateNames";
+import React, { Component } from 'react'
+import axios from 'axios'
+import Navbar from '../Common/navbar'
+import './foodSupplyDashboard.css'
+import Select from 'react-select'
+import InputRange from 'react-input-range'
+import 'react-input-range/lib/css/index.css'
+import ChartComponent from './chartComponent'
+import listOfStates from '../../constants/stateNames'
 
 class FoodSupplyHoliday extends Component {
-  componentDidMount() {
+  componentDidMount () {
     //populate categories
-    axios.get(`http://localhost:9000/filters/categories`).then((res) => {
-      const allCategories = res.data;
-      this.setState({ allCategories });
-    });
+    axios.get(`http://localhost:9000/filters/categories`).then(res => {
+      const allCategories = res.data
+      this.setState({ allCategories })
+    })
   }
 
-  constructor() {
-    super();
+  constructor () {
+    super()
     this.state = {
       allCategories: [],
       allCommodities: [],
@@ -26,155 +27,288 @@ class FoodSupplyHoliday extends Component {
       selectedCommodities: [],
       selectedStates: [],
       units: [],
-      category0: [
-        { a: "a", b: "b" },
-        { a: "a", b: "b" },
-      ],
+      selectedUnits: ['', '', ''],
+      selected: {},
       yearRange: { min: 1980, max: 2020 },
-    };
+      Commodity1: [],
+      Commodity2: [],
+      Commodity3: []
+    }
   }
-
-  onSelectCategory = (opt) => {
+  onSelectUnit = async opt => {
+    let selectedUnits = this.state.selectedUnits
+    selectedUnits[opt.index] = opt
+    this.setState({ selectedUnits })
+    await this.setState({
+      selected: Object.assign({}, this.state.selected, {
+        [opt.commodity]: opt.value
+      })
+    })
+  }
+  onSelectCategory = opt => {
     if (opt) {
-      console.log("opt" + opt);
       this.setState({
-        selectedCategories: opt,
-      });
+        selectedCategories: opt
+      })
 
       axios
-        .get("http://localhost:9000/filters/commoditiesByCategory", {
-          params: { category: opt.value },
+        .get('http://localhost:9000/filters/commoditiesByCategory', {
+          params: { category: opt.value }
         })
-        .then((res) => {
-          const selectedCommodities = res.data;
-          console.log("selected" + selectedCommodities);
+        .then(res => {
+          const selectedCommodities = res.data
           let chosenCategories = [],
             chosenCategory,
-            index;
+            index
           for (index in selectedCommodities) {
-            chosenCategory = selectedCommodities[index];
+            chosenCategory = selectedCommodities[index]
             chosenCategories.push({
               label: chosenCategory,
-              value: chosenCategory,
-            });
-            this.setState({ allCommodities: chosenCategories });
+              value: chosenCategory
+            })
+            this.setState({ allCommodities: chosenCategories })
           }
-        });
+        })
     }
-  };
-  onSelectCommodity = async (opt) => {
+  }
+  onSelectCommodity = async opt => {
+    if (!opt) {
+      this.setState({ selectedCommodities: [] })
+      return
+    }
+    if (opt.length > 3) {
+      return
+    }
     await this.setState({
-      selectedCommodities: opt,
-    });
-    // for (index in this.state.selectedCommodities) {
-    // }
-  };
-  onSelectState = async (opt) => {
-    await this.setState({
-      selectedStates: opt,
-    });
+      selectedCommodities: opt
+    })
+    let index,
+      units = []
 
-    this.getInfo();
-  };
+    for (index in this.state.selectedCommodities) {
+      await axios
+        .get(`http://localhost:9000/filters/units`, {
+          params: {
+            category: this.state.selectedCategories.value,
+            commodity: this.state.selectedCommodities[index].value
+          }
+        })
+        .then(res => {
+          let local = []
+          for (let each in res.data) {
+            local.push({
+              label: res.data[each],
+              value: res.data[each],
+              commodity: this.state.selectedCommodities[index].value,
+              index: index
+            })
+          }
+          units[index] = local
+          console.log(units)
+          this.setState({
+            selected: Object.assign({}, this.state.selected, {
+              [this.state.selectedCommodities[index].value]: res.data[0]
+            })
+          })
+        })
+      let temp = this.state.selected
+      let queryParams = this.getQueryParams(opt, temp)
+      let response = await axios.get(
+        `/filters/statesByCommodityAndUnit?${queryParams}`
+      )
+      this.setState({
+        allStates: response.data,
+        selectedStates: { label: response.data[0], value: response.data[0] },
+        // selectedCommodities: opt,
+        units: units,
+        selected: temp
+      })
+    }
+
+    this.setState({ units })
+  }
+  onSelectState = async opt => {
+    await this.setState({
+      selectedStates: opt
+    })
+
+    this.getInfo()
+  }
+  getQueryParams = (selectedCommodities, selectedUnit) => {
+    // let categoryParams = ["categoryOne", "categoryTwo", "categoryThree"]
+    let commodityParams = ['commodityOne', 'commodityTwo', 'commodityThree']
+    let unitParams = ['unitOne', 'unitTwo', 'unitThree']
+    let commodity, unit
+    let query = ''
+    for (var index in selectedCommodities) {
+      commodity = selectedCommodities[index].value
+      unit = selectedUnit[commodity]
+      // query = query + categoryParams[index] + "=" + this.state.selectedCategories.value + "&" + commodityParams[index] + "=" + commodity + "&" + unitParams[index] + "=" + unit + "&"
+      query =
+        query +
+        commodityParams[index] +
+        '=' +
+        commodity +
+        '&' +
+        unitParams[index] +
+        '=' +
+        unit +
+        '&'
+    }
+    return query
+  }
+
+  onSelect = async opt => {}
+  onGenerateGraph = async () => {
+    if (
+      this.state.selectedCategories.length === 0 ||
+      this.state.selectedCommodities.length === 0 ||
+      this.state.selectedStates == 0
+    ) {
+      alert('Select all required values')
+    } else {
+      let queryParams = this.getQueryParams(
+        this.state.selectedCommodities,
+        this.state.selected
+      )
+      queryParams =
+        queryParams +
+        'state=' +
+        this.state.selectedStates.value +
+        '&startYear=' +
+        this.state.yearRange.min +
+        '&endYear=' +
+        this.state.yearRange.max
+      let response = await axios.get(`/analysis/historicalData?${queryParams}`)
+      await this.setState({
+        Commodity1: response.data.filterOneData,
+        Commodity2: response.data.filterTwoData,
+        Commodity3: response.data.filterThreeData
+      })
+    }
+  }
   getInfo = async () => {
     await axios
-      .get("http://localhost:9000/analysis/historicalDataByState", {
+      .get('http://localhost:9000/analysis/historicalDataByState', {
         params: {
           category: this.state.selectedCategories.value,
           commodity: this.state.selectedCommodities.value,
           startYear: this.state.yearRange.min,
           endYear: this.state.yearRange.max,
-          state: this.state.selectedStates.value,
-        },
+          state: this.state.selectedStates.value
+        }
       })
-      .then((res) => {
-        const selectedCommodities = res.data;
-        console.log("selected" + selectedCommodities);
-        alert(res.data.length);
-      });
-  };
+      .then(res => {
+        const selectedCommodities = res.data
+      })
+  }
 
-  render() {
+  render () {
     let allStates = [],
       index,
       stateName,
       category = [],
-      categoryName;
+      categoryName,
+      units = [],
+      unitName
     for (index in this.state.allStates) {
-      stateName = this.state.allStates[index];
-      allStates.push({ label: stateName, value: stateName });
+      stateName = this.state.allStates[index]
+      allStates.push({ label: stateName, value: stateName })
     }
     for (index in this.state.allCategories) {
-      categoryName = this.state.allCategories[index];
-      category.push({ label: categoryName, value: categoryName });
+      categoryName = this.state.allCategories[index]
+      category.push({ label: categoryName, value: categoryName })
     }
-    let unitsDropdown = null;
+    let statesDropdown = null
+    statesDropdown =
+      this.state.selectedCommodities.length === 0 ? null : (
+        <Select
+          onChange={this.onSelectState}
+          options={allStates}
+          value={this.state.selectedStates}
+          placeholder='State'
+        />
+      )
+    let unitsDropdown = null
     unitsDropdown = !this.state.selectedCommodities
       ? null
       : this.state.selectedCommodities.map((Commodity, index) => (
-          <div className="col-md-4">
+          <div className='col-md-4'>
+            <span>Units for {Commodity.value}:</span>
             <Select
-              onChange={this.onSelectCategory}
-              options={category + index.a}
-              value={this.state.selectedDevices}
-              placeholder={
-                Commodity.value + " " + index + " " + category + index.a
-              }
+              onChange={this.onSelectUnit}
+              options={this.state.units[index]}
+              value={this.state.selected[Commodity.value]}
+              placeholder={this.state.selected[Commodity.value]}
             ></Select>
           </div>
-        ));
+        ))
 
     return (
       <div>
-        <div className="row m-5">
-          <div className="col-md-2">
-            <p id="year">Year range</p>
+        <Navbar />
+        <div className='row m-5'>
+          <div className='col-md-2'>
+            <p id='year'>Year range</p>
           </div>
-          <div className="col-md-10">
+          <div className='col-md-10'>
             <InputRange
               maxValue={2020}
               minValue={1980}
               value={this.state.yearRange}
-              onChange={(yearRange) => this.setState({ yearRange })}
+              onChange={yearRange => this.setState({ yearRange })}
             />
           </div>
         </div>
-        <div className="row m-5">
-          <div className="col-md-4">
+        <div className='row m-5'>
+          <div className='col-md-4'>
             <Select
               //isMulti
               onChange={this.onSelectCategory}
               options={category}
               value={this.state.selectedDevices}
-              placeholder="Category"
+              placeholder='Category'
             ></Select>
           </div>
-          <div className="col-md-4">
+          <div className='col-md-4'>
             <Select
               isMulti
               onChange={this.onSelectCommodity}
               options={this.state.allCommodities}
-              value={this.state.selectedDevices}
-              placeholder="Commodity"
+              value={this.state.selectedCommodities}
+              placeholder='Commodity'
             />
           </div>
-          <div className="col-md-4">
-            <Select
-              onChange={this.onSelectState}
-              options={allStates}
-              value={this.state.selectedStates}
-              placeholder="State"
+          <div className='col-md-4'>{statesDropdown}</div>
+        </div>
+        <div className='row m-5'>{unitsDropdown}</div>
+        <div align='center'>
+          <button
+            type='button'
+            class='btn btn-warning'
+            onClick={this.onGenerateGraph}
+          >
+            Generate Graph
+          </button>
+        </div>
+        {this.state.Commodity1.length === 0 ? (
+          <p className='display-4 text-center m-5'>
+            Apply filters to show graph
+          </p>
+        ) : (
+          <div className='m-5'>
+            <ChartComponent
+              Commodity1={this.state.Commodity1}
+              Commodity2={this.state.Commodity2}
+              Commodity3={this.state.Commodity3}
+              yearRange={this.state.yearRange}
             />
           </div>
-        </div>
-        <div className="row m-5">{unitsDropdown}</div>
-        <div className="m-5">
-          <ChartComponent yearRange={this.state.yearRange} />
-        </div>
+        )}
       </div>
-    );
+    )
   }
 }
 
 //export FoodSupplyHoliday Component
-export default FoodSupplyHoliday;
+export default FoodSupplyHoliday

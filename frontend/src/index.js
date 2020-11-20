@@ -1,20 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 // import './index.css';
 
-import 'antd/dist/antd.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import configureStore from './store/store';
+import 'antd/dist/antd.css'
+import App from './App'
+import registerServiceWorker from './registerServiceWorker'
+import configureStore from './store/store'
 
-const store = configureStore();
+const store = configureStore()
 
 //render App component on the root element
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root'));
+  document.getElementById('root')
+)
 
-registerServiceWorker();
+registerServiceWorker()
