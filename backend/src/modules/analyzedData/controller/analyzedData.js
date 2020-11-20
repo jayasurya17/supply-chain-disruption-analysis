@@ -411,18 +411,28 @@ exports.getCovidFoodProductionDisruptionByState = async (req, res) => {
 			state = req.query.state,
 			startYear = constants.YEAR[2015],
 			endYear = constants.YEAR[2020]
+		
+		let data = []
 
-		fs.createReadStream('data.csv')
+		fs.createReadStream(`src/python/datasets/quarter_data.csv`)
 			.pipe(csv())
 			.on('data', (row) => {
-				console.log(row);
+				if(row.state === state && row.commodity === commodity && row.unit === unit) {
+				console.log(row)
+					let obj = {
+						year: row.year,
+						quarter: row.quarter,
+						value: row.value,
+						percent: row.percent
+					}
+					data.push(obj)
+				}
 			})
 			.on('end', () => {
 				console.log('CSV file successfully processed');
+				return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(data)
 			});
-
-		return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(result)
-
+			
 	} catch (error) {
 		console.log(`Error while getting food disruption percentage in production values of a commodity for a given unit for each state for 2016-2020 ${error}`)
 		return res
