@@ -4,6 +4,8 @@ import { Tabs } from 'antd';
 import FoodSupplyDashboard from './foodSupplyDashboard';
 import DisasterBasedAnalysis from './disasterBasedAnalysis';
 import DisasterPerStateAnalysis from './disasterPerState';
+import CropsPerState from './cropsPerState/cropsPerState';
+import QuarterlyDifference from './quarterlyDifference/quarterlyDifference';
 import './FoodSupplyHome.css'
 
 const { TabPane } = Tabs;
@@ -25,6 +27,12 @@ const FoodSupplyHome = () => {
                 </TabPane>
                 <TabPane tab="Food supply chain disaster state" key="3">
                     <DisasterPerStateAnalysis />
+                </TabPane>
+                <TabPane tab="Crops per state" key="4">
+                    <CropsPerState />
+                </TabPane>
+                <TabPane tab="Quarterly analysis" key="5">
+                    <QuarterlyDifference />
                 </TabPane>
             </Tabs>
         </div>    
