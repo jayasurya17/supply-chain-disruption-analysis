@@ -2,6 +2,9 @@
 
 import AnalyzedFoodProductionData from '../../../models/mongoDB/analyzedFoodProductionData'
 import constants from '../../../utils/constants'
+import csv from 'csv-parser'
+import fs from 'fs'
+import _ from 'underscore-node'
 
 /**
  * Get analyzed data based on selected category, commodity and year range for food production data.
@@ -46,7 +49,8 @@ exports.getHistoricalData = async (req, res) => {
 					unit: { $first: '$unit' },
 					yearlyValue: { $first: '$yearlyValue' }
 				}
-			}
+			},
+			{ $sort: { year: 1 } }
 			]);
 
 		let valuesTwo = await AnalyzedFoodProductionData.aggregate(
@@ -71,7 +75,8 @@ exports.getHistoricalData = async (req, res) => {
 					unit: { $first: '$unit' },
 					yearlyValue: { $first: '$yearlyValue' }
 				}
-			}
+			},
+			{ $sort: { year: 1 } }
 			]);
 		let valuesThree = await AnalyzedFoodProductionData.aggregate(
 			[{
@@ -95,7 +100,8 @@ exports.getHistoricalData = async (req, res) => {
 					unit: { $first: '$unit' },
 					yearlyValue: { $first: '$yearlyValue' }
 				}
-			}
+			},
+			{ $sort: { year: 1 } }
 			]);
 
 		console.log("result length-->", valuesOne.length, valuesTwo.length, valuesThree.length)
@@ -133,7 +139,7 @@ exports.getHistoricalDataByState = async (req, res) => {
 			state = req.query.state
 
 		if (startYear > endYear) {
-			return res.status(422).send("Start year should be less than or equal to end year")
+			return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Start year should be less than or equal to end year")
 		}
 
 		let values = await AnalyzedFoodProductionData.find({
@@ -238,8 +244,6 @@ exports.getYearlyDisasterData = async (req, res) => {
 			year: year
 		})
 
-		console.log("result length-->", valuesOne.length, valuesTwo.length, valuesThree.length)
-
 		let response = {
 			production: {},
 			disasters: {}
@@ -307,14 +311,6 @@ exports.getYearlyDisasterData = async (req, res) => {
 			}
 			]);
 
-		console.log("disasterValues-->", disasterValues)
-
-		console.log("valueOne-->", valueOne.length)
-
-		console.log("valueTwo-->", valueTwo.length)
-
-		console.log("valueThree-->", valueThree.length)
-
 		if (valueOne && valueOne.length > 0) {
 			for (let i = 0; i < valueOne.length; i++) {
 				if (valueOne[i].disasterType.length > 0) {
@@ -324,25 +320,111 @@ exports.getYearlyDisasterData = async (req, res) => {
 			}
 		}
 
-		// if(valueTwo && valueTwo.length > 0) { 
-		// 	for(let i = 0; i < valueTwo.length; i++) {
-		// 		if(valueTwo[i].disasterType.length > 0) {
-		// 			response.disasters[valueTwo[i].month].push.apply(response.disasters[valueTwo[i].month], valueTwo[i].disasterType)
-		// 		}
-		// 	}
-		// }
-
-		// if(valueThree && valueThree.length > 0) { 
-		// 	for(let i = 0; i < valueThree.length; i++) {
-		// 		if(valueThree[i].disasterType.length > 0) {
-		// 			response.disasters[valueThree[i].month].push.apply(response.disasters[valueThree[i].month], valueThree[i].disasterType)
-		// 		}
-		// 	}
-		// }
-
 		return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(response)
 	} catch (error) {
 		console.log(`Error while getting yearly analyzed food production data ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+/**
+ * Get food production values of a commodity for a given unit for each state for a certain year range.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getFoodProductionByState = async (req, res) => {
+	try {
+		let commodity = req.query.commodity,
+			unit = req.query.unit,
+			startYear = req.query.startYear,
+			endYear = req.query.endYear
+
+		if (startYear > endYear) {
+			return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Start year should be less than or equal to end year")
+		}
+
+		// let states = { 'ALABAMA': 0, 'ALASKA': 0, 'ARIZONA': 0, 'ARKANSAS': 0, 'CALIFORNIA': 0, 'COLORADO': 0, 'CONNECTICUT': 0, 'DELAWARE': 0, 'FLORIDA': 0, 'GEORGIA': 0, 'HAWAII': 0, 'IDAHO': 0, 'ILLINOIS': 0, 'INDIANA': 0, 'IOWA': 0, 'KANSAS': 0, 'KENTUCKY': 0, 'LOUISIANA': 0, 'MAINE': 0, 'MARYLAND': 0, 'MASSACHUSETTS': 0, 'MICHIGAN': 0, 'MINNESOTA': 0, 'MISSISSIPPI': 0, 'MISSOURI': 0, 'MONTANA': 0, 'NEBRASKA': 0, 'NEVADA': 0, 'NEW HAMPSHIRE': 0, 'NEW JERSEY': 0, 'NEW MEXICO': 0, 'NEW YORK': 0, 'NORTH CAROLINA': 0, 'NORTH DAKOTA': 0, 'OHIO': 0, 'OKLAHOMA': 0, 'OREGON': 0, 'PENNSYLVANIA': 0, 'RHODE ISLAND': 0, 'SOUTH CAROLINA': 0, 'SOUTH DAKOTA': 0, 'TENNESSEE': 0, 'TEXAS': 0, 'UTAH': 0, 'VERMONT': 0, 'VIRGINIA': 0, 'WASHINGTON': 0, 'WEST VIRGINIA': 0, 'WISCONSIN': 0, 'WYOMING': 0 }
+
+		// for(let i = 0; i < constants.STATES.length; i++) {
+		// 	let result = await AnalyzedFoodProductionData.aggregate(
+		// 		[{
+		// 			$match:
+		// 			{
+		// 				year: {
+		// 					$gte: startYear, $lte: endYear
+		// 				},
+		// 				commodity: commodity,
+		// 				unit: unit,
+		// 				state: constants.STATES[i],
+		// 				month: constants.MONTH.JANUARY
+		// 			}
+		// 		}
+		// 	]);
+
+		// 	for(let i = 0; i < result.length; i++) {
+		// 		states[result[i].state] += Number(result[i].yearlyValue)
+		// 	}
+		// }
+
+		let result = await AnalyzedFoodProductionData.aggregate(
+			[{
+				$match:
+				{
+					year: {
+						$gte: startYear, $lte: endYear
+					},
+					commodity: commodity,
+					unit: unit,
+					month: constants.MONTH.JANUARY
+				}
+			},
+			{ $group: { _id: "$state", count: { $sum: "$yearlyValue" } } }
+			]);
+
+		let states = constants.STATES_COUNT
+
+		for (let row of result) {
+			states[row._id] = row.count
+		}
+
+		return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(states)
+
+	} catch (error) {
+		console.log(`Error while getting food production values of a commodity for a given unit for each state for a certain year range ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+/**
+* Get food disruption percentage in production values of a commodity for a given unit for each state for 2016-2020.
+* @param  {Object} req request object
+* @param  {Object} res response object
+*/
+exports.getCovidFoodProductionDisruptionByState = async (req, res) => {
+	try {
+		let commodity = req.query.commodity,
+			unit = req.query.unit,
+			state = req.query.state,
+			startYear = constants.YEAR[2015],
+			endYear = constants.YEAR[2020]
+
+		fs.createReadStream('data.csv')
+			.pipe(csv())
+			.on('data', (row) => {
+				console.log(row);
+			})
+			.on('end', () => {
+				console.log('CSV file successfully processed');
+			});
+
+		return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(result)
+
+	} catch (error) {
+		console.log(`Error while getting food disruption percentage in production values of a commodity for a given unit for each state for 2016-2020 ${error}`)
 		return res
 			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
 			.send(error.message)

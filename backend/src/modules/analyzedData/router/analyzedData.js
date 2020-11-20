@@ -6,9 +6,12 @@ import analysisController from '../controller/analyzedData'
 import validator from '../validator'
 import validation from 'express-validation'
 
-router.get('/historicalData', validation(validator['getHistoricalData']), analysisController.getHistoricalData)
-router.get('/historicalDataByState', validation(validator['getHistoricalDataByState']), analysisController.getHistoricalDataByState)
+router.get('/historicalData', validation(validator['historicalData']), analysisController.getHistoricalData)
+router.get('/historicalDataByState', validation(validator['historicalDataByState']), analysisController.getHistoricalDataByState)
 router.get('/disastersByState', validation(validator['disastersByState']), analysisController.getDisastersByState)
 router.get('/yearlyDisasterData', validation(validator['yearlyDisasterData']), analysisController.getYearlyDisasterData)
+router.get('/foodProductionByState', validation(validator['foodProductionByState']), analysisController.getFoodProductionByState)
+router.get('/covidFoodProductionDisruptionByState', validation(validator['covidFoodProductionDisruptionByState']), analysisController.getCovidFoodProductionDisruptionByState)
+
 
 module.exports = router

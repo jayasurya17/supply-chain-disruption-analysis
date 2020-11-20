@@ -24,9 +24,9 @@ let csvStream = fastcsv
       category: data[3],
       commodity: data[4],
       unit: data[5],
-      value: data[6],
+      value: Number(data[6]),
       disasterType: disasterTypeArr,
-      yearlyValue: data[8],
+      yearlyValue: Number(data[8]),
       endMonth: data[9],
       endYear: Number(data[10])
     });

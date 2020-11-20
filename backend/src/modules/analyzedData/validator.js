@@ -3,7 +3,7 @@
 import Joi from 'joi'
 
 module.exports = {
-	getHistoricalData: {
+	historicalData: {
 		query: {
 			commodityOne: Joi.string().required(),
 			unitOne: Joi.string().required(),
@@ -19,7 +19,7 @@ module.exports = {
 		group: "AnalyzedData",
 		description: "Get analyzed data based on selected category, commodity and year range for food production data"
 	},
-	getHistoricalDataByState: {
+	historicalDataByState: {
 		query: {
 			category: Joi.string().required(),
 			commodity: Joi.string().required(),
@@ -35,7 +35,7 @@ module.exports = {
 		query: {
 			disaster: Joi.string().required(),
 			startYear: Joi.number().required(),
-			endYear: Joi.number().required(),
+			endYear: Joi.number().required()
 		},
 		model: "disastersByState",
 		group: "Filter",
@@ -55,5 +55,26 @@ module.exports = {
 		model: "yearlyDisasterData",
 		group: "AnalyzedData",
 		description: "Get analyzed data based on selected categories, commodities, units, state for food production data for a given year"
+	},
+	foodProductionByState: {
+		query: {
+			commodity: Joi.string().required(),
+			unit: Joi.string().required(),
+			startYear: Joi.number().required(),
+			endYear: Joi.number().required()
+		},
+		model: "foodProductionByState",
+		group: "AnalyzedData",
+		description: "Get food production values of a commodity for a given unit for each state for a certain year range"
+	},
+	covidFoodProductionDisruptionByState: {
+		query: {
+			commodity: Joi.string().required(),
+			unit: Joi.string().required(),
+			state: Joi.string().required()
+		},
+		model: "covidFoodProductionDisruptionByState",
+		group: "AnalyzedData",
+		description: "Get food disruption percentage in production values of a commodity for a given unit for each state for 2016-2020"
 	}
 }
