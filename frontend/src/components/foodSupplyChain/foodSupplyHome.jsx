@@ -1,10 +1,10 @@
 import React from 'react';
 import { Tabs } from 'antd';
 
-import FoodSupplyDashboard from './foodSupplyDashboard';
-import DisasterBasedAnalysis from './disasterBasedAnalysis';
-import DisasterPerStateAnalysis from './disasterPerState';
-import CropsPerState from './cropsPerState/cropsPerState';
+import FoodSupplyDashboard from './yearlyProductionChart/yearlyProduction';
+import DisasterBasedAnalysis from './disasterPerYearChart/disasterPerYear';
+import DisasterPerStateAnalysis from './disasterHeatMap/disasterPerState';
+import CropsPerState from './cropsPerStateHeatMap/cropsPerState';
 import QuarterlyDifference from './quarterlyDifference/quarterlyDifference';
 import './FoodSupplyHome.css'
 
@@ -19,16 +19,16 @@ const FoodSupplyHome = () => {
     return (
         <div className="foodSupplyHomeContainer">
             <Tabs defaultActiveKey="1" onChange={callback}>
-                <TabPane tab="Food Supply chain home page" key="1">
+                <TabPane tab="Yearly food production" key="1">
                     <FoodSupplyDashboard />
                 </TabPane>
-                <TabPane tab="Food supply chain disaster" key="2">
+                <TabPane tab="Production in a year with disasters" key="2">
                     <DisasterBasedAnalysis />
                 </TabPane>
-                <TabPane tab="Food supply chain disaster state" key="3">
+                <TabPane tab="Disasters heat map" key="3">
                     <DisasterPerStateAnalysis />
                 </TabPane>
-                <TabPane tab="Crops per state" key="4">
+                <TabPane tab="Crops produced per state" key="4">
                     <CropsPerState />
                 </TabPane>
                 <TabPane tab="Quarterly analysis" key="5">

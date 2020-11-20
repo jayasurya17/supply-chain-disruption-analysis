@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CanvasJSReact from '../Common/lib/canvasjs.react'
+import CanvasJSReact from '../../Common/lib/canvasjs.react'
 var CanvasJSChart = CanvasJSReact.CanvasJSChart
 
 class DisasterChartComponent extends Component {

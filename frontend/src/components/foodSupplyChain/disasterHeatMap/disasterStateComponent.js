@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import USAMap from 'react-usa-map'
-import stateName from '../../constants/stateShortName'
+import stateName from '../../../constants/stateShortName'
 import "./disasterStateComponent.css"
 
 class DisasterStateComponent extends Component {

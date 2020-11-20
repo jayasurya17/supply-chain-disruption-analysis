@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import './foodSupplyDashboard.css'
 import Select from 'react-select'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
-import DisasterChartComponent from './disasterChartComponent'
-// import DummyData from '../../constants/dummyData'
+import DisasterChartComponent from './disasterPerYearChart'
 
 class DisasterBasedAnalysis extends Component {
     constructor() {
