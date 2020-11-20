@@ -28,7 +28,17 @@ module.exports = {
 	ALL_CATEGORIES : 'All',
 	YEAR: {
 		2015: 2015,
+		2016: 2016,
+		2017: 2017,
+		2018: 2018,
+		2019: 2019,
 		2020: 2020
+	},
+	QUARTERS: {
+		Q1 : 'Q1',
+		Q2 : 'Q2',
+		Q3 : 'Q3',
+		Q4 : 'Q4'
 	},
 	MONTH: {
 		JANUARY: 'JAN'

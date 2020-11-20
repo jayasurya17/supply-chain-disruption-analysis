@@ -191,8 +191,8 @@ exports.getDisastersByState = async (req, res) => {
 			{ $group: { _id: "$state", count: { $sum: 1 } } }
 			]);
 
-		let states = { 'ALABAMA': 0, 'ALASKA': 0, 'ARIZONA': 0, 'ARKANSAS': 0, 'CALIFORNIA': 0, 'COLORADO': 0, 'CONNECTICUT': 0, 'DELAWARE': 0, 'FLORIDA': 0, 'GEORGIA': 0, 'HAWAII': 0, 'IDAHO': 0, 'ILLINOIS': 0, 'INDIANA': 0, 'IOWA': 0, 'KANSAS': 0, 'KENTUCKY': 0, 'LOUISIANA': 0, 'MAINE': 0, 'MARYLAND': 0, 'MASSACHUSETTS': 0, 'MICHIGAN': 0, 'MINNESOTA': 0, 'MISSISSIPPI': 0, 'MISSOURI': 0, 'MONTANA': 0, 'NEBRASKA': 0, 'NEVADA': 0, 'NEW HAMPSHIRE': 0, 'NEW JERSEY': 0, 'NEW MEXICO': 0, 'NEW YORK': 0, 'NORTH CAROLINA': 0, 'NORTH DAKOTA': 0, 'OHIO': 0, 'OKLAHOMA': 0, 'OREGON': 0, 'PENNSYLVANIA': 0, 'RHODE ISLAND': 0, 'SOUTH CAROLINA': 0, 'SOUTH DAKOTA': 0, 'TENNESSEE': 0, 'TEXAS': 0, 'UTAH': 0, 'VERMONT': 0, 'VIRGINIA': 0, 'WASHINGTON': 0, 'WEST VIRGINIA': 0, 'WISCONSIN': 0, 'WYOMING': 0 }
-
+		let states = constants.STATES_COUNT
+		
 		for (let row of result) {
 			states[row._id] = row.count
 		}
@@ -345,29 +345,6 @@ exports.getFoodProductionByState = async (req, res) => {
 			return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Start year should be less than or equal to end year")
 		}
 
-		// let states = { 'ALABAMA': 0, 'ALASKA': 0, 'ARIZONA': 0, 'ARKANSAS': 0, 'CALIFORNIA': 0, 'COLORADO': 0, 'CONNECTICUT': 0, 'DELAWARE': 0, 'FLORIDA': 0, 'GEORGIA': 0, 'HAWAII': 0, 'IDAHO': 0, 'ILLINOIS': 0, 'INDIANA': 0, 'IOWA': 0, 'KANSAS': 0, 'KENTUCKY': 0, 'LOUISIANA': 0, 'MAINE': 0, 'MARYLAND': 0, 'MASSACHUSETTS': 0, 'MICHIGAN': 0, 'MINNESOTA': 0, 'MISSISSIPPI': 0, 'MISSOURI': 0, 'MONTANA': 0, 'NEBRASKA': 0, 'NEVADA': 0, 'NEW HAMPSHIRE': 0, 'NEW JERSEY': 0, 'NEW MEXICO': 0, 'NEW YORK': 0, 'NORTH CAROLINA': 0, 'NORTH DAKOTA': 0, 'OHIO': 0, 'OKLAHOMA': 0, 'OREGON': 0, 'PENNSYLVANIA': 0, 'RHODE ISLAND': 0, 'SOUTH CAROLINA': 0, 'SOUTH DAKOTA': 0, 'TENNESSEE': 0, 'TEXAS': 0, 'UTAH': 0, 'VERMONT': 0, 'VIRGINIA': 0, 'WASHINGTON': 0, 'WEST VIRGINIA': 0, 'WISCONSIN': 0, 'WYOMING': 0 }
-
-		// for(let i = 0; i < constants.STATES.length; i++) {
-		// 	let result = await AnalyzedFoodProductionData.aggregate(
-		// 		[{
-		// 			$match:
-		// 			{
-		// 				year: {
-		// 					$gte: startYear, $lte: endYear
-		// 				},
-		// 				commodity: commodity,
-		// 				unit: unit,
-		// 				state: constants.STATES[i],
-		// 				month: constants.MONTH.JANUARY
-		// 			}
-		// 		}
-		// 	]);
-
-		// 	for(let i = 0; i < result.length; i++) {
-		// 		states[result[i].state] += Number(result[i].yearlyValue)
-		// 	}
-		// }
-
 		let result = await AnalyzedFoodProductionData.aggregate(
 			[{
 				$match:
@@ -400,7 +377,7 @@ exports.getFoodProductionByState = async (req, res) => {
 }
 
 /**
-* Get food disruption percentage in production values of a commodity for a given unit for each state for 2016-2020.
+* Get food disruption percentage for production values of a commodity for a given unit for each state for 2015-2020.
 * @param  {Object} req request object
 * @param  {Object} res response object
 */
@@ -408,24 +385,31 @@ exports.getCovidFoodProductionDisruptionByState = async (req, res) => {
 	try {
 		let commodity = req.query.commodity,
 			unit = req.query.unit,
-			state = req.query.state,
-			startYear = constants.YEAR[2015],
-			endYear = constants.YEAR[2020]
+			state = req.query.state
 		
-		let data = []
+		let data = {}
+		
+		data[constants.YEAR[2015]] = {}
+		data[constants.YEAR[2016]] = {}
+		data[constants.YEAR[2017]] = {}
+		data[constants.YEAR[2018]] = {}
+		data[constants.YEAR[2019]] = {}
+		data[constants.YEAR[2020]] = {}
 
 		fs.createReadStream(`src/python/datasets/quarter_data.csv`)
 			.pipe(csv())
 			.on('data', (row) => {
 				if(row.state === state && row.commodity === commodity && row.unit === unit) {
-				console.log(row)
-					let obj = {
-						year: row.year,
-						quarter: row.quarter,
-						value: row.value,
-						percent: row.percent
+					let quarterObj = {}
+
+					if (row.value && row.percent) {
+						quarterObj = {
+							'value': row.value,
+							'percent': row.percent
+						}
 					}
-					data.push(obj)
+
+					data[row.year][row.quarter] = quarterObj
 				}
 			})
 			.on('end', () => {
@@ -434,7 +418,7 @@ exports.getCovidFoodProductionDisruptionByState = async (req, res) => {
 			});
 			
 	} catch (error) {
-		console.log(`Error while getting food disruption percentage in production values of a commodity for a given unit for each state for 2016-2020 ${error}`)
+		console.log(`Error while getting food disruption percentage in production values of a commodity for a given unit for each state for 2015-2020 ${error}`)
 		return res
 			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
 			.send(error.message)

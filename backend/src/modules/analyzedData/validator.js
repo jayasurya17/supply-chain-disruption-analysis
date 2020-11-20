@@ -75,6 +75,6 @@ module.exports = {
 		},
 		model: "covidFoodProductionDisruptionByState",
 		group: "AnalyzedData",
-		description: "Get food disruption percentage in production values of a commodity for a given unit for each state for 2016-2020"
+		description: "Get food disruption percentage for production values of a commodity for a given unit for each state for 2015-2020"
 	}
 }
