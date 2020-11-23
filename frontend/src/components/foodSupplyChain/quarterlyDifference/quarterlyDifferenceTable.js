@@ -16,12 +16,12 @@ class QuarterlyDifferenceTable extends Component {
     getPercent = (year, quarter) => {
         if (year in this.props.data && quarter in this.props.data[year]) {
             let percent = parseFloat(this.props.data[year][quarter].percent).toFixed(2)
-            if (percent === 0) {
-                return null
-            } else if (percent > 0) {
+            if (percent > 0) {
                 return <span id="percent" className="text-success"><i class="fas fa-arrow-up"></i> {percent}%</span>
             } else if (percent < 0) {
                 return <span id="percent" className="text-danger"><i class="fas fa-arrow-down"></i> {-percent}%</span>
+            } else {
+                return <span id="percent" className="text-secondary">0.00 %</span>
             }
         }
         return null
@@ -46,10 +46,10 @@ class QuarterlyDifferenceTable extends Component {
                     <div className="col-md-2" id="heading">2015</div>
                     <div className="col-md-10">
                         <div className="row">
-                            <div className="col-md-3">{this.getQuantity("2015", "Q1")} {this.getPercent("2015", "Q1")}</div>
-                            <div className="col-md-3">{this.getQuantity("2015", "Q2")} {this.getPercent("2015", "Q2")}</div>
-                            <div className="col-md-3">{this.getQuantity("2015", "Q3")} {this.getPercent("2015", "Q3")}</div>
-                            <div className="col-md-3">{this.getQuantity("2015", "Q4")} {this.getPercent("2015", "Q4")}</div>
+                            <div className="col-md-3">{this.getQuantity("2015", "Q1")}</div>
+                            <div className="col-md-3">{this.getQuantity("2015", "Q2")}</div>
+                            <div className="col-md-3">{this.getQuantity("2015", "Q3")}</div>
+                            <div className="col-md-3">{this.getQuantity("2015", "Q4")}</div>
                         </div>
                     </div>
                 </div>

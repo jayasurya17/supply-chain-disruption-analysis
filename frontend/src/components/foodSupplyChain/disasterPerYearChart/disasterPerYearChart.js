@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import CanvasJSReact from '../../Common/lib/canvasjs.react'
+import DisastersTable from '../disastersTable'
 var CanvasJSChart = CanvasJSReact.CanvasJSChart
 
 class DisasterChartComponent extends Component {
     render() {
+
         let graphData = [],
             dataPoints = [],
             dataPoint,
@@ -34,6 +36,13 @@ class DisasterChartComponent extends Component {
                 }
             )
         }
+        if (graphData.length === 0) {
+            return (
+                <div className="text-center display-4">
+                    No data is available for this input
+                </div>
+            )
+        }
         const options = {
             animationEnabled: true,
             axisY: {
@@ -58,7 +67,8 @@ class DisasterChartComponent extends Component {
                 <CanvasJSChart
                     options={options}
                 /* onRef={ref => this.chart = ref} */
-                />
+                className="m-5" />
+                <DisastersTable />
             </div>
         )
     }

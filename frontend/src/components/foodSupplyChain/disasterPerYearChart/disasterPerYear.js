@@ -3,7 +3,6 @@ import axios from 'axios'
 import Select from 'react-select'
 import 'react-input-range/lib/css/index.css'
 import DisasterChartComponent from './disasterPerYearChart'
-import DisastersTable from '../disastersTable'
 
 class DisasterBasedAnalysis extends Component {
     constructor() {
@@ -95,6 +94,7 @@ class DisasterBasedAnalysis extends Component {
             }
         }
         let queryParams = this.getQueryParams(opt, temp)
+        queryParams = queryParams + "&startYear=" + this.state.year + "&endYear=" + this.state.year
         let response = await axios.get(`/filters/statesByCommodityAndUnit?${queryParams}`)
         this.setState({
             allStates: response.data,
@@ -127,9 +127,16 @@ class DisasterBasedAnalysis extends Component {
         })
     }
 
-    onChangeYear = (e) => {
+    onChangeYear = async (e) => {
         this.setState({
             year: e.target.value
+        })
+        let queryParams = this.getQueryParams(this.state.selectedCommodities, this.state.selectedUnit)
+        queryParams = queryParams + "&startYear=" + e.target.value + "&endYear=" + e.target.value
+        let response = await axios.get(`/filters/statesByCommodityAndUnit?${queryParams}`)
+        this.setState({
+            allStates: response.data,
+            selectedStates: { label: response.data[0], value: response.data[0] }
         })
     }
 
@@ -217,12 +224,9 @@ class DisasterBasedAnalysis extends Component {
                 {
                     this.state.production === null?
                     <p className="display-4 text-center m-5">Apply filters to show graph</p>:
-                    <div>
                         <div className='m-5'>
                             <DisasterChartComponent production={this.state.production} disasters={this.state.disasters} />
                         </div>
-                        <DisastersTable />
-                    </div>
                     
                 }
             </div>

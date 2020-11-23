@@ -95,11 +95,25 @@ exports.getStatesByCommodityAndUnit = async (req, res) => {
 			commodityTwo = req.query.commodityTwo,
 			unitTwo = req.query.unitTwo,
 			commodityThree = req.query.commodityThree,
-			unitThree = req.query.unitThree
+			unitThree = req.query.unitThree,
+			startYear = req.query.startYear ? Number(req.query.startYear) : 1980,
+			endYear = req.query.endYear? Number(req.query.endYear) : 2020
 
-		let valuesOne = await AnalyzedFoodProductionData.find({ commodity: commodityOne, unit: unitOne}).distinct('state')
-		let valuesTwo = await AnalyzedFoodProductionData.find({ commodity: commodityTwo, unit: unitTwo}).distinct('state')
-		let valuesThree = await AnalyzedFoodProductionData.find({ commodity: commodityThree, unit: unitThree}).distinct('state')
+		let valuesOne = await AnalyzedFoodProductionData.find({
+			commodity: commodityOne, unit: unitOne, year: {
+				$gte: startYear, $lte: endYear
+			}
+		}).distinct('state')
+		let valuesTwo = await AnalyzedFoodProductionData.find({
+			commodity: commodityTwo, unit: unitTwo, year: {
+				$gte: startYear, $lte: endYear
+			}
+		}).distinct('state')
+		let valuesThree = await AnalyzedFoodProductionData.find({
+			commodity: commodityThree, unit: unitThree, year: {
+				$gte: startYear, $lte: endYear
+			}
+		}).distinct('state')
 
 		let intersection = valuesOne
 

@@ -41,7 +41,7 @@ class QuarterlyDifference extends Component {
             selectedUnit: unitsResponse.data[0]
         })
 
-        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${commoditiesResponse.data[0]}&unitOne=${unitsResponse.data[0]}`)
+        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${commoditiesResponse.data[0]}&unitOne=${unitsResponse.data[0]}&startYear=2015&endYear=2020`)
         this.setState({
             allStates: stateResponse.data,
             selectedState: stateResponse.data[0]
@@ -69,7 +69,7 @@ class QuarterlyDifference extends Component {
             selectedUnit: unitsResponse.data[0]
         })
 
-        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${commoditiesResponse.data[0]}&unitOne=${unitsResponse.data[0]}`)
+        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${commoditiesResponse.data[0]}&unitOne=${unitsResponse.data[0]}&startYear=2015&endYear=2020`)
         this.setState({
             allStates: stateResponse.data,
             selectedState: stateResponse.data[0]
@@ -90,7 +90,7 @@ class QuarterlyDifference extends Component {
             selectedUnit: unitsResponse.data[0]
         })
 
-        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${value}&unitOne=${unitsResponse.data[0]}`)
+        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${value}&unitOne=${unitsResponse.data[0]}&startYear=2015&endYear=2020`)
         this.setState({
             allStates: stateResponse.data,
             selectedState: stateResponse.data[0]
@@ -104,7 +104,7 @@ class QuarterlyDifference extends Component {
             selectedUnit: e.target.value
         })
 
-        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${this.state.selectedCommodity}&unitOne=${e.target.value}`)
+        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${this.state.selectedCommodity}&unitOne=${e.target.value}&startYear=2015&endYear=2020`)
         this.setState({
             allStates: stateResponse.data,
             selectedState: stateResponse.data[0]

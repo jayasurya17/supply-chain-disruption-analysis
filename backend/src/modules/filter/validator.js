@@ -26,7 +26,9 @@ module.exports = {
 			commodityTwo: Joi.string(),
 			unitTwo: Joi.string(),
 			commodityThree: Joi.string(),
-			unitThree: Joi.string()
+			unitThree: Joi.string(),
+			startYear: Joi.number(),
+			endYear: Joi.number()
 		},
 		model: "statesByCommodityAndUnit",
 		group: "Filter",
