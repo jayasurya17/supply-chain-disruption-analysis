@@ -20,7 +20,7 @@ const layout = {
 };
 
 function callback(key) {
-  console.log(key);
+//   console.log(key);
 }
 
 const Welcome = (props) => {
@@ -32,7 +32,7 @@ const Welcome = (props) => {
 
   /* Triggered when submit button of form is clicked and also the form is valid */
 const onSignUpClick = (values) => {
-	console.log('Success:', values);
+	// console.log('Success:', values);
 	const user = values;
 	user.name = user.fname + ' ' + user.lname;
 	delete user.fname;
@@ -42,7 +42,7 @@ const onSignUpClick = (values) => {
 };
 
 const onLoginClick = (values) => {
-	console.log('Success:', values);
+	// console.log('Success:', values);
     const user = values;
     
     let redirectURL;

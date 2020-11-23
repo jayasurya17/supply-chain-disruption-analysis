@@ -19,7 +19,7 @@ class CropsPerStateMap extends Component {
 		let r = Math.floor(percent * 255)
 		r = 255 - r
 		let color = this.componentToHex(r)
-		return "#ff" + color + color
+		return "#" + color + "ff" + color
 	}
 
 	statesCustomConfig = () => {
@@ -40,7 +40,7 @@ class CropsPerStateMap extends Component {
 
 		return (
 			<div>
-				<div id="colorGradient" className="w-100">
+				<div id="colorGradientProduction" className="w-100">
 					<span className="text-left">Least produced</span>
 					<span id="rightAlign">Most produced</span>
 				</div>

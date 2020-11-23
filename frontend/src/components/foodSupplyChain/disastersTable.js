@@ -30,16 +30,40 @@ class DisastersTable extends Component {
                             <td>Ash fall, Lahar, Pyroclastic flow, Lava flow</td>
                         </tr>
                         <tr>
-                            <th scope="row">Storm</th>
+                            <th scope="row">Tropical storm</th>
                             <td>Natural</td>
                             <td>Meteorological</td>
-                            <td>Tropical storm, Extra-tropical storm, Convective storm</td>
+                            <td>-</td>
                         </tr>
                         <tr>
-                            <th scope="row">Extreme Temperature</th>
+                            <th scope="row">Extra-tropical storm</th>
                             <td>Natural</td>
                             <td>Meteorological</td>
-                            <td>Cold wave, Heat Wave, Severe winter conditions</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Convective storm</th>
+                            <td>Natural</td>
+                            <td>Meteorological</td>
+                            <td>Derecho, Hail, Lightning/thunderstorm, Rain, Tornado, Sand/dust storm, Winter storm/blizzard, Storm/surge, Wind, Severe Storm</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Cold wave</th>
+                            <td>Natural</td>
+                            <td>Meteorological</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Heat Wave</th>
+                            <td>Natural</td>
+                            <td>Meteorological</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Severe winter conditions</th>
+                            <td>Natural</td>
+                            <td>Meteorological</td>
+                            <td>Snow/ice, Frost/freeze</td>
                         </tr>
                         <tr>
                             <th scope="row">Flood</th>
@@ -57,7 +81,7 @@ class DisastersTable extends Component {
                             <th scope="row">Drought</th>
                             <td>Natural</td>
                             <td>Climatological</td>
-                            <td>Drought</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <th scope="row">Wildfire</th>

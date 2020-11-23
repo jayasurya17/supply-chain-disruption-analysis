@@ -21,7 +21,7 @@ const Navbar = (props) => {
 
     const handleMenuClick =(e) => {
         message.info('Click on menu item.');
-        console.log('click', e);
+        // console.log('click', e);
       }
 
     const menu = (

@@ -21,7 +21,7 @@ function* logIn(action) {
         
         const result = yield call(axios.post, backendURL + '/users/login', action.payload.user);
         message.loading('Logging in', 3);
-        console.log(result);
+        // console.log(result);
         if (!R.isNil(result) && !R.isEmpty(result)) {
             if(result.status === 200) {
                 message.success('Login successful!', 2);
@@ -44,7 +44,7 @@ function* signUp(action) {
     try {
         const result = yield call(axios.post, backendURL + '/users/signup' , action.user);
         message.loading('Signing up', 3);
-        console.log(result);
+        // console.log(result);
         if (!R.isNil(result) && !R.isEmpty(result)) {
             if(result.status === 201) {
                 message.success('Account successfully created, please login', 2);

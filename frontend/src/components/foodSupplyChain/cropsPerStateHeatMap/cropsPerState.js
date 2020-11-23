@@ -127,7 +127,6 @@ class CropsPerState extends Component {
             unit = this.state.allUnits[index]
             allUnits.push(<option value={unit}>{unit}</option>)
         }
-        console.log(this.state)
 
         return (
             <div>
@@ -163,7 +162,9 @@ class CropsPerState extends Component {
 
                 {
                     this.state.showMap === null ?
-                        <p className="display-4 text-center m-5">Apply filters to show graph</p> :
+                        <div className="text-center m-5">
+                            <img src="loading.gif" alt="loading" className="w-25" />
+                        </div> :
                         <div className='m-5'>
                             <CropsPerStateMap productionCount={this.state.mapData} />
                         </div>

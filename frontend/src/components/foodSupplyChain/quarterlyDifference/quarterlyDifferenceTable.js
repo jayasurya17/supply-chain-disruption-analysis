@@ -5,7 +5,10 @@ class QuarterlyDifferenceTable extends Component {
 
     getQuantity = (year, quarter) => {
         if (year in this.props.data && quarter in this.props.data[year]) {
-            return <span id="values">{this.props.data[year][quarter].value}</span>
+            let value = this.props.data[year][quarter].value
+            value = parseInt(value, 10)
+            value /= 1000
+            return <span id="values">{value}</span>
         }
         return <span id="values" className="text-secondary text-center">-</span>
     }
@@ -13,7 +16,7 @@ class QuarterlyDifferenceTable extends Component {
     getPercent = (year, quarter) => {
         if (year in this.props.data && quarter in this.props.data[year]) {
             let percent = parseFloat(this.props.data[year][quarter].percent).toFixed(2)
-            if (percent == 0) {
+            if (percent === 0) {
                 return null
             } else if (percent > 0) {
                 return <span id="percent" className="text-success"><i class="fas fa-arrow-up"></i> {percent}%</span>
@@ -27,7 +30,8 @@ class QuarterlyDifferenceTable extends Component {
     render() {
 
         return (
-            <div>
+            <div className="mt-2">
+                <p id="heading">* All the figures are in tonnes</p>
                 <div className="row mt-2 p-2 text-white bg-secondary text-center" id="heading">
                     <div className="col-md-10 offset-md-2">
                         <div className="row">

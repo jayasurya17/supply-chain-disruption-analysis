@@ -13,26 +13,26 @@ const { TabPane } = Tabs;
 const FoodSupplyHome = () => {
 
     function callback(key) {
-        console.log(key);
+        // console.log(key);
     }
 
     return (
         <div className="foodSupplyHomeContainer">
             <Tabs defaultActiveKey="1" onChange={callback}>
-                <TabPane tab="Yearly food production" key="1">
-                    <FoodSupplyDashboard />
-                </TabPane>
-                <TabPane tab="Production in a year with disasters" key="2">
+                <TabPane tab="Production in a year with disasters" key="1">
                     <DisasterBasedAnalysis />
                 </TabPane>
-                <TabPane tab="Disasters heat map" key="3">
+                <TabPane tab="Quarterly analysis" key="2">
+                    <QuarterlyDifference />
+                </TabPane>
+                <TabPane tab="Yearly food production" key="3">
+                    <FoodSupplyDashboard />
+                </TabPane>
+                <TabPane tab="Disasters heat map" key="4">
                     <DisasterPerStateAnalysis />
                 </TabPane>
-                <TabPane tab="Crops produced per state" key="4">
+                <TabPane tab="Crops produced per state" key="5">
                     <CropsPerState />
-                </TabPane>
-                <TabPane tab="Quarterly analysis" key="5">
-                    <QuarterlyDifference />
                 </TabPane>
             </Tabs>
         </div>    

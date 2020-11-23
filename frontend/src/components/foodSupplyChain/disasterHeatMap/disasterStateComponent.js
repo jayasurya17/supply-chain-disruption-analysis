@@ -37,10 +37,11 @@ class DisasterStateComponent extends Component {
 	};
 
 	render() {
+        console.log(this.props.disasterCount)
 
 		return (
 			<div>
-				<div id="colorGradient" className="w-100">
+				<div id="colorGradientDisasters" className="w-100">
 					<span className="text-left">Least likely</span>
 					<span id="rightAlign">Most likely</span>
 				</div>

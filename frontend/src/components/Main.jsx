@@ -44,7 +44,7 @@ const Main = (props) => {
             !R.isNil(route) && 
             props.location.pathname !== route /* Without this condition, same address is pushed twice and thus forward button disappears */
         ) {
-            console.log(props.location.pathname, route, 'pushing into history');
+            // console.log(props.location.pathname, route, 'pushing into history');
             props.history.push(route);
         }
     }, [route]);

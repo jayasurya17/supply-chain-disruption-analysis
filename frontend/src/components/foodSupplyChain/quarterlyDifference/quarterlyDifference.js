@@ -167,9 +167,9 @@ class QuarterlyDifference extends Component {
         }
 
         return (
-            <div>
+            <div className="m-2">
 
-                <div className='row mt-3'>
+                <div className='row'>
                     <div className='col-md-3'>
                         Category
                         <select onChange={this.onSelectCategory} className="form-control" name="category" value={this.state.selectedCategory} placeholder="Category">
@@ -198,7 +198,7 @@ class QuarterlyDifference extends Component {
 
                 {
                     this.state.showTable === null ?
-                        <p className="display-4 text-center m-5">Apply filters to show graph</p> :
+                        <p className="display-4 text-center m-5">Loading data...</p> :
                         <QuarterlyDifferenceTable data={this.state.tableData} />
                 }
             </div>

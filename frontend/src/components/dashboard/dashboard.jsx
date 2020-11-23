@@ -32,7 +32,7 @@ const Dashboard = () => {
             </div>
 
             <div className="m-5" id="description">
-                Description of what we are doing
+                {/* Description of what we are doing */}
                 <p>Based on data obtained from <a href="https://quickstats.nass.usda.gov/" target="blank" className="text-decoration-none">UDSA</a> and <a href="https://public.emdat.be/" target="blank" className="text-decoration-none">EM-DAT</a>, we are showing graphs and charts from the year 1980 until 2020.</p>
             </div>
 

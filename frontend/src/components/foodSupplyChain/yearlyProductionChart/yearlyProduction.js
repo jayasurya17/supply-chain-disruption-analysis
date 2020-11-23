@@ -91,7 +91,7 @@ class FoodSupplyHoliday extends Component {
             category: this.state.selectedCategories.value,
             commodity: this.state.selectedCommodities[index].value
           }
-        })
+        }) 
         .then(res => {
           let local = []
           for (let each in res.data) {
@@ -103,7 +103,6 @@ class FoodSupplyHoliday extends Component {
             })
           }
           units[index] = local
-          console.log(units)
           this.setState({
             selected: Object.assign({}, this.state.selected, {
               [this.state.selectedCommodities[index].value]: res.data[0]
@@ -162,7 +161,7 @@ class FoodSupplyHoliday extends Component {
     if (
       this.state.selectedCategories.length === 0 ||
       this.state.selectedCommodities.length === 0 ||
-      this.state.selectedStates == 0
+      this.state.selectedStates === 0
     ) {
       alert('Select all required values')
     } else {

@@ -52,7 +52,6 @@ class DisasterChartComponent extends Component {
             },
             data: graphData
         }
-        console.log(options)
 
         return (
             <div>

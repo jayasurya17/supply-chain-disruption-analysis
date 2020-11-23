@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Select from 'react-select'
-import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import DisasterChartComponent from './disasterPerYearChart'
+import DisastersTable from '../disastersTable'
 
 class DisasterBasedAnalysis extends Component {
     constructor() {
@@ -125,22 +125,11 @@ class DisasterBasedAnalysis extends Component {
             production: response.data.production,
             disasters: response.data.disasters
         })
-        console.log(queryParams)
     }
 
-    onChangeYear = async (year) => {
-        // if (this.state.selectedStates) {
-        //     let queryParams = this.getQueryParams(this.state.selectedCommodities, this.state.selectedUnit)
-        //     queryParams = queryParams + "state=" + this.state.selectedStates.value + "&year=" + year
-        //     let response = await axios.get(`/analysis/yearlyDisasterData?${queryParams}`)
-        //     this.setState({
-        //         production: response.data.production,
-        //         disasters: response.data.production
-        //     })
-        //     console.log(queryParams)
-        // }
+    onChangeYear = (e) => {
         this.setState({
-            year: year
+            year: e.target.value
         })
     }
 
@@ -164,6 +153,11 @@ class DisasterBasedAnalysis extends Component {
         for (let index in this.state.allCommodities) {
             commodity = this.state.allCommodities[index]
             allCommodities.push({ label: commodity, value: commodity })
+        }
+        let allYears = [],
+            year
+        for (year = 1980; year <= 2020; year++) {
+            allYears.push(<option value={year}>{year}</option>)
         }
 
         let allUnits = []
@@ -195,21 +189,19 @@ class DisasterBasedAnalysis extends Component {
 
         return (
             <div>
-                <div className='row mt-5 ml-5 mr-5'>
-                    <div className='col-md-2'>
-                        <p id='year'>Year</p>
-                    </div>
-                    <div className='col-md-10'>
-                        <InputRange maxValue={2020} minValue={1980} value={this.state.year} onChange={this.onChangeYear} />
-                    </div>
-                </div>
 
                 <div className='row mt-3 ml-5 mr-5'>
+                    <div className='col-md-3'>
+                        Year
+                        <select className="form-control" onChange={this.onChangeYear} value={this.state.year} placeholder='Year' >
+                            {allYears}
+                        </select>
+                    </div>
                     <div className='col-md-3'>
                         Category
                         <Select onChange={this.onSelectCategory} options={allCategories} value={this.state.selectedCategories} placeholder='Category' />
                     </div>
-                    <div className='col-md-6'>
+                    <div className='col-md-3'>
                         Commodity (Limit: 3)
                         <Select isMulti onChange={this.onSelectCommodity} options={allCommodities} value={this.state.selectedCommodities} placeholder='Commodity' />
                     </div>
@@ -225,9 +217,13 @@ class DisasterBasedAnalysis extends Component {
                 {
                     this.state.production === null?
                     <p className="display-4 text-center m-5">Apply filters to show graph</p>:
-                    <div className='m-5'>
-                        <DisasterChartComponent production={this.state.production} disasters={this.state.disasters} />
+                    <div>
+                        <div className='m-5'>
+                            <DisasterChartComponent production={this.state.production} disasters={this.state.disasters} />
+                        </div>
+                        <DisastersTable />
                     </div>
+                    
                 }
             </div>
         )
