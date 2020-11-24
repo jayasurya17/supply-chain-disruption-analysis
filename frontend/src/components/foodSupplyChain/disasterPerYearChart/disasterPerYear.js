@@ -3,6 +3,7 @@ import axios from 'axios'
 import Select from 'react-select'
 import 'react-input-range/lib/css/index.css'
 import DisasterChartComponent from './disasterPerYearChart'
+import year from '../../../constants/year'
 
 class DisasterBasedAnalysis extends Component {
     constructor() {
@@ -16,7 +17,7 @@ class DisasterBasedAnalysis extends Component {
             selectedStates: null,
             units: [],
             selectedUnit: {},
-            year: 2020,
+            year: year.year.endYear,
             production: null,
             disasters: null
         }
@@ -118,6 +119,9 @@ class DisasterBasedAnalysis extends Component {
     }
 
     updateGraph = async () => {
+        if (this.state.selectedStates.value === undefined) {
+            return
+        }
         let queryParams = this.getQueryParams(this.state.selectedCommodities, this.state.selectedUnit)
         queryParams = queryParams + "state=" + this.state.selectedStates.value + "&year=" + this.state.year
         let response = await axios.get(`/analysis/yearlyDisasterData?${queryParams}`)

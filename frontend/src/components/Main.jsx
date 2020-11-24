@@ -10,6 +10,7 @@ import AdminDashboard from './Admin/dashboard';
 import Dashboard from './dashboard/dashboard';
 import ErrorPage from './Authentication/errorPage';
 import Navbar from './Common/navbar';
+// import Footer from './Common/footer';
 import { useEffect } from 'react';
 import FoodSupplyHome from './foodSupplyChain/foodSupplyHome';
 
@@ -73,6 +74,8 @@ const Main = (props) => {
 
 						<Route component={ErrorPage} />
 					</Switch>
+
+                    {/* <Footer /> */}
 			</div>
 	);
 };

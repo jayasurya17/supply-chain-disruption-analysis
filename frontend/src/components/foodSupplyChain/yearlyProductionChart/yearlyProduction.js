@@ -6,6 +6,7 @@ import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import ChartComponent from './yearlyProductionChart'
 import listOfStates from '../../../constants/stateNames'
+import year from '../../../constants/year'
 
 class FoodSupplyHoliday extends Component {
   componentDidMount () {
@@ -28,7 +29,7 @@ class FoodSupplyHoliday extends Component {
       units: [],
       selectedUnits: ['', '', ''],
       selected: {},
-      yearRange: { min: 1980, max: 2020 },
+      yearRange: { min: year.year.startYear, max: year.year.endYear },
       Commodity1: [],
       Commodity2: [],
       Commodity3: []

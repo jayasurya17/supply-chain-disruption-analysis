@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import 'react-input-range/lib/css/index.css'
 import QuarterlyDifferenceTable from './quarterlyDifferenceTable'
+import year from '../../../constants/year'
 
 class QuarterlyDifference extends Component {
     constructor() {
@@ -41,7 +42,7 @@ class QuarterlyDifference extends Component {
             selectedUnit: unitsResponse.data[0]
         })
 
-        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${commoditiesResponse.data[0]}&unitOne=${unitsResponse.data[0]}&startYear=2015&endYear=2020`)
+        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${commoditiesResponse.data[0]}&unitOne=${unitsResponse.data[0]}&startYear=${year.year.endYear - 5}&endYear=${year.year.endYear}`)
         this.setState({
             allStates: stateResponse.data,
             selectedState: stateResponse.data[0]
@@ -69,7 +70,7 @@ class QuarterlyDifference extends Component {
             selectedUnit: unitsResponse.data[0]
         })
 
-        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${commoditiesResponse.data[0]}&unitOne=${unitsResponse.data[0]}&startYear=2015&endYear=2020`)
+        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${commoditiesResponse.data[0]}&unitOne=${unitsResponse.data[0]}&startYear=${year.year.endYear - 5}&endYear=${year.year.endYear}`)
         this.setState({
             allStates: stateResponse.data,
             selectedState: stateResponse.data[0]
@@ -90,7 +91,7 @@ class QuarterlyDifference extends Component {
             selectedUnit: unitsResponse.data[0]
         })
 
-        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${value}&unitOne=${unitsResponse.data[0]}&startYear=2015&endYear=2020`)
+        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${value}&unitOne=${unitsResponse.data[0]}&startYear=${year.year.endYear - 5}&endYear=${year.year.endYear}`)
         this.setState({
             allStates: stateResponse.data,
             selectedState: stateResponse.data[0]
@@ -103,14 +104,14 @@ class QuarterlyDifference extends Component {
         this.setState({
             selectedUnit: e.target.value
         })
-
-        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${this.state.selectedCommodity}&unitOne=${e.target.value}&startYear=2015&endYear=2020`)
+        let value = e.target.value
+        let stateResponse = await axios.get(`/filters/statesByCommodityAndUnit?commodityOne=${this.state.selectedCommodity}&unitOne=${e.target.value}&startYear=${year.year.endYear - 5}&endYear=${year.year.endYear}`)
         this.setState({
             allStates: stateResponse.data,
             selectedState: stateResponse.data[0]
         })
 
-        this.updateGraph(this.state.selectedCommodity, e.target.value, stateResponse.data[0])
+        this.updateGraph(this.state.selectedCommodity, value, stateResponse.data[0])
     }
 
     onSelectState = async (e) => {
@@ -130,7 +131,7 @@ class QuarterlyDifference extends Component {
     }
 
     onChangeYear = async (year) => {
-        this.updateGraph(this.state.selectedCommodity, this.state.selectedUnit, year.min, year.max)
+        this.updateGraph(this.state.selectedCommodity, this.state.selectedUnit, year.year.min, year.year.max)
         this.setState({
             year: year
         })
@@ -138,6 +139,7 @@ class QuarterlyDifference extends Component {
 
 
     render() {
+        console.log(year)
 
         let allCategories = [],
             category

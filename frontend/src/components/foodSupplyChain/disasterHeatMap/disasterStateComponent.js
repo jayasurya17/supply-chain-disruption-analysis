@@ -37,7 +37,6 @@ class DisasterStateComponent extends Component {
 	};
 
 	render() {
-        console.log(this.props.disasterCount)
 
 		return (
 			<div>

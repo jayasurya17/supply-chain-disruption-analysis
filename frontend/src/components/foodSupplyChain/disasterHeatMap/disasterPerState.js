@@ -5,13 +5,14 @@ import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import DisasterStateComponent from './disasterStateComponent'
 import DisasterTable from '../disastersTable'
+import year from '../../../constants/year'
 
 class DisasterBasedAnalysis extends Component {
 	constructor() {
 		super()
 		this.state = {
 			allDisasters: [],
-			yearRange: { min: 1980, max: 2020 },
+			yearRange: { min: year.year.startYear, max: year.year.endYear },
 			selectedDisaster: null,
 			disasterCount: {},
 			isFetched: false
@@ -37,11 +38,14 @@ class DisasterBasedAnalysis extends Component {
 	}
 
 	onChangeYear = (e) => {
-        this.updateGraph(this.state.selectedDisaster, e.min, e.max)
         this.setState({
             yearRange: e
         })
-	}
+    }
+    
+    confirmYear = (e) => {
+        this.updateGraph(this.state.selectedDisaster, e.min, e.max)
+    }
 
 	updateGraph = (disaster, startYear, endYear) => {
 		axios.get(`/analysis/disastersByState?disaster=${disaster}&startYear=${startYear}&endYear=${endYear}`)
@@ -66,7 +70,8 @@ class DisasterBasedAnalysis extends Component {
 								maxValue={2020}
 								minValue={1980}
 								value={this.state.yearRange}
-								onChange={this.onChangeYear}
+                                onChangeComplete={this.confirmYear}
+                                onChange={this.onChangeYear}
 							/>
 						</div>
 					</div>
@@ -92,7 +97,8 @@ class DisasterBasedAnalysis extends Component {
 							maxValue={2020}
 							minValue={1980}
 							value={this.state.yearRange}
-							onChange={this.onChangeYear}
+                            onChange={this.onChangeYear}
+                            onChangeComplete={this.confirmYear}
 						/>
 					</div>
 				</div>
@@ -116,7 +122,7 @@ class DisasterBasedAnalysis extends Component {
 				</div>
 
 				<div className='m-5'>
-					<DisasterStateComponent disasterCount={this.state.disasterCount} />
+					<DisasterStateComponent disasterCount={this.state.disasterCount} yearRange={this.state.yearRange} disaster={this.state.selectedDisaster} />
 				</div>
 
 				<DisasterTable />

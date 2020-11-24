@@ -4,12 +4,13 @@ import './cropsPerStateMap.css'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import CropsPerStateMap from './cropsPerStateMap'
+import year from '../../../constants/year'
 
 class CropsPerState extends Component {
     constructor() {
         super()
         this.state = {
-            year: { min: 1980, max: 2020 },
+            year: { min: year.year.startYear, max: year.year.endYear },
             allCategories: [],
             allCommodities: [],
             allUnits: [],
@@ -99,10 +100,13 @@ class CropsPerState extends Component {
     }
 
     onChangeYear = async (year) => {
-        this.updateGraph(this.state.selectedCommodity, this.state.selectedUnit, year.min, year.max)
         this.setState({
             year: year
         })
+    }
+    
+    confirmYear = (e) => {
+        this.updateGraph(this.state.selectedCommodity, this.state.selectedUnit, e.min, e.max)
     }
 
 
@@ -135,7 +139,7 @@ class CropsPerState extends Component {
                         <p id='year'>Year</p>
                     </div>
                     <div className='col-md-10'>
-                        <InputRange maxValue={2020} minValue={1980} value={this.state.year} onChange={this.onChangeYear} />
+                        <InputRange maxValue={2020} minValue={1980} value={this.state.year} onChange={this.onChangeYear} onChangeComplete={this.confirmYear} />
                     </div>
                 </div>
 

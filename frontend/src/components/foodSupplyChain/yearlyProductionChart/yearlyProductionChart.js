@@ -43,6 +43,7 @@ class ChartComponent extends Component {
       },
       axisX: {
         title: 'Year',
+        interval: 1,
         gridThickness: 0
       },
       toolTip: {
