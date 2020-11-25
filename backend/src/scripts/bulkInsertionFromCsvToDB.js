@@ -11,7 +11,8 @@ let csvData = [];
 let csvStream = fastcsv
   .parse()
   .on("data", function(data) {
-    console.log("data-->", data.length, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8])
+    console.log("data-->", data.length, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10])
+    
     let disasterTypes = data[7].split(",")
     let disasterTypeArr = [];
     if(disasterTypes.length >= 1 && disasterTypes[0].length >= 1) {
