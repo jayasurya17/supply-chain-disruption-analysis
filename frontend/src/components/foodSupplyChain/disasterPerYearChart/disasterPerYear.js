@@ -3,6 +3,7 @@ import axios from 'axios'
 import Select from 'react-select'
 import 'react-input-range/lib/css/index.css'
 import DisasterChartComponent from './disasterPerYearChart'
+import DownloadDisasterChart from './downloadDisasterPerYear'
 import year from '../../../constants/year'
 
 class DisasterBasedAnalysis extends Component {
@@ -229,6 +230,7 @@ class DisasterBasedAnalysis extends Component {
                     this.state.production === null?
                     <p className="display-4 text-center m-5">Apply filters to show graph</p>:
                         <div className='m-5'>
+                            <DownloadDisasterChart year={this.state.year} production={this.state.production} unit={this.state.selectedUnit} commodities={this.state.selectedCommodities} disasters={this.state.disasters} state={this.state.selectedStates.value} />
                             <DisasterChartComponent production={this.state.production} disasters={this.state.disasters} />
                         </div>
                     

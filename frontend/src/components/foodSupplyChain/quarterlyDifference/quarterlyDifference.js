@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import 'react-input-range/lib/css/index.css'
 import QuarterlyDifferenceTable from './quarterlyDifferenceTable'
+import QuarterlyDifferenceDownloader from './downloadQuarterlyData'
 import year from '../../../constants/year'
 
 class QuarterlyDifference extends Component {
@@ -130,13 +131,6 @@ class QuarterlyDifference extends Component {
         })
     }
 
-    onChangeYear = async (year) => {
-        this.updateGraph(this.state.selectedCommodity, this.state.selectedUnit, year.year.min, year.year.max)
-        this.setState({
-            year: year
-        })
-    }
-
 
     render() {
         console.log(year)
@@ -201,7 +195,10 @@ class QuarterlyDifference extends Component {
                 {
                     this.state.showTable === null ?
                         <p className="display-4 text-center m-5">Loading data...</p> :
-                        <QuarterlyDifferenceTable data={this.state.tableData} />
+                        <div>
+                            <QuarterlyDifferenceDownloader data={this.state.tableData} state={this.state.selectedState} commodity={this.state.selectedCommodity} unit={this.state.selectedUnit} year={year.year.endYear} />
+                            <QuarterlyDifferenceTable data={this.state.tableData} />
+                        </div>
                 }
             </div>
         )

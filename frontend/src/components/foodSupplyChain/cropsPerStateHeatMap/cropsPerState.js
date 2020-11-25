@@ -5,6 +5,7 @@ import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import CropsPerStateMap from './cropsPerStateMap'
 import year from '../../../constants/year'
+import DownloadCropsData from './downloadCropsData'
 
 class CropsPerState extends Component {
     constructor() {
@@ -170,6 +171,7 @@ class CropsPerState extends Component {
                             <img src="loading.gif" alt="loading" className="w-25" />
                         </div> :
                         <div className='m-5'>
+                            <DownloadCropsData productionCount={this.state.mapData} crop={this.state.selectedCommodity} unit={this.state.selectedUnit} yearRange={this.state.year} />
                             <CropsPerStateMap productionCount={this.state.mapData} />
                         </div>
                 }
