@@ -20,10 +20,11 @@ function* logIn(action) {
     try {
         
         const result = yield call(axios.post, backendURL + '/users/login', action.payload.user);
-        message.loading('Logging in', 3);
+        const loadingMessage = message.loading('Logging in', 3);
         // console.log(result);
         if (!R.isNil(result) && !R.isEmpty(result)) {
             if(result.status === 200) {
+                loadingMessage(); // Calling the variable that holds the message, will close the message.
                 message.success('Login successful!', 2);
                 yield put(setUser(result.data));
                 if (!R.isNil(action.payload.redirectURL) && !R.isEmpty(action.payload.redirectURL)) {
@@ -43,10 +44,11 @@ function* logIn(action) {
 function* signUp(action) {
     try {
         const result = yield call(axios.post, backendURL + '/users/signup' , action.user);
-        message.loading('Signing up', 3);
+        const loadingMessage = message.loading('Signing up', 3);
         // console.log(result);
         if (!R.isNil(result) && !R.isEmpty(result)) {
             if(result.status === 201) {
+                loadingMessage();
                 message.success('Account successfully created, please login', 2);
             } else {
 
