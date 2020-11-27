@@ -10,6 +10,7 @@ const Navbar = (props) => {
     // Dispatch Operations
     const dispatch = useDispatch();
     const setRoute = ProfileOperations.dispatchSetRoute(dispatch);
+    const logOut = ProfileOperations.dispatchLogOut(dispatch);
 
     const onDashboardClick = () => {
         setRoute('/dashboard');
@@ -20,9 +21,17 @@ const Navbar = (props) => {
     }
 
     const handleMenuClick =(e) => {
-        message.info('Click on menu item.');
-        // console.log('click', e);
-      }
+
+        switch(e.key) {
+            case '2':
+                return handleLogOut();
+        }
+    }
+
+    const handleLogOut = () => {
+        logOut();
+        window.location.reload();
+    }
 
     const menu = (
         <Menu onClick={handleMenuClick}>

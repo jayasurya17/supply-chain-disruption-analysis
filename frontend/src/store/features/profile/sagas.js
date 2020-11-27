@@ -77,8 +77,17 @@ function* getUser(action) {
         }
     } catch(error) {
         /* This case will occur when there is an access token, but it is either corrupted or expired. */
-        cookies.remove('access_token');
+        cookies.remove('access_token', { path: '/', domain: 'localhost' });
         yield put(setRoute('/welcome'));
+    }
+}
+
+function* logOut(action) {
+    try {
+        cookies.remove('access_token', { path: '/', domain: 'localhost' });
+        console.log('cookies removed');
+    } catch(error) {
+
     }
 }
 
@@ -94,10 +103,15 @@ function* watchGetUser() {
     yield takeEvery('PROFILE_GETUSER', getUser);
 }
 
+function* watchLogOut() {
+    yield takeEvery('PROFILE_LOGOUT', logOut);
+}
+
 export default function* rootSaga() {
   yield all([
     watchLogIn(),
     watchSignUp(),
     watchGetUser(),
+    watchLogOut(),
   ]);
 }

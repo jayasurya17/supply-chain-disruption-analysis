@@ -22,10 +22,15 @@ const getUser = () => ({
     type: 'PROFILE_GETUSER',
 });
 
+const logOut = () => ({
+    type: 'PROFILE_LOGOUT',
+});
+
 export {
     logIn,
     setUser,
     signUp,
     setRoute,
     getUser,
+    logOut,
 };
