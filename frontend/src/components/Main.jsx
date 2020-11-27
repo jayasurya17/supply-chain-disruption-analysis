@@ -36,6 +36,7 @@ const Main = (props) => {
     // First time mount (Similar to Componentdidmount)
     useEffect(() => {
         getUser();
+        setRoute(props.location.pathname); // This can also set to dashboard, for redirecting user to dashboard always when there is a reload.
     }, []);
 
     /* When redux is updated, we change the actual page in the browser using the browser. */

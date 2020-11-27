@@ -70,7 +70,6 @@ function* getUser(action) {
             {
                 if(result.status === 200) {
                     yield put(setUser(result.data));
-                    yield put(setRoute('/dashboard'));
                 }
             }
         } else {
