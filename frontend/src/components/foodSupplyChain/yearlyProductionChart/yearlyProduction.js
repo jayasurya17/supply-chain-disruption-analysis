@@ -15,10 +15,11 @@ class FoodSupplyHoliday extends Component {
       const allCategories = res.data
       this.setState({ allCategories })
     })
+    console.log('user', this.props.user);
   }
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props);
     this.state = {
       allCategories: [],
       allCommodities: [],
