@@ -11,12 +11,35 @@ import year from '../../../constants/year'
 import DownloadYearlyProduction from './downloadYearlyProduction'
 
 class FoodSupplyHoliday extends Component {
-  componentDidMount () {
+  async componentDidMount () {
     //populate categories
-    axios.get(`http://localhost:9000/filters/categories`).then(res => {
+    let selectedCategories
+    await axios.get(`http://localhost:9000/filters/categories`).then(res => {
       const allCategories = res.data
       this.setState({ allCategories })
+      selectedCategories = { label: res.data[0], value: res.data[0] }
+      this.setState({ selectedCategories })
     })
+    axios
+      .get('http://localhost:9000/filters/commoditiesByCategory', {
+        params: { category: selectedCategories.value }
+      })
+      .then(res => {
+        const selectedCommodities = res.data
+        this.setState({ selectedDevices: res.data[0] })
+        let chosenCategories = [],
+          chosenCategory,
+          index
+        for (index in selectedCommodities) {
+          chosenCategory = selectedCommodities[index]
+          chosenCategories.push({
+            label: chosenCategory,
+            value: chosenCategory
+          })
+          this.setState({ allCommodities: chosenCategories })
+        }
+      })
+
     if (this.props.user.jwtToken) {
       console.log('user in download', this.props.user)
     } else {
@@ -31,6 +54,7 @@ class FoodSupplyHoliday extends Component {
       allCommodities: [],
       allStates: listOfStates,
       selectedCategories: [],
+      chosenCategory: [],
       selectedCommodities: [],
       selectedStates: [],
       units: [],
@@ -57,13 +81,14 @@ class FoodSupplyHoliday extends Component {
       this.setState({
         selectedCategories: opt
       })
-
+      this.setState({ selectedCommodities: [] })
       axios
         .get('http://localhost:9000/filters/commoditiesByCategory', {
           params: { category: opt.value }
         })
         .then(res => {
           const selectedCommodities = res.data
+          this.setState({ selectedDevices: res.data[0] })
           let chosenCategories = [],
             chosenCategory,
             index
@@ -284,7 +309,7 @@ class FoodSupplyHoliday extends Component {
               //isMulti
               onChange={this.onSelectCategory}
               options={category}
-              value={this.state.selectedDevices}
+              value={this.state.selectedCategories}
               placeholder='Category'
             ></Select>
           </div>
