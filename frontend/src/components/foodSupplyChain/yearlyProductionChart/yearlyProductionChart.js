@@ -25,7 +25,7 @@ class ChartComponent extends Component {
       }
     }
     if (this.props.Commodity3.length > 0) {
-      for (index in this.props.Commodity2) {
+      for (index in this.props.Commodity3) {
         dataPoints3.push({
           y: this.props.Commodity3[index].yearlyValue,
           x: this.props.Commodity3[index].year

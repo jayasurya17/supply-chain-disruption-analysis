@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import './yearlyProduction.css'
 import Select from 'react-select'
+import { Alert } from 'react-bootstrap'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import ChartComponent from './yearlyProductionChart'
 import listOfStates from '../../../constants/stateNames'
 import year from '../../../constants/year'
+import DownloadYearlyProduction from './downloadYearlyProduction'
 
 class FoodSupplyHoliday extends Component {
   componentDidMount () {
@@ -15,11 +17,15 @@ class FoodSupplyHoliday extends Component {
       const allCategories = res.data
       this.setState({ allCategories })
     })
-    console.log('user', this.props.user);
+    if (this.props.user.jwtToken) {
+      console.log('user in download', this.props.user)
+    } else {
+      console.log('None')
+    }
   }
 
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       allCategories: [],
       allCommodities: [],
@@ -93,7 +99,7 @@ class FoodSupplyHoliday extends Component {
             category: this.state.selectedCategories.value,
             commodity: this.state.selectedCommodities[index].value
           }
-        }) 
+        })
         .then(res => {
           let local = []
           for (let each in res.data) {
@@ -244,6 +250,19 @@ class FoodSupplyHoliday extends Component {
           </div>
         ))
 
+    let downloadOption = this.props.user.jwtToken ? (
+      <DownloadYearlyProduction
+        Commodity1={this.state.Commodity1}
+        Commodity2={this.state.Commodity2}
+        Commodity3={this.state.Commodity3}
+        yearRange={this.state.yearRange}
+      ></DownloadYearlyProduction>
+    ) : (
+      <Alert variant='dark'>
+        Please Log In to download the information presented in the chart
+      </Alert>
+    )
+
     return (
       <div>
         <div className='row m-5'>
@@ -296,6 +315,7 @@ class FoodSupplyHoliday extends Component {
           </p>
         ) : (
           <div className='m-5'>
+            {downloadOption}
             <ChartComponent
               Commodity1={this.state.Commodity1}
               Commodity2={this.state.Commodity2}
