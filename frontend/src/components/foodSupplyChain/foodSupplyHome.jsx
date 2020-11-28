@@ -30,16 +30,16 @@ const FoodSupplyHome = () => {
           <DisasterBasedAnalysis user={user} />
         </TabPane>
         <TabPane tab='Quarterly analysis' key='2'>
-          <QuarterlyDifference />
+          <QuarterlyDifference user={user} />
         </TabPane>
         <TabPane tab='Yearly food production' key='3'>
           <FoodSupplyDashboard user={user} />
         </TabPane>
         <TabPane tab='Disasters heat map' key='4'>
-          <DisasterPerStateAnalysis />
+          <DisasterPerStateAnalysis user={user} />
         </TabPane>
         <TabPane tab='Crops produced per state' key='5'>
-          <CropsPerState />
+          <CropsPerState user={user} />
         </TabPane>
       </Tabs>
     </div>
