@@ -82,6 +82,7 @@ function* getUser(action) {
     }
 }
 
+// eslint-disable-next-line
 function* logOut(action) {
     try {
         cookies.remove('access_token', { path: '/', domain: 'localhost' });

@@ -117,14 +117,14 @@ class FoodSupplyHoliday extends Component {
       units = []
 
     for (index in this.state.selectedCommodities) {
-      await axios
+      let res = await axios
         .get(`http://localhost:9000/filters/units`, {
           params: {
             category: this.state.selectedCategories.value,
             commodity: this.state.selectedCommodities[index].value
           }
         })
-        .then(res => {
+        // .then(res => {
           let local = []
           for (let each in res.data) {
             local.push({
@@ -140,7 +140,7 @@ class FoodSupplyHoliday extends Component {
               [this.state.selectedCommodities[index].value]: res.data[0]
             })
           })
-        })
+        // })
       let temp = this.state.selected
       let queryParams = this.getQueryParams(opt, temp)
       let response = await axios.get(
@@ -228,9 +228,9 @@ class FoodSupplyHoliday extends Component {
           state: this.state.selectedStates.value
         }
       })
-      .then(res => {
-        const selectedCommodities = res.data
-      })
+    //   .then(res => {
+    //     const selectedCommodities = res.data
+    //   })
   }
 
   render () {
@@ -238,9 +238,9 @@ class FoodSupplyHoliday extends Component {
       index,
       stateName,
       category = [],
-      categoryName,
-      units = [],
-      unitName
+      categoryName
+    //   units = [],
+    //   unitName
     for (index in this.state.allStates) {
       stateName = this.state.allStates[index]
       allStates.push({ label: stateName, value: stateName })

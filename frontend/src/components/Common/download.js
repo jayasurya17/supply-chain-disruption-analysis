@@ -1,25 +1,27 @@
-import React, { Component } from 'react'
+import React from 'react'
+// import React, { Component } from 'react'
 import CsvDownloader from 'react-csv-downloader'
 import { useSelector, shallowEqual } from 'react-redux'
 import ProfileSelectors from '../../../src/store/features/profile/selectors'
 import { Alert } from 'react-bootstrap'
 
-class DownloadData extends Component {
+// class DownloadData extends Component {
+const DownloadData = () => {
+    
+    const { user } = useSelector(
+        state => ({
+            user: ProfileSelectors.user(state)
+        }),
+        shallowEqual
+    )
 
-    render() {
+    // render() {
 
-
-        const { user } = useSelector(
-            state => ({
-                user: ProfileSelectors.user(state)
-            }),
-            shallowEqual
-        )
 
         if (!user.jwtToken) {
             return (
                 <Alert variant='dark'>
-                    Please Log In to download the information presented in the chart
+                    Please login to download the information presented in the chart
                 </Alert>
             )
         }
@@ -40,7 +42,7 @@ class DownloadData extends Component {
                 </CsvDownloader>
             </div>
         )
-    }
+    // }
 }
 //export DownloadData Component
 export default DownloadData
