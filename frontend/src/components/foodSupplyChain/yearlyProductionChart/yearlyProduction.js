@@ -38,12 +38,6 @@ class FoodSupplyHoliday extends Component {
           this.setState({ allCommodities: chosenCategories })
         }
       })
-
-    if (this.props.user.jwtToken) {
-      console.log('user in download', this.props.user)
-    } else {
-      console.log('None')
-    }
   }
 
   constructor (props) {
@@ -117,30 +111,29 @@ class FoodSupplyHoliday extends Component {
       units = []
 
     for (index in this.state.selectedCommodities) {
-      let res = await axios
-        .get(`http://localhost:9000/filters/units`, {
-          params: {
-            category: this.state.selectedCategories.value,
-            commodity: this.state.selectedCommodities[index].value
-          }
+      let res = await axios.get(`http://localhost:9000/filters/units`, {
+        params: {
+          category: this.state.selectedCategories.value,
+          commodity: this.state.selectedCommodities[index].value
+        }
+      })
+      // .then(res => {
+      let local = []
+      for (let each in res.data) {
+        local.push({
+          label: res.data[each],
+          value: res.data[each],
+          commodity: this.state.selectedCommodities[index].value,
+          index: index
         })
-        // .then(res => {
-          let local = []
-          for (let each in res.data) {
-            local.push({
-              label: res.data[each],
-              value: res.data[each],
-              commodity: this.state.selectedCommodities[index].value,
-              index: index
-            })
-          }
-          units[index] = local
-          this.setState({
-            selected: Object.assign({}, this.state.selected, {
-              [this.state.selectedCommodities[index].value]: res.data[0]
-            })
-          })
-        // })
+      }
+      units[index] = local
+      this.setState({
+        selected: Object.assign({}, this.state.selected, {
+          [this.state.selectedCommodities[index].value]: res.data[0]
+        })
+      })
+      // })
       let temp = this.state.selected
       let queryParams = this.getQueryParams(opt, temp)
       let response = await axios.get(
@@ -218,16 +211,15 @@ class FoodSupplyHoliday extends Component {
     }
   }
   getInfo = async () => {
-    await axios
-      .get('http://localhost:9000/analysis/historicalDataByState', {
-        params: {
-          category: this.state.selectedCategories.value,
-          commodity: this.state.selectedCommodities.value,
-          startYear: this.state.yearRange.min,
-          endYear: this.state.yearRange.max,
-          state: this.state.selectedStates.value
-        }
-      })
+    await axios.get('http://localhost:9000/analysis/historicalDataByState', {
+      params: {
+        category: this.state.selectedCategories.value,
+        commodity: this.state.selectedCommodities.value,
+        startYear: this.state.yearRange.min,
+        endYear: this.state.yearRange.max,
+        state: this.state.selectedStates.value
+      }
+    })
     //   .then(res => {
     //     const selectedCommodities = res.data
     //   })
@@ -273,7 +265,6 @@ class FoodSupplyHoliday extends Component {
             ></Select>
           </div>
         ))
-
 
     return (
       <div>
@@ -328,10 +319,10 @@ class FoodSupplyHoliday extends Component {
         ) : (
           <div className='m-5'>
             <DownloadYearlyProduction
-                Commodity1={this.state.Commodity1}
-                Commodity2={this.state.Commodity2}
-                Commodity3={this.state.Commodity3}
-                yearRange={this.state.yearRange}
+              Commodity1={this.state.Commodity1}
+              Commodity2={this.state.Commodity2}
+              Commodity3={this.state.Commodity3}
+              yearRange={this.state.yearRange}
             />
             <ChartComponent
               Commodity1={this.state.Commodity1}
