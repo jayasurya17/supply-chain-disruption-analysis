@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import 'react-input-range/lib/css/index.css'
-import { Alert } from 'react-bootstrap'
 import QuarterlyDifferenceTable from './quarterlyDifferenceTable'
 import QuarterlyDifferenceDownloader from './downloadQuarterlyData'
 import year from '../../../constants/year'
@@ -204,20 +203,6 @@ class QuarterlyDifference extends Component {
       allStates.push(<option value={state}>{state}</option>)
     }
 
-    let downloadOption = this.props.user.jwtToken ? (
-      <QuarterlyDifferenceDownloader
-        data={this.state.tableData}
-        state={this.state.selectedState}
-        commodity={this.state.selectedCommodity}
-        unit={this.state.selectedUnit}
-        year={year.year.endYear}
-      />
-    ) : (
-      <Alert variant='dark'>
-        Please Log In to download the information presented in the chart
-      </Alert>
-    )
-
     return (
       <div className='m-2'>
         <div className='row'>
@@ -275,7 +260,14 @@ class QuarterlyDifference extends Component {
           <p className='display-4 text-center m-5'>Loading data...</p>
         ) : (
           <div className='m-5'>
-            {downloadOption}
+
+            <QuarterlyDifferenceDownloader
+                data={this.state.tableData}
+                state={this.state.selectedState}
+                commodity={this.state.selectedCommodity}
+                unit={this.state.selectedUnit}
+                year={year.year.endYear}
+            />
             <QuarterlyDifferenceTable data={this.state.tableData} />
           </div>
         )}

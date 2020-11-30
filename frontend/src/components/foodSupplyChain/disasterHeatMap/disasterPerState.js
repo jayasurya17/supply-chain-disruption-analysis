@@ -3,7 +3,6 @@ import axios from 'axios'
 // import '../foodSupplyDashboard.css'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
-import { Alert } from 'react-bootstrap'
 import DisasterStateComponent from './disasterStateComponent'
 import DisasterTable from '../disastersTable'
 import year from '../../../constants/year'
@@ -97,17 +96,6 @@ class DisasterBasedAnalysis extends Component {
     for (var disaster of this.state.allDisasters) {
       allDisasters.push(<option value={disaster}>{disaster}</option>)
     }
-    let downloadOption = this.props.user.jwtToken ? (
-      <DownloadDisasterData
-        disasterCount={this.state.disasterCount}
-        disaster={this.state.selectedDisaster}
-        yearRange={this.state.yearRange}
-      />
-    ) : (
-      <Alert variant='dark'>
-        Please Log In to download the information presented in the chart
-      </Alert>
-    )
 
     return (
       <div>
@@ -145,7 +133,12 @@ class DisasterBasedAnalysis extends Component {
         </div>
 
         <div className='m-5'>
-          {downloadOption}
+            
+        <DownloadDisasterData
+            disasterCount={this.state.disasterCount}
+            disaster={this.state.selectedDisaster}
+            yearRange={this.state.yearRange}
+        />
           <DisasterStateComponent
             disasterCount={this.state.disasterCount}
             yearRange={this.state.yearRange}

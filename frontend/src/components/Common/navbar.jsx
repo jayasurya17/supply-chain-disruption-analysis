@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Dropdown, Menu, message } from 'antd';
+import { Button, Dropdown, Menu } from 'antd';
 
 import ProfileOperations from '../../store/features/profile/operations';
 import './navbar.css';
@@ -25,6 +25,8 @@ const Navbar = (props) => {
         switch(e.key) {
             case '2':
                 return handleLogOut();
+            default:
+                return null
         }
     }
 

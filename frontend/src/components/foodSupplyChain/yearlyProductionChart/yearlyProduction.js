@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import './yearlyProduction.css'
 import Select from 'react-select'
-import { Alert } from 'react-bootstrap'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import ChartComponent from './yearlyProductionChart'
@@ -275,18 +274,6 @@ class FoodSupplyHoliday extends Component {
           </div>
         ))
 
-    let downloadOption = this.props.user.jwtToken ? (
-      <DownloadYearlyProduction
-        Commodity1={this.state.Commodity1}
-        Commodity2={this.state.Commodity2}
-        Commodity3={this.state.Commodity3}
-        yearRange={this.state.yearRange}
-      ></DownloadYearlyProduction>
-    ) : (
-      <Alert variant='dark'>
-        Please Log In to download the information presented in the chart
-      </Alert>
-    )
 
     return (
       <div>
@@ -340,7 +327,12 @@ class FoodSupplyHoliday extends Component {
           </p>
         ) : (
           <div className='m-5'>
-            {downloadOption}
+            <DownloadYearlyProduction
+                Commodity1={this.state.Commodity1}
+                Commodity2={this.state.Commodity2}
+                Commodity3={this.state.Commodity3}
+                yearRange={this.state.yearRange}
+            />
             <ChartComponent
               Commodity1={this.state.Commodity1}
               Commodity2={this.state.Commodity2}

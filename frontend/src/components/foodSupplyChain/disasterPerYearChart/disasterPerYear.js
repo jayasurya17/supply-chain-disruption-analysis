@@ -15,7 +15,7 @@ class DisasterBasedAnalysis extends Component {
       allStates: [],
       selectedCategories: [],
       selectedCommodities: [],
-      selectedStates: null,
+      selectedStates: {},
       units: [],
       selectedUnit: {},
       year: year.year.endYear,
@@ -57,7 +57,7 @@ class DisasterBasedAnalysis extends Component {
           allCommodities: commoditiesResponse.data,
           selectedCommodities: [],
           allStates: [],
-          selectedStates: null,
+          selectedStates: {},
           units: []
         })
       })
@@ -91,7 +91,7 @@ class DisasterBasedAnalysis extends Component {
     if (!opt) {
       this.setState({
         allStates: [],
-        selectedStates: null,
+        selectedStates: {},
         selectedCommodities: [],
         units: []
       })
