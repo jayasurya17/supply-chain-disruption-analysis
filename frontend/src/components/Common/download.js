@@ -6,7 +6,7 @@ import ProfileSelectors from '../../../src/store/features/profile/selectors'
 import { Alert } from 'react-bootstrap'
 
 // class DownloadData extends Component {
-const DownloadData = () => {
+const DownloadData = (props) => {
     
     const { user } = useSelector(
         state => ({
@@ -30,9 +30,12 @@ const DownloadData = () => {
             <div>
                 <CsvDownloader
                     className='m-4'
-                    filename={this.props.filename}
-                    columns={this.props.columns}
-                    datas={this.props.datas}
+                    filename={props.filename}
+                    columns={props.columns}
+                    datas={props.datas}
+                    // filename={this.props.filename}
+                    // columns={this.props.columns}
+                    // datas={this.props.datas}
                     text='DOWNLOAD'
                     suffix={true}
                 >
