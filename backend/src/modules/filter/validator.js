@@ -71,5 +71,39 @@ module.exports = {
 		model: "statesByCategoryAndCommodityAndUnitAndDisasterType",
 		group: "Filter",
 		description: "Get states filtered based on selected disaster type, category, commodity and unit"
+	},
+	statesByExportCommodities: {
+		query: {
+			commodity: Joi.string().required(),
+		},
+		model: "statesByExportCommodities",
+		group: "Filter",
+		description: "Get list of states based on selected commodity for food export data"
+	},
+	statesByImportCommodities: {
+		query: {
+			commodity: Joi.string().required(),
+		},
+		model: "statesByImportCommodities",
+		group: "Filter",
+		description: "Get list of states based on selected commodity for food import data"
+	},
+	yearByStatesAndExportCommodities: {
+		query: {
+			commodity: Joi.string().required(),
+			state: Joi.string().required()
+		},
+		model: "yearByStatesAndExportCommodities",
+		group: "Filter",
+		description: "Get list of years based on selected commodity and state for food export data"
+	},
+	yearByStatesAndImportCommodities: {
+		query: {
+			commodity: Joi.string().required(),
+			state: Joi.string().required()
+		},
+		model: "yearByStatesAndImportCommodities",
+		group: "Filter",
+		description: "Get list of years based on selected commodity and state for food import data"
 	}
 }

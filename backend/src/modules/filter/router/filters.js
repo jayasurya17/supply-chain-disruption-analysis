@@ -15,5 +15,11 @@ router.get('/categoriesByDisasterType', validation(validator['categoriesByDisast
 router.get('/commoditiesByCategoryAndDisasterType', validation(validator['commoditiesByCategoryAndDisasterType']), filterController.getCommoditiesByCategoryAndDisasterType)
 router.get('/unitsByCategoryAndCommodityAndDisasterType', validation(validator['unitsByCategoryAndCommodityAndDisasterType']), filterController.getUnitsByCategoryAndCommodityAndDisasterType)
 router.get('/statesByCategoryAndCommodityAndUnitAndDisasterType', validation(validator['statesByCategoryAndCommodityAndUnitAndDisasterType']), filterController.getStatesByCategoryAndCommodityAndUnitAndDisasterType)
+router.get('/exportCommodities', filterController.getExportCommodities)
+router.get('/importCommodities', filterController.getImportCommodities)
+router.get('/statesByExportCommodities', filterController.getStatesByExportCommodity)
+router.get('/statesByImportCommodities', filterController.getStatesByImportCommodity)
+router.get('/yearByStatesAndExportCommodities', filterController.getYearByStatesAndExportCommodities)
+router.get('/yearByStatesAndImportCommodities', filterController.getYearByStatesAndImportCommodities)
 
 module.exports = router

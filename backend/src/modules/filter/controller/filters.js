@@ -1,6 +1,8 @@
 'use strict'
 
 import AnalyzedFoodProductionData from '../../../models/mongoDB/analyzedFoodProductionData'
+import AnalyzedFoodExportData from '../../../models/mongoDB/analyzedFoodExportData'
+import AnalyzedFoodImportData from '../../../models/mongoDB/analyzedFoodImportData'
 import constants from '../../../utils/constants'
 
 /**
@@ -265,3 +267,160 @@ exports.getStatesByCategoryAndCommodityAndUnitAndDisasterType = async (req, res)
 	}
 }
 
+/**
+ * Get list of commodity filter values for food export data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getExportCommodities = async (req, res) => {
+	try {
+		let resData = await AnalyzedFoodExportData.find().distinct('commodity')
+
+		if (resData && resData.length > 0) {
+			resData.push(constants.ALL_CATEGORIES)
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(resData)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting food export commodity filter values ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+/**
+ * Get list of commodity filter values for food import data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getImportCommodities = async (req, res) => {
+	try {
+		let resData = await AnalyzedFoodImportData.find().distinct('commodity')
+
+		if (resData && resData.length > 0) {
+			resData.push(constants.ALL_CATEGORIES)
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(resData)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting food import commodity filter values ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+/**
+ * Get list of state based on selected commodity for food export data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getStatesByExportCommodity = async (req, res) => {
+	try {
+		let commodity = req.query.commodity,
+			filter = {}
+
+		filter['commodity'] = commodity
+
+		let values = await AnalyzedFoodExportData.find(filter).distinct('state')
+
+		if (values && values.length > 0) {
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting list of states based on selected export commodity ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+/**
+ * Get list of state based on selected commodity for food import data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getStatesByImportCommodity = async (req, res) => {
+	try {
+		let commodity = req.query.commodity,
+			filter = {}
+
+		filter['commodity'] = commodity
+
+		let values = await AnalyzedFoodImportData.find(filter).distinct('state')
+
+		if (values && values.length > 0) {
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting list of states based on selected import commodity ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+/**
+ * Get list of years based on selected state and commodity for food export data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getYearByStatesAndExportCommodities = async (req, res) => {
+	try {
+		let commodity = req.query.commodity,
+			state = req.query.state,
+			filter = {}
+
+			filter['commodity'] = commodity
+			filter['state'] = state
+
+		let values = await AnalyzedFoodExportData.find(filter).distinct('year')
+
+		if (values && values.length > 0) {
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting list of years based on selected export commodity and state ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+/**
+ * Get list of years based on selected state and commodity for food import data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getYearByStatesAndImportCommodities = async (req, res) => {
+	try {
+		let commodity = req.query.commodity,
+			state = req.query.state,
+			filter = {}
+
+			filter['commodity'] = commodity
+			filter['state'] = state
+
+		let values = await AnalyzedFoodImportData.find(filter).distinct('year')
+
+		if (values && values.length > 0) {
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting list of years based on selected import commodity and state ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
