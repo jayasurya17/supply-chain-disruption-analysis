@@ -18,7 +18,7 @@ let csvStream = fastcsv
       commodity: data[1],
       continent: data[2],
       year: Number(data[3]),
-      value: data[4]
+      value: Number(data[4].replace(/,/g, ''))
     });
   })
   .on("end", function() {
