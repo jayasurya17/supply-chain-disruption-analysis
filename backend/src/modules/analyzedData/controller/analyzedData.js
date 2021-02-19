@@ -489,3 +489,51 @@ exports.getFoodShareByContinent = async (req, res) => {
             .send(error.message)
     }
 }
+
+/**
+ * Get food export/import share values of a commodity for each state for every year.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getFoodShareByYear = async (req, res) => {
+    try {
+        let commodity = req.query.commodity,
+            state = req.query.state
+
+        let filter = [{
+            $match:
+            {
+                commodity: commodity,
+                state: state
+            }
+        },
+        { $group: { _id: "$year", count: { $sum: "$value" } } }
+        ]
+
+        let exportData = await AnalyzedFoodExportData.aggregate(filter),
+            importData = await AnalyzedFoodImportData.aggregate(filter);
+
+        let response = {},
+            exportResponse = {},
+            importResponse = {}
+
+        for (let row of exportData) {
+            exportResponse[row._id] = row.count
+        }
+
+        for (let row of importData) {
+            importResponse[row._id] = row.count
+        }
+
+        response['export'] = exportResponse
+        response['import'] = importResponse
+
+        return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(response)
+
+    } catch (error) {
+        console.log(`Error while getting food export/import share values of a commodity for each state for every year ${error}`)
+        return res
+            .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+            .send(error.message)
+    }
+}

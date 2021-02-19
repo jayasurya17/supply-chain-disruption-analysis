@@ -14,5 +14,6 @@ router.get('/foodProductionByState', validation(validator['foodProductionByState
 router.get('/covidFoodProductionDisruptionByState', validation(validator['covidFoodProductionDisruptionByState']), analysisController.getCovidFoodProductionDisruptionByState)
 
 router.get('/foodShareByContinent', validation(validator['foodShareByContinent']), analysisController.getFoodShareByContinent)
+router.get('/foodShareByYear', validation(validator['foodShareByYear']), analysisController.getFoodShareByYear)
 
 module.exports = router

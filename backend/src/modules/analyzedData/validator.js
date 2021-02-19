@@ -86,8 +86,17 @@ module.exports = {
 			endYear: Joi.number().required(),
 			type: Joi.string().required()
 		},
-		model: "foodExportShareByContinent",
+		model: "foodShareByContinent",
 		group: "AnalyzedData",
 		description: "Get food export/import share values of a commodity from every continent for each state for a certain year range"
+	},
+	foodShareByYear: {
+		query: {
+			state: Joi.string().required(),
+			commodity: Joi.string().required()
+		},
+		model: "foodShareByYear",
+		group: "AnalyzedData",
+		description: "Get food export/import share values of a commodity for each state for every year"
 	}
 }
