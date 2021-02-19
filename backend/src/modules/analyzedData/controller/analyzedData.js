@@ -1,6 +1,8 @@
 'use strict'
 
 import AnalyzedFoodProductionData from '../../../models/mongoDB/analyzedFoodProductionData'
+import AnalyzedFoodExportData from '../../../models/mongoDB/analyzedFoodExportData'
+import AnalyzedFoodImportData from '../../../models/mongoDB/analyzedFoodImportData'
 import constants from '../../../utils/constants'
 import stateConstants from '../../../utils/stateConstants'
 import csv from 'csv-parser'
@@ -426,6 +428,62 @@ exports.getCovidFoodProductionDisruptionByState = async (req, res) => {
 
     } catch (error) {
         console.log(`Error while getting food disruption percentage in production values of a commodity for a given unit for each state for 2015-2020 ${error}`)
+        return res
+            .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+            .send(error.message)
+    }
+}
+
+/**
+ * Get food export/import share values of a commodity from every continent for each state for a certain year range.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getFoodShareByContinent = async (req, res) => {
+    try {
+        let commodity = req.query.commodity,
+            state = req.query.state,
+            startYear = req.query.startYear,
+            endYear = req.query.endYear,
+            type = req.query.type,
+            result
+
+        if (startYear > endYear) {
+            return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Start year should be less than or equal to end year")
+        }
+
+        let filter = [{
+            $match:
+            {
+                year: {
+                    $gte: startYear, $lte: endYear
+                },
+                commodity: commodity,
+                state: state
+            }
+        },
+        { $group: { _id: "$continent", count: { $sum: "$value" } } }
+        ]
+
+        if(type === constants.EXPORT) {
+            result = await AnalyzedFoodExportData.aggregate(filter);
+        } else if (type === constants.IMPORT) {
+            result = await AnalyzedFoodImportData.aggregate(filter);
+        } else {
+            return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Type should be valid")
+        }
+         
+
+        let response = {}
+
+        for (let row of result) {
+            response[row._id] = row.count
+        }
+
+        return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(response)
+
+    } catch (error) {
+        console.log(`Error while getting food export/import share values of a commodity from every continent for each state for a certain year range ${error}`)
         return res
             .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
             .send(error.message)

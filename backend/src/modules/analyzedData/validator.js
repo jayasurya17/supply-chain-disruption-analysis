@@ -1,6 +1,7 @@
 `use strict`
 
 import Joi from 'joi'
+import { join } from 'path'
 
 module.exports = {
 	historicalData: {
@@ -76,5 +77,17 @@ module.exports = {
 		model: "covidFoodProductionDisruptionByState",
 		group: "AnalyzedData",
 		description: "Get food disruption percentage for production values of a commodity for a given unit for each state for 2015-2020"
+	},
+	foodShareByContinent: {
+		query: {
+			state: Joi.string().required(),
+			commodity: Joi.string().required(),
+			startYear: Joi.number().required(),
+			endYear: Joi.number().required(),
+			type: Joi.string().required()
+		},
+		model: "foodExportShareByContinent",
+		group: "AnalyzedData",
+		description: "Get food export/import share values of a commodity from every continent for each state for a certain year range"
 	}
 }
