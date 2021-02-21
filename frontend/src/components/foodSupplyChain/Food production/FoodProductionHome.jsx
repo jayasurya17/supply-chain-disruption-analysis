@@ -1,16 +1,16 @@
 import React from 'react'
 import { Tabs } from 'antd'
-import FoodSupplyDashboard from './yearlyProductionChart/yearlyProduction'
-import DisasterBasedAnalysis from './disasterPerYearChart/disasterPerYear'
-import DisasterPerStateAnalysis from './disasterHeatMap/disasterPerState'
-import CropsPerState from './cropsPerStateHeatMap/cropsPerState'
-import QuarterlyDifference from './quarterlyDifference/quarterlyDifference'
+import FoodSupplyDashboard from '../yearlyProductionChart/yearlyProduction'
+import DisasterBasedAnalysis from '../disasterPerYearChart/disasterPerYear'
+import DisasterPerStateAnalysis from '../disasterHeatMap/disasterPerState'
+import CropsPerState from '../cropsPerStateHeatMap/cropsPerState'
+import QuarterlyDifference from '../quarterlyDifference/quarterlyDifference'
 
-import './FoodSupplyHome.css'
+import './FoodProductionHome.css'
 
 const { TabPane } = Tabs
 
-const FoodSupplyHome = () => {
+const FoodProductionHome = () => {
   function callback (key) {
     // console.log(key);
   }
@@ -38,4 +38,4 @@ const FoodSupplyHome = () => {
   )
 }
 
-export default FoodSupplyHome
+export default FoodProductionHome

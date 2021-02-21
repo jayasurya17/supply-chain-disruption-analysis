@@ -12,7 +12,7 @@ import ErrorPage from './Authentication/errorPage';
 import Navbar from './Common/navbar';
 // import Footer from './Common/footer';
 import { useEffect } from 'react';
-import FoodSupplyHome from './foodSupplyChain/foodSupplyHome';
+import FoodSupplyHome from './foodSupplyChain/index';
 
 //Create a Main Component
 const Main = (props) => {
