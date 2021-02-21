@@ -3,7 +3,7 @@ import math
 from os import listdir
 
 def load_data(filename):
-    return pd.read_csv(filename)
+    return pd.read_csv(filename, low_memory=False)
 
 def save_to_csv(df, filename):
 	df.to_csv(filename, index=False)
@@ -12,17 +12,17 @@ def process_data(drugData):
 
 	drugData = drugData[drugData['State'] != "XX"]
 	drugData = drugData[drugData['Utilization Type'] == "FFSU"]
-	drugData = drugData[drugData['Product Name'].isin(["V-C FORTE", "AZITHROMYC", "RITONAVIR", "CHLORHEXID", "CHLOROQUIN", "FLUXETINE", "LOPINAVIR", "ACTEMRA SC", "ORENITRAM", "ACTEMRA", "PREDNISONE"])].reset_index()
+	drugData = drugData[drugData['Product Name'].isin(['FLUOXETINE', 'CHLORHEXID', 'PREDNISONE', 'DEXAMETHAS', 'PROMETHAZI', 'WARFARIN S', 'HEPARIN SO'])].reset_index()
 	drugData.drop(['index', 'Utilization Type', 'Labeler Code', 'Product Code', 'Package Size', 'Supression Used', 'Suppression Used', 'ndc', 'Number of Prescriptions',  'Total Amount Reimbursed', 'Medicaid Amount Reimbursed', 'Non Medicaid Amount Reimbursed', 'Quarter Begin', 'Quarter Begin Date', 'Latitude', 'Longitude', 'Location', 'NDC'], axis = 1, errors='ignore', inplace = True)
-	drugData['Units Reimbursed'].fillna(0, inplace = True)
+	# drugData['Units Reimbursed'].fillna(0, inplace = True)
+	drugData = drugData.dropna(axis=0, subset=['Units Reimbursed'])
 	drugData['Product Name'] = drugData['Product Name'].str.upper() 
+	drugData = drugData.groupby(['State', 'Year', 'Quarter', 'Product Name'])['Units Reimbursed'].sum().reset_index()
 
 	return drugData
 
 
 def find_percent_change(df, row):
-	if row['Year'] == 1996:
-		return row
 
 	df = df.loc[(df['Year'] == row['Year'] - 1) & (df['Quarter'] == row['Quarter']) & (df['State'] == row['State']) & (df['Product Name'] == row['Product Name'])].reset_index()
 	if len(df) > 0:
@@ -48,18 +48,17 @@ if __name__ == "__main__":
 	print ("Loading data from file..")
 	allData = pd.DataFrame()
 
-	count = 0
-	for file in listdir(directory):
+	count = pd.Series([], dtype = int)
+
+	for index, file in enumerate(listdir(directory)):
 		print ("Processing file: ", file)
 
 		drugData = load_data(directory + file)
 		drugData = process_data(drugData)
 		allData = allData.append(drugData)
-		count += 1
-		if count == 3:
-			break
 
-	print (allData)
+
+	print ("Calculating percentage change")
 	allData = add_percent_change(allData)
 	print (allData)
 	save_to_csv(allData, "datasets/medicine_quarterly.csv")
