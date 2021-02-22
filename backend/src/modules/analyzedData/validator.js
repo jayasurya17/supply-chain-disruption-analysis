@@ -98,5 +98,14 @@ module.exports = {
 		model: "foodShareByYear",
 		group: "AnalyzedData",
 		description: "Get food export/import share values of a commodity for each state for every year"
+	},
+	quarterlyMedicineUtilizationDisruptionByState: {
+		query: {
+			commodity: Joi.string().required(),
+			state: Joi.string().required()
+		},
+		model: "quarterlyMedicineUtilizationDisruptionByState",
+		group: "AnalyzedData",
+		description: "Get medicine disruption percentage for utilization values of a commodity for each state for 2001-2020 on a quarterly basis"
 	}
 }
