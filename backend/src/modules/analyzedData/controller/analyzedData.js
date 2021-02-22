@@ -537,3 +537,65 @@ exports.getFoodShareByYear = async (req, res) => {
             .send(error.message)
     }
 }
+
+/**
+* Get medicine disruption percentage for utilization values of a commodity for each state for 2001-2020 on a quarterly basis.
+* @param  {Object} req request object
+* @param  {Object} res response object
+*/
+exports.getQuarterlyMedicineUtilizationDisruptionByState = async (req, res) => {
+    try {
+        let commodity = req.query.commodity,
+            state = req.query.state
+
+        let data = {}
+
+        data[constants.YEAR[2001]] = {}
+        data[constants.YEAR[2002]] = {}
+        data[constants.YEAR[2003]] = {}
+        data[constants.YEAR[2004]] = {}
+        data[constants.YEAR[2005]] = {}
+        data[constants.YEAR[2006]] = {}
+        data[constants.YEAR[2007]] = {}
+        data[constants.YEAR[2008]] = {}
+        data[constants.YEAR[2009]] = {}
+        data[constants.YEAR[2010]] = {}
+        data[constants.YEAR[2011]] = {}
+        data[constants.YEAR[2012]] = {}
+        data[constants.YEAR[2013]] = {}
+        data[constants.YEAR[2014]] = {}
+        data[constants.YEAR[2015]] = {}
+        data[constants.YEAR[2016]] = {}
+        data[constants.YEAR[2017]] = {}
+        data[constants.YEAR[2018]] = {}
+        data[constants.YEAR[2019]] = {}
+        data[constants.YEAR[2020]] = {}
+
+        fs.createReadStream(`src/python/datasets/medicine_quarterly.csv`)
+            .pipe(csv())
+            .on('data', (row) => {
+                if (row.state === state && row.commodity === commodity ) {
+                    let quarterObj = {}
+
+                    if (row.value && row.percent) {
+                        quarterObj = {
+                            'value': row.value,
+                            'percent': row.percent
+                        }
+                    }
+
+                    data[row.year][row.quarter] = quarterObj
+                }
+            })
+            .on('end', () => {
+                console.log('CSV file successfully processed');
+                return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(data)
+            });
+
+    } catch (error) {
+        console.log(`Error while getting medicine disruption percentage for utilization values of a commodity for each state for 2001-2020 on a quarterly basis ${error}`)
+        return res
+            .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+            .send(error.message)
+    }
+}
