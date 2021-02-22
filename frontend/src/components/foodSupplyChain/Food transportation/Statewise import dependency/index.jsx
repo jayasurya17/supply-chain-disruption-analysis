@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Row, Col, Select, Button } from 'antd'
 import { Doughnut } from 'react-chartjs-2';
-import { set } from 'ramda';
 
 const { Option } = Select
 
@@ -14,12 +13,7 @@ const StatewiseImportDependacy = () => {
   const [selectedState, setSelectedState] = useState('');
   const [years, setYears] = useState([]);
   const [selectedYear, setSelectedYear] = useState('');
-  const [importData, setImportData] = useState({});
   const [chartData, setChartData] = useState({});
-
-  function callback (key) {
-    // console.log(key);
-  }
 
   const getAllCommodities = () => {
     axios.get(
@@ -42,14 +36,13 @@ const StatewiseImportDependacy = () => {
     setSelectedYear(value);
   }
 
+  /* Clears all the data except available commodities */
   const onClearClick = () => {
-    setCommodities([]);
     setSelectedCommodity('');
     setStates([]);
     setSelectedState('');
     setYears([]);
     setSelectedYear('');
-    setImportData({});
     setChartData({});
   }
 
@@ -57,6 +50,7 @@ const StatewiseImportDependacy = () => {
     getAllCommodities();
   }, []);
 
+  /* We clear all the data in the lower hierarchy when an item in higher hierarchy is changed */
   useEffect(() => {
     if(selectedCommodity) {
       axios.get(
@@ -64,6 +58,10 @@ const StatewiseImportDependacy = () => {
       )
       .then(statesResponse => {
         setStates(statesResponse.data);
+        setSelectedState('');
+        setYears([]);
+        setSelectedYear('');
+        setChartData({});
       });
     }
   }, [selectedCommodity])
@@ -75,6 +73,9 @@ const StatewiseImportDependacy = () => {
       )
       .then(yearsResponse => {
         setYears(yearsResponse.data);
+        setSelectedYear('');
+
+        setChartData({});
       });
     }
   }, [selectedState])
@@ -98,7 +99,8 @@ const StatewiseImportDependacy = () => {
               '#C9DE00',
               '#2FDE00',
               '#00A6B4',
-              '#6800B4'
+              '#6800B4',
+              '#F9DE00'
             ],
             data: []
           }, 
@@ -109,7 +111,6 @@ const StatewiseImportDependacy = () => {
           data.datasets[0].data.push(value)
         }
         setChartData(data);
-        setImportData(importResponse.data);
       });
     }
   }, [selectedYear])
