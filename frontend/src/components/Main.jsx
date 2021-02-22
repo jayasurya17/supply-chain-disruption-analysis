@@ -67,12 +67,10 @@ const Main = (props) => {
 					<Navbar user={user} location={props.location.pathname} />
 					{/* <Route path="/" component={Landing} /> */}
 					<Switch>
-                        <Route path="/welcome" component={Welcome} exact={true} />
-						<Route path="/dashboard" component={Dashboard} exact={true} />
+            <Route path="/welcome" component={Welcome} exact={true} />
 						<Route path="/admin/dashboard" component={AdminDashboard} exact={true} />
-
 						<Route path="/food-supply-chain" component={FoodSupplyHome} exact={true} />
-
+            <Route path="/" component={Dashboard} />
 						<Route component={ErrorPage} />
 					</Switch>
 
