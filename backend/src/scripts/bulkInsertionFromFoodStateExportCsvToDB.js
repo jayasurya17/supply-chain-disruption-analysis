@@ -14,6 +14,9 @@ let csvStream = fastcsv
     console.log("data-->", data.length, data[0], data[1], data[2], data[3], data[4])
 
     for (let column = 0; column < 20; column++) {
+        if (data[0] == 'commodity') {
+            continue
+        }
         csvData.push({
             commodity: data[0],
             state: data[1],
@@ -24,7 +27,7 @@ let csvStream = fastcsv
   })
   .on("end", function() {
     // remove the first line: header
-    csvData.shift();
+    // csvData.shift();
 
     console.log(csvData);
 
@@ -36,7 +39,7 @@ let csvStream = fastcsv
 
         client
           .db("cmpe295")
-          .collection("analyzedFoodStateExportData") // change collection name according to your need, use mongodb collection name
+          .collection("analyzedfoodstateexportdatas") // change collection name according to your need, use mongodb collection name
           .insertMany(csvData, (err, res) => {
             if (err) throw err;
 
