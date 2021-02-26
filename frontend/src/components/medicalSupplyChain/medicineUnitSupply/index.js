@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Row, Col, Select, Button } from 'antd'
-import { Line } from 'react-chartjs-2'
+import { Row, Col, Select } from 'antd'
 import './MedicineUnitSupply.css'
 
 //mport { addCommas } from '../../../Utilities/utils'
@@ -14,12 +13,13 @@ import Fusion from '../medicineUnitSupply/Fusion'
 const { Option } = Select
 
 const MedicineUnitSupply = () => {
-  const [medicines, setMedicines] = useState(medicineNames)
+  const [medicines] = useState(medicineNames)
   const [selectedMedicine, setSelectedMedicine] = useState(medicines[0])
-  const [states, setStates] = useState(stateNames)
+  const [states] = useState(stateNames)
   const [selectedState, setSelectedState] = useState(states[0])
-  const [years, setYears] = useState(yearRange)
-  const [selectedYear, setSelectedYear] = useState(years[0])
+  const [years] = useState(yearRange)
+  // eslint-disable-next-line
+  const [setSelectedYear] = useState(years[0])
 
   let chartConfigs = {
     type: 'column2d', // The chart type
@@ -50,7 +50,6 @@ const MedicineUnitSupply = () => {
       .then(unitsSuppliedResponse => {
         console.log(unitsSuppliedResponse)
         let data = []
-        var x = unitsSuppliedResponse.data
         let linkedchart = []
         for (let [key, value] of Object.entries(unitsSuppliedResponse.data)) {
           //console.log(key)
@@ -72,7 +71,7 @@ const MedicineUnitSupply = () => {
             //console.log(key1)
             //console.log(value1)
             drill.linkedchart.data.push({ label: key1, value: value1.value })
-            summedValue += parseInt(value1.value)
+            summedValue += parseInt(value1.value, 10)
           }
           console.log('Summed value for' + key + ' is ' + summedValue)
           linkedchart.push(drill)
@@ -85,7 +84,7 @@ const MedicineUnitSupply = () => {
           //console.log('Drilled', linkedchart)
         }
         let chartDataLocal
-        if (chartData == '') chartDataLocal = chartData
+        if (chartData === '') chartDataLocal = chartData
         else chartDataLocal = chartConfigs
         chartDataLocal.dataSource.data = data
         chartDataLocal.dataSource.linkeddata = linkedchart
@@ -111,9 +110,9 @@ const MedicineUnitSupply = () => {
   const handleSelectedStateChange = async value => {
     setSelectedState(value)
   }
-  const handleSelectedYearChange = async value => {
-    setSelectedYear(value)
-  }
+//   const handleSelectedYearChange = async value => {
+//     setSelectedYear(value)
+//   }
   const handleSelectedMedicineChange = async value => {
     setSelectedMedicine(value)
   }

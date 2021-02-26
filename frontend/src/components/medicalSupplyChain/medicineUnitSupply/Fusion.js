@@ -1,7 +1,9 @@
 //Including react
+// eslint-disable-next-line
 import React, { Component } from 'react'
 
 //Including the react-fusioncharts component
+// eslint-disable-next-line
 import ReactDOM from 'react-dom'
 
 //Including the fusioncharts library
@@ -153,6 +155,7 @@ ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme)
 
 // Trigerred when chart is rendered.
 // Configures the linked charts.
+// eslint-disable-next-line
 const alterChart = chart => {
   chart.configureLink({
     type: 'pie2d',
