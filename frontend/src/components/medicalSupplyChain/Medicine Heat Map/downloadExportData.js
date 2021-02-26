@@ -8,19 +8,19 @@ class DownloadCropsData extends Component {
             displayName: 'State'
         }, {
             id: 'Quantity',
-            displayName: `Number of occurance of ${this.props.disaster} between ${this.props.yearRange.min} and ${this.props.yearRange.max}`
+            displayName: `${this.props.commodity} produced between ${this.props.yearRange.min} and ${this.props.yearRange.max}`
         }];
 
         let datas = [];
-		for (let val in this.props.disasterCount) {
+		for (let val in this.props.exportCount) {
             datas.push({
                 'State': val,
-                'Quantity': this.props.disasterCount[val]
+                'Quantity': this.props.exportCount[val]
             })
         }
         
         return (
-            <DownloadComponent columns={columns} datas={datas} filename="disasters_per_state" />
+            <DownloadComponent columns={columns} datas={datas} filename="medicine_produced_per_state" />
         );
     }
 }

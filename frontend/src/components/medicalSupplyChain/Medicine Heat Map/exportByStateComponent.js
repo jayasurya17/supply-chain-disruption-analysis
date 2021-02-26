@@ -41,8 +41,8 @@ class ExportByStateComponent extends Component {
 		return (
 			<div>
 				<div id="colorGradientDisasters" className="w-100">
-					<span className="text-left">High export</span>
-					<span id="rightAlign">Low export</span>
+					<span className="text-left">High</span>
+					<span id="rightAlign">Low</span>
 				</div>
 				<div className="text-center bg-secondary">
 					{/* Graph goes here */}

@@ -58,7 +58,7 @@ class ExportBasedAnalysis extends Component {
     updateGraph = (commodity, startYear, endYear) => {
         axios
             .get(
-                `/analysis/foodExportByState?commodity=${commodity}&startYear=${startYear}&endYear=${endYear}`
+                `/analysis/medicineUtilizationByState?commodity=${commodity}&startYear=${startYear}&endYear=${endYear}`
             )
             .then(commoditiesByStateResponse => {
                 this.setState({
