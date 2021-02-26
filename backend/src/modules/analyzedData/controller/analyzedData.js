@@ -3,6 +3,7 @@
 import AnalyzedFoodProductionData from '../../../models/mongoDB/analyzedFoodProductionData'
 import AnalyzedFoodExportData from '../../../models/mongoDB/analyzedFoodExportData'
 import AnalyzedFoodImportData from '../../../models/mongoDB/analyzedFoodImportData'
+import AnalyzedFoodStateExportData from '../../../models/mongoDB/analyzedFoodStateExportData'
 import constants from '../../../utils/constants'
 import stateConstants from '../../../utils/stateConstants'
 import csv from 'csv-parser'
@@ -594,6 +595,128 @@ exports.getQuarterlyMedicineUtilizationDisruptionByState = async (req, res) => {
 
     } catch (error) {
         console.log(`Error while getting medicine disruption percentage for utilization values of a commodity for each state for 2001-2020 on a quarterly basis ${error}`)
+        return res
+            .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+            .send(error.message)
+    }
+}
+
+/**
+ * Get analyzed data based on selected commodity/ies, state and year range for state food export data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getHistoricalExportData = async (req, res) => {
+    try {
+        let commodityOne = req.query.commodityOne,
+            commodityTwo = req.query.commodityTwo,
+            commodityThree = req.query.commodityThree,
+            state = req.query.state,
+            startYear = Number(req.query.startYear),
+            endYear = Number(req.query.endYear)
+
+        if (startYear > endYear) {
+            return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Start year should be less than or equal to end year")
+        }
+
+        let valuesOne = await AnalyzedFoodStateExportData.aggregate(
+            [{
+                $match:
+                {
+                    commodity: commodityOne,
+                    state: state,
+                    year: {
+                        $gte: startYear, $lte: endYear
+                    }
+                }
+            },
+            { $sort: { year: 1 } }
+            ]);
+
+        let valuesTwo = await AnalyzedFoodStateExportData.aggregate(
+            [{
+                $match:
+                {
+                    commodity: commodityTwo,
+                    state: state,
+                    year: {
+                        $gte: startYear, $lte: endYear
+                    }
+                }
+            },
+            { $sort: { year: 1 } }
+            ]);
+        let valuesThree = await AnalyzedFoodStateExportData.aggregate(
+            [{
+                $match:
+                {
+                    commodity: commodityThree,
+                    state: state,
+                    year: {
+                        $gte: startYear, $lte: endYear
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: "$year",
+                    year: { $first: '$year' },
+                    state: { $first: '$state' },
+                    commodity: { $first: '$commodity' },
+                    value: { $first: '$value' }
+                }
+            },
+            { $sort: { year: 1 } }
+            ]);
+
+        let response = {
+            filterOneData: valuesOne,
+            filterTwoData: valuesTwo,
+            filterThreeData: valuesThree,
+        }
+
+        if (valuesOne && valuesOne.length > 0) {
+            return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(response)
+        } else {
+            return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+        }
+    } catch (error) {
+        console.log(`Error while getting analyzed data based on selected commodity/ies, state and year range for state food export data ${error}`)
+        return res
+            .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+            .send(error.message)
+    }
+}
+
+/**
+ * Get analyzed data based on selected commodity, state and year range for state food export data.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getHistoricalExportDataByState = async (req, res) => {
+    try {
+        let commodity = req.query.commodity,
+            startYear = req.query.startYear,
+            endYear = req.query.endYear,
+            state = req.query.state
+
+        if (startYear > endYear) {
+            return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Start year should be less than or equal to end year")
+        }
+
+        let values = await AnalyzedFoodStateExportData.find({
+                commodity: commodity, state: state, year: {
+                $gte: startYear, $lte: endYear
+            }
+        })
+
+        if (values && values.length > 0) {
+            return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(values)
+        } else {
+            return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+        }
+    } catch (error) {
+        console.log(`Error while getting analyzed data based on selected commodity, state and year range for state food export data ${error}`)
         return res
             .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
             .send(error.message)
