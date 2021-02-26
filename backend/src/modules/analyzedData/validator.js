@@ -107,5 +107,15 @@ module.exports = {
 		model: "quarterlyMedicineUtilizationDisruptionByState",
 		group: "AnalyzedData",
 		description: "Get medicine disruption percentage for utilization values of a commodity for each state for 2001-2020 on a quarterly basis"
+	},
+	foodExportByAllStatesInYearRange: {
+		query: {
+			commodity: Joi.string().required(),
+			startYear: Joi.number().required(),
+			endYear: Joi.number().required(),
+		},
+		model: "medicineUtilizationByAllStatesInYearRange",
+		group: "AnalyzedData",
+		description: "Get medicine utilized by all states in an year range to show heat map"
 	}
 }

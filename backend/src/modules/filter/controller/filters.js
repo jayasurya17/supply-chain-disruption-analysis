@@ -3,6 +3,7 @@
 import AnalyzedFoodProductionData from '../../../models/mongoDB/analyzedFoodProductionData'
 import AnalyzedFoodExportData from '../../../models/mongoDB/analyzedFoodExportData'
 import AnalyzedFoodImportData from '../../../models/mongoDB/analyzedFoodImportData'
+import AnalyzedFoodStateExportData from '../../../models/mongoDB/analyzedFoodStateExportData'
 import constants from '../../../utils/constants'
 
 /**
@@ -419,6 +420,31 @@ exports.getYearByStatesAndImportCommodities = async (req, res) => {
 		}
 	} catch (error) {
 		console.log(`Error while getting list of years based on selected import commodity and state ${error}`)
+		return res
+			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+			.send(error.message)
+	}
+}
+
+
+
+/**
+ * Get list of commodity filter values for food export data by state.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getExportByStateCommodities = async (req, res) => {
+	try {
+		let resData = await AnalyzedFoodStateExportData.find().distinct('commodity')
+
+		if (resData && resData.length > 0) {
+			resData.push(constants.ALL_CATEGORIES)
+			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(resData)
+		} else {
+			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
+		}
+	} catch (error) {
+		console.log(`Error while getting food export commodity filter values ${error}`)
 		return res
 			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
 			.send(error.message)

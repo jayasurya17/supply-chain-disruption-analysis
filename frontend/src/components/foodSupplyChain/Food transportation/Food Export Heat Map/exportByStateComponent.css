@@ -1,0 +1,10 @@
+#colorGradientDisasters {
+    padding: 5px;
+    background-image: linear-gradient(to right, white , red);
+    font-family: 'Comfortaa';
+    font-weight: bold;
+    font-size: 10px;
+}
+#rightAlign {
+    float:right;
+}

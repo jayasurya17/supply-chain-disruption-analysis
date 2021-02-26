@@ -3,6 +3,7 @@ import { Tabs } from 'antd'
 
 import StatewiseImportDependacy from './Statewise import dependency'
 import StatewiseImportExportComparision from './Statewise import export comparision'
+import FoodExportHeatMap from './Food Export Heat Map'
 
 const { TabPane } = Tabs
 
@@ -20,6 +21,9 @@ const FoodTransportationHome = () => {
         </TabPane>
         <TabPane tab='Statewise import export comparision' key='2'>
           <StatewiseImportExportComparision />
+        </TabPane>
+        <TabPane tab='Export by states heat map' key='3'>
+          <FoodExportHeatMap />
         </TabPane>
       </Tabs>
     </div>

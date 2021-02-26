@@ -21,5 +21,6 @@ router.get('/statesByExportCommodities', filterController.getStatesByExportCommo
 router.get('/statesByImportCommodities', filterController.getStatesByImportCommodity)
 router.get('/yearByStatesAndExportCommodities', filterController.getYearByStatesAndExportCommodities)
 router.get('/yearByStatesAndImportCommodities', filterController.getYearByStatesAndImportCommodities)
+router.get('/exportByStateCommodities', filterController.getExportByStateCommodities)
 
 module.exports = router
