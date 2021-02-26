@@ -9,7 +9,6 @@ import stateNames from '../../../constants/stateNames'
 import yearRange from '../../../constants/years'
 import medicineNames from '../../../constants/medicines'
 
-import DrillDown from '../medicineUnitSupply/DrillDown'
 import Fusion from '../medicineUnitSupply/Fusion'
 
 const { Option } = Select
@@ -135,7 +134,7 @@ const MedicineUnitSupply = () => {
         </Col>
         <Col span={10}>
           <Select
-            style={{ width: '80%' }}
+            style={{ width: '75%' }}
             value={selectedMedicine}
             onChange={handleSelectedMedicineChange}
           >
@@ -145,7 +144,8 @@ const MedicineUnitSupply = () => {
           </Select>
         </Col>
       </Row>
-      <Row span={10}>
+
+      <Row>
         <Fusion chartConfigs={chartData} />
       </Row>
     </div>

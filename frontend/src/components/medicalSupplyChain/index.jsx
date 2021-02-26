@@ -18,8 +18,8 @@ const MedicalSupplyHome = () => {
         <TabPane tab='Units supplied' key='1'>
           <MedicineUnitsSupplied />
         </TabPane>
-        <TabPane tab='N/A' key='2'>
-          Two
+        <TabPane tab='Additional' key='2'>
+          Find more requirements
         </TabPane>
       </Tabs>
     </div>
