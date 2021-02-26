@@ -4,6 +4,7 @@ import AnalyzedFoodProductionData from '../../../models/mongoDB/analyzedFoodProd
 import AnalyzedFoodExportData from '../../../models/mongoDB/analyzedFoodExportData'
 import AnalyzedFoodImportData from '../../../models/mongoDB/analyzedFoodImportData'
 import AnalyzedFoodStateExportData from '../../../models/mongoDB/analyzedFoodStateExportData'
+import AnalyzedMedicineUtilizationData from '../../../models/mongoDB/analyzedMedicineUtilizationData'
 import constants from '../../../utils/constants'
 import stateConstants from '../../../utils/stateConstants'
 import csv from 'csv-parser'
@@ -761,6 +762,50 @@ exports.getFoodExportByState = async (req, res) => {
 
     } catch (error) {
         console.log(`Error while getting food state export data of a commodity for each state for a certain year range ${error}`)
+        return res
+            .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+            .send(error.message)
+    }
+}
+
+/**
+ * Get medicine utilization data of a commodity for each state for a certain year range.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getMedicineUtilizationByState = async (req, res) => {
+    try {
+        let commodity = req.query.commodity,
+            startYear = req.query.startYear,
+            endYear = req.query.endYear
+
+        if (startYear > endYear) {
+            return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Start year should be less than or equal to end year")
+        }
+
+        let result = await AnalyzedMedicineUtilizationData.aggregate(
+            [{
+                $match:
+                {
+                    year: {
+                        $gte: startYear, $lte: endYear
+                    },
+                    commodity: commodity
+                }
+            },
+            { $group: { _id: "$state", count: { $sum: "$value" } } }
+            ]);
+
+        let states = {}
+
+        for (let row of result) {
+            states[row._id] = row.count
+        }
+
+        return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(states)
+
+    } catch (error) {
+        console.log(`Error while getting medicine utilization data of a commodity for each state for a certain year range ${error}`)
         return res
             .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
             .send(error.message)
