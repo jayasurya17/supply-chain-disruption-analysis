@@ -4,33 +4,34 @@ import axios from 'axios'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import DisasterStateComponent from './exportByStateComponent'
-import year from '../../../../constants/year'
+import year from '../../../constants/year'
 import DownloadExportData from './downloadExportData'
 
 class ExportBasedAnalysis extends Component {
     constructor() {
         super()
         this.state = {
-            allCommodities: [],
+            allCommodities: [
+                'CHLORHEXID',
+                'DEXAMETHAS',
+                'FLUOXETINE',
+                'PREDNISONE',
+                'PROMETHAZI',
+                'WARFARIN S'
+            ],
+            selectedCommodity: 'CHLORHEXID',
             yearRange: { min: year.year.startYear, max: year.year.endYear },
-            selectedCommodity: null,
             exportCount: {},
             isFetched: false
         }
     }
 
     componentDidMount() {
-        axios.get(`/filters/stateExport`).then(allCommoditiesResponse => {
-            this.setState({
-                allCommodities: allCommoditiesResponse.data.commodityOptions,
-                selectedCommodity: allCommoditiesResponse.data.commodityOptions[0]
-            })
-            this.updateGraph(
-                allCommoditiesResponse.data.commodityOptions[0],
-                this.state.yearRange.min,
-                this.state.yearRange.max
-            )
-        })
+        this.updateGraph(
+            this.state.selectedCommodity,
+            this.state.yearRange.min,
+            this.state.yearRange.max
+        )
     }
 
     onChangeCommodity = e => {
