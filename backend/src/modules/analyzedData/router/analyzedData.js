@@ -16,6 +16,8 @@ router.get('/covidFoodProductionDisruptionByState', validation(validator['covidF
 router.get('/foodShareByContinent', validation(validator['foodShareByContinent']), analysisController.getFoodShareByContinent)
 router.get('/foodShareByYear', validation(validator['foodShareByYear']), analysisController.getFoodShareByYear)
 router.get('/quarterlyMedicineUtilizationDisruptionByState', validation(validator['quarterlyMedicineUtilizationDisruptionByState']), analysisController.getQuarterlyMedicineUtilizationDisruptionByState)
+router.get('/historicalExportData', validation(validator['historicalExportData']), analysisController.getHistoricalExportData)
+router.get('/historicalExportDataByState', validation(validator['historicalExportDataByState']), analysisController.getHistoricalExportDataByState)
 
 router.get('/foodExportByAllStatesInYearRange', validation(validator['foodExportByAllStatesInYearRange']), analysisController.foodExportByAllStatesInYearRange)
 

@@ -2,7 +2,7 @@
 
 import mongoose from 'mongoose'
 
-const analyzedFoodStateExportData = new mongoose.Schema({
+const AnalyzedFoodStateExportData = new mongoose.Schema({
     year: {
         type: Number,
         required: true
@@ -21,4 +21,4 @@ const analyzedFoodStateExportData = new mongoose.Schema({
     },
 }, { versionKey: false })
 
-export default mongoose.model('analyzedFoodStateExportData', analyzedFoodStateExportData)
+export default mongoose.model('analyzedFoodStateExportData', AnalyzedFoodStateExportData)

@@ -426,25 +426,26 @@ exports.getYearByStatesAndImportCommodities = async (req, res) => {
 	}
 }
 
-
-
 /**
- * Get list of commodity filter values for food export data by state.
+ * Get list of commodity and state filter values for food state export data.
  * @param  {Object} req request object
  * @param  {Object} res response object
  */
-exports.getExportByStateCommodities = async (req, res) => {
+exports.getCommoditiesAndStatesForExportData = async (req, res) => {
 	try {
-		let resData = await AnalyzedFoodStateExportData.find().distinct('commodity')
+		let stateData = await AnalyzedFoodStateExportData.find().distinct('state'),
+			commodityData = await AnalyzedFoodStateExportData.find().distinct('commodity'),
+			resData = {}
 
-		if (resData && resData.length > 0) {
-			resData.push(constants.ALL_CATEGORIES)
+		if (stateData && commodityData && stateData.length > 0 && commodityData.length > 0) {
+			resData['stateOptions'] = stateData
+			resData['commodityOptions'] = commodityData
 			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(resData)
 		} else {
 			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
 		}
 	} catch (error) {
-		console.log(`Error while getting food export commodity filter values ${error}`)
+		console.log(`Error while getting list of commodity and state filter values for food state export data ${error}`)
 		return res
 			.status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
 			.send(error.message)

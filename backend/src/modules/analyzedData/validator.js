@@ -108,14 +108,28 @@ module.exports = {
 		group: "AnalyzedData",
 		description: "Get medicine disruption percentage for utilization values of a commodity for each state for 2001-2020 on a quarterly basis"
 	},
-	foodExportByAllStatesInYearRange: {
+	historicalExportData: {
 		query: {
-			commodity: Joi.string().required(),
+			commodityOne: Joi.string().required(),
+			commodityTwo: Joi.string(),
+			commodityThree: Joi.string(),
+			state: Joi.string().required(),
 			startYear: Joi.number().required(),
 			endYear: Joi.number().required(),
-		},
-		model: "medicineUtilizationByAllStatesInYearRange",
+			},
+		model: "getHistoricalExportData",
 		group: "AnalyzedData",
-		description: "Get medicine utilized by all states in an year range to show heat map"
+		description: "Get analyzed data based on selected commodity/ies, state and year range for state food export data"
+	},
+	historicalExportDataByState: {
+		query: {
+			commodity: Joi.string().required(),
+			startYear: Joi.string().required(),
+			endYear: Joi.string().required(),
+			state: Joi.string().required()
+			},
+		model: "getHistoricalExportDataByState",
+		group: "AnalyzedData",
+		description: "Get analyzed data based on selected commodity, state and year range for state food export data"
 	}
 }
