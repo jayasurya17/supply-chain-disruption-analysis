@@ -131,5 +131,15 @@ module.exports = {
 		model: "getHistoricalExportDataByState",
 		group: "AnalyzedData",
 		description: "Get analyzed data based on selected commodity, state and year range for state food export data"
+	},
+	dataByState: {
+		query: {
+			commodity: Joi.string().required(),
+			startYear: Joi.number().required(),
+			endYear: Joi.number().required()
+		},
+		model: "dataByState",
+		group: "AnalyzedData",
+		description: "Get data of a commodity for each state for a certain year range"
 	}
 }
