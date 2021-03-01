@@ -44,7 +44,7 @@ const StatewiseImportDependacy = () => {
 
   useEffect(() => {
     getAllCommodities()
-  })
+  }, [])
 
   /* We clear all the data in the lower hierarchy when an item in higher hierarchy is changed */
   useEffect(() => {
