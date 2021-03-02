@@ -670,11 +670,11 @@ exports.getHistoricalExportData = async (req, res) => {
             { $sort: { year: 1 } }
             ]);
 
-        let response = {
-            filterOneData: valuesOne,
-            filterTwoData: valuesTwo,
-            filterThreeData: valuesThree,
-        }
+        let response = [
+            valuesOne,
+            valuesTwo,
+            valuesThree,
+        ]
 
         if (valuesOne && valuesOne.length > 0) {
             return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(response)

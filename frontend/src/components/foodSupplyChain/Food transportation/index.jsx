@@ -20,7 +20,7 @@ const FoodTransportationHome = () => {
         <TabPane tab='Statewise import dependancy' key='1'>
           <StatewiseImportDependacy />
         </TabPane>
-        <TabPane tab='Statewise export details' key='2'>
+        <TabPane tab='Statewise exports (To other states)' key='2'>
           <StatewiseExportDetails />
         </TabPane>
         <TabPane tab='Statewise import export comparision' key='3'>
