@@ -20,6 +20,7 @@ router.get('/historicalExportData', validation(validator['historicalExportData']
 router.get('/historicalExportDataByState', validation(validator['historicalExportDataByState']), analysisController.getHistoricalExportDataByState)
 router.get('/foodExportByState', validation(validator['dataByState']), analysisController.getFoodExportByState)
 router.get('/medicineUtilizationByState', validation(validator['dataByState']), analysisController.getMedicineUtilizationByState)
-
+router.get('/medicineUtilizationByCommodity', validation(validator['dataByCommodity']), analysisController.getMedicineUtilizationByCommodity)
+router.get('/foodExportByCommodity', validation(validator['dataByCommodity']), analysisController.getFoodExportByCommodity)
 
 module.exports = router

@@ -811,3 +811,97 @@ exports.getMedicineUtilizationByState = async (req, res) => {
             .send(error.message)
     }
 }
+
+/**
+ * Get medicine utilization data of commodities for a state for a certain year range.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getMedicineUtilizationByCommodity = async (req, res) => {
+    try {
+        let state = req.query.state,
+            startYear = req.query.startYear,
+            endYear = req.query.endYear
+
+        if (startYear > endYear) {
+            return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Start year should be less than or equal to end year")
+        }
+
+        let result = await AnalyzedMedicineUtilizationData.aggregate(
+            [{
+                $match:
+                {
+                    year: {
+                        $gte: startYear, $lte: endYear
+                    },
+                    state: state
+                }
+            },
+            { $group: { _id: "$commodity", count: { $sum: "$value" } } }
+            ]);
+
+        let commodities = []
+
+        for (let row of result) {
+            let obj = {}
+            obj['label'] = row._id
+            obj['value'] = row.count
+            commodities.push(obj)
+        }
+
+        return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(commodities)
+
+    } catch (error) {
+        console.log(`Error while getting medicine utilization data of commodities for a state for a certain year range ${error}`)
+        return res
+            .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+            .send(error.message)
+    }
+}
+
+/**
+ * Get state food export data of commodities for a state for a certain year range.
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ */
+exports.getFoodExportByCommodity = async (req, res) => {
+    try {
+        let state = req.query.state,
+            startYear = req.query.startYear,
+            endYear = req.query.endYear
+
+        if (startYear > endYear) {
+            return res.status(constants.STATUS_CODE.UNPROCESSABLE_ENTITY_STATUS).send("Start year should be less than or equal to end year")
+        }
+
+        let result = await AnalyzedFoodStateExportData.aggregate(
+            [{
+                $match:
+                {
+                    year: {
+                        $gte: startYear, $lte: endYear
+                    },
+                    state: state
+                }
+            },
+            { $group: { _id: "$commodity", count: { $sum: "$value" } } }
+            ]);
+
+        let commodities = []
+
+        for (let row of result) {
+            let obj = {}
+            obj['label'] = row._id
+            obj['value'] = row.count
+            commodities.push(obj)
+        }
+
+        return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(commodities)
+
+    } catch (error) {
+        console.log(`Error while getting state food export data of commodities for a state for a certain year range ${error}`)
+        return res
+            .status(constants.STATUS_CODE.INTERNAL_SERVER_ERROR_STATUS)
+            .send(error.message)
+    }
+}
