@@ -4,8 +4,9 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
+    "@weknow/react-bubble-chart-d3": "^1.0.12",
     "antd": "^4.8.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "dotenv": "^8.2.0",
     "fusioncharts": "^3.16.0",
@@ -23,7 +24,7 @@
     "react-redux": "^7.2.2",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "^4.0.3",
     "react-select": "^3.1.0",
     "react-usa-map": "^1.5.0",
     "reactstrap": "^8.4.1",
@@ -38,5 +39,17 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
