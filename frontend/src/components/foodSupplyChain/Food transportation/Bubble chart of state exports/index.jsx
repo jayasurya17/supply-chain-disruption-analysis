@@ -31,7 +31,6 @@ const StatewiseExportBubbleChart = () => {
 
   /* Clears all the data except available commodities */
   const onClearClick = () => {
-    setSelectedCommodity([])
     setSelectedState('')
     setChartData({})
   }
