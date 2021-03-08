@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
-import { Row, Col, Select, Button, message } from 'antd'
+import { Row, Col, Select, Button, message, Collapse, Timeline } from 'antd'
 import { Line } from 'react-chartjs-2'
 import { addCommas } from '../../../Utilities/utils'
 
 const { Option } = Select
+const { Panel } = Collapse
 
 const StatewiseExportDetails = () => {
   const [commodities, setCommodities] = useState([])
@@ -158,15 +159,27 @@ const StatewiseExportDetails = () => {
           </Select>
         </Col>
       </Row>
-      <Row>
+      <Row style={{paddingTop: '5px'}}>
         <Col span={8}>
           <Button danger onClick={onClearClick}>
             Clear filters
           </Button>
         </Col>
+        <Col span={8}>
+          <Collapse accordion>
+            <Panel header="Help" key="1">
+              <Timeline>
+                <Timeline.Item>Select a maximum of 3 commodities</Timeline.Item>
+                <Timeline.Item>Select State</Timeline.Item>
+                <Timeline.Item>Multi line chart shows a comparision of the selected commodities year over year</Timeline.Item>
+              </Timeline>
+            </Panel>
+          </Collapse>
+        </Col>
       </Row>
       <div style = {{ margin: '2% 5% 2% 5%', border: '1px dashed black', maxHeight: '60vh' }}>
-        <Line 
+        <Line
+          height='100%'
           data={chartData}
           options = {{
             title:{

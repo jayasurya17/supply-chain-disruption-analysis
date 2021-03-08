@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
-import { Row, Col, Select, Button, message } from 'antd'
+import { Row, Col, Select, Button, message, Timeline, Collapse } from 'antd'
 import BubbleChart from '@weknow/react-bubble-chart-d3';
 
 const { Option } = Select
+const { Panel } = Collapse
 
 const StatewiseExportBubbleChart = () => {
   const [states, setStates] = useState([])
@@ -31,7 +32,7 @@ const StatewiseExportBubbleChart = () => {
 
   /* Clears all the data except available commodities */
   const onClearClick = () => {
-    setSelectedState('')
+    setSelectedState(null)
     setChartData({})
   }
 
@@ -76,11 +77,21 @@ const StatewiseExportBubbleChart = () => {
           </Select>
         </Col>
       </Row>
-      <Row>
+      <Row style={{paddingTop: '5px'}}>
         <Col span={8}>
           <Button danger onClick={onClearClick}>
             Clear filters
           </Button>
+        </Col>
+        <Col span={8}>
+          <Collapse accordion>
+            <Panel header="Help" key="1">
+              <Timeline>
+                <Timeline.Item>Select State</Timeline.Item>
+                <Timeline.Item>Clustered bubble chart gives a visual representation of comparision of different type of commodities exported by the state from the year 2000 - 2020. </Timeline.Item>
+              </Timeline>
+            </Panel>
+          </Collapse>
         </Col>
       </Row>
       <Row>
@@ -89,10 +100,10 @@ const StatewiseExportBubbleChart = () => {
           <h5>Bubble chart of state exports from 2000 - 2020.</h5>
         </Col>
       </Row>
-      <div style = {{ margin: '2% 5% 2% 5%', border: '1px dashed black', maxHeight: '50vh' }}>
+      <div style = {{ margin: '2% 5% 2% 5%', border: '1px dashed black', maxHeight: '80vh' }}>
         <BubbleChart
           graph= {{
-            zoom: 1.1,
+            zoom: 0.8,
             offsetX: -0.05,
             offsetY: -0.01,
           }}
