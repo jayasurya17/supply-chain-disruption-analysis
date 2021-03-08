@@ -11,7 +11,7 @@ const StatewiseExportDetails = () => {
   const [commodities, setCommodities] = useState([])
   const [selectedCommodity, setSelectedCommodity] = useState([])
   const [states, setStates] = useState([])
-  const [selectedState, setSelectedState] = useState('')
+  const [selectedState, setSelectedState] = useState(null)
   const [years, setYears] = useState([])
   const [chartData, setChartData] = useState({})
 
@@ -150,7 +150,7 @@ const StatewiseExportDetails = () => {
             style={{ width: '75%' }}
             value={selectedState}
             onChange={handleSelectedStateChange}
-            placeholder="State"
+            placeholder="Select state"
           >
             {commodities &&
               states &&
@@ -165,7 +165,7 @@ const StatewiseExportDetails = () => {
           </Button>
         </Col>
       </Row>
-      <div style = {{ margin: '10% 25% 10% 25%' }}>
+      <div style = {{ margin: '2% 5% 2% 5%', border: '1px dashed black', maxHeight: '60vh' }}>
         <Line 
           data={chartData}
           options = {{

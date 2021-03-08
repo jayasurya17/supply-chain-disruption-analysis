@@ -10,9 +10,9 @@ const { Option } = Select
 const StatewiseImportExportComparision = () => {
 
   const [commodities, setCommodities] = useState([]);
-  const [selectedCommodity, setSelectedCommodity] = useState('');
+  const [selectedCommodity, setSelectedCommodity] = useState(null);
   const [states, setStates] = useState([]);
-  const [selectedState, setSelectedState] = useState('');
+  const [selectedState, setSelectedState] = useState(null);
   const [chartData, setChartData] = useState({});
 
   const getAllCommodities = () => {
@@ -105,6 +105,7 @@ const StatewiseImportExportComparision = () => {
             style = {{ width: '75%' }}
             value = { selectedCommodity }
             onChange = {handleSelectedCommodityChange}
+            placeholder='Select commodity'
           >
             {
               commodities && commodities.map((commodity) => (
@@ -120,6 +121,7 @@ const StatewiseImportExportComparision = () => {
             style = {{ width: '75%' }}
             value = { selectedState }
             onChange = {handleSelectedStateChange}
+            placeholder='Select state'
           >
             {
               commodities && states && 
@@ -136,8 +138,8 @@ const StatewiseImportExportComparision = () => {
         <Col span={8}>
           <Button danger onClick={onClearClick}>Clear filters</Button>
         </Col>
-      </Row>  
-      <div style = {{ margin: '10% 25% 10% 25%' }}>
+      </Row>
+      <div style = {{ margin: '2% 5% 2% 5%', border: '1px dashed black', maxHeight: '60vh' }}>
         <Line 
           data={chartData}
           options = {{

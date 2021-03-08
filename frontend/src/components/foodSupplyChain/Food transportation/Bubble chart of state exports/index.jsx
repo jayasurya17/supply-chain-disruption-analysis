@@ -8,7 +8,7 @@ const { Option } = Select
 
 const StatewiseExportBubbleChart = () => {
   const [states, setStates] = useState([])
-  const [selectedState, setSelectedState] = useState('')
+  const [selectedState, setSelectedState] = useState(null)
   const [chartData, setChartData] = useState({})
 
   const bubbleClick = (lbl) =>{
@@ -69,7 +69,7 @@ const StatewiseExportBubbleChart = () => {
             style={{ width: '75%' }}
             value={selectedState}
             onChange={handleSelectedStateChange}
-            placeholder="State"
+            placeholder="Select state"
           >
             { states &&
               states.map(state => <Option value={state}>{state}</Option>)}
@@ -86,10 +86,10 @@ const StatewiseExportBubbleChart = () => {
       <Row>
         <Col span={8}></Col>
         <Col span={8}>
-          <h2>Bubble chart of state exports from 2000 - 2020.</h2>
+          <h5>Bubble chart of state exports from 2000 - 2020.</h5>
         </Col>
       </Row>
-      <div style = {{ margin: '10% 25% 10% 25%' }}>
+      <div style = {{ margin: '2% 5% 2% 5%', border: '1px dashed black', maxHeight: '50vh' }}>
         <BubbleChart
           graph= {{
             zoom: 1.1,
