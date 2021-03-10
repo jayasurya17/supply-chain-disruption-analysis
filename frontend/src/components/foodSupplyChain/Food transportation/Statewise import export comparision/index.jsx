@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Row, Col, Select, Button } from 'antd'
+import { Row, Col, Select, Button, Timeline, Collapse } from 'antd'
 import { Line } from 'react-chartjs-2';
 
 import { addCommas } from '../../../Utilities/utils'
 
 const { Option } = Select
+const { Panel } = Collapse
 
 const StatewiseImportExportComparision = () => {
 
   const [commodities, setCommodities] = useState([]);
-  const [selectedCommodity, setSelectedCommodity] = useState('');
+  const [selectedCommodity, setSelectedCommodity] = useState(null);
   const [states, setStates] = useState([]);
-  const [selectedState, setSelectedState] = useState('');
+  const [selectedState, setSelectedState] = useState(null);
   const [chartData, setChartData] = useState({});
 
   const getAllCommodities = () => {
@@ -34,9 +35,9 @@ const StatewiseImportExportComparision = () => {
 
   /* Clears all the data except available commodities */
   const onClearClick = () => {
-    setSelectedCommodity('');
+    setSelectedCommodity(null);
     setStates([]);
-    setSelectedState('');
+    setSelectedState(null);
     setChartData({});
   }
 
@@ -52,7 +53,7 @@ const StatewiseImportExportComparision = () => {
       )
       .then(statesResponse => {
         setStates(statesResponse.data);
-        setSelectedState('');
+        setSelectedState(null);
         setChartData({});
       });
     }
@@ -105,6 +106,7 @@ const StatewiseImportExportComparision = () => {
             style = {{ width: '75%' }}
             value = { selectedCommodity }
             onChange = {handleSelectedCommodityChange}
+            placeholder='Select commodity'
           >
             {
               commodities && commodities.map((commodity) => (
@@ -120,6 +122,7 @@ const StatewiseImportExportComparision = () => {
             style = {{ width: '75%' }}
             value = { selectedState }
             onChange = {handleSelectedStateChange}
+            placeholder='Select state'
           >
             {
               commodities && states && 
@@ -132,14 +135,28 @@ const StatewiseImportExportComparision = () => {
           </Select>
         </Col>
       </Row>
-      <Row>
+      <Row style={{paddingTop: '5px'}}>
         <Col span={8}>
-          <Button danger onClick={onClearClick}>Clear filters</Button>
+          <Button danger onClick={onClearClick}>
+            Clear filters
+          </Button>
         </Col>
-      </Row>  
-      <div style = {{ margin: '10% 25% 10% 25%' }}>
+        <Col span={8}>
+          <Collapse accordion>
+            <Panel header="Help" key="1">
+              <Timeline>
+                <Timeline.Item>Select Commodity</Timeline.Item>
+                <Timeline.Item>Select State</Timeline.Item>
+                <Timeline.Item>Multi-line chart gives a compartitaive view of import/export of a selected commodity by a state over years</Timeline.Item>
+              </Timeline>
+            </Panel>
+          </Collapse>
+        </Col>
+      </Row>
+      <div style = {{ margin: '2% 5% 2% 5%', border: '1px dashed black', maxHeight: '60vh' }}>
         <Line 
           data={chartData}
+          height='100%'
           options = {{
             title:{
               display:true,
