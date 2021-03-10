@@ -284,49 +284,11 @@ exports.getYearlyDisasterData = async (req, res) => {
             response.production[commodityThree] = productionData
         }
 
-        let disasterValues = await AnalyzedFoodProductionData.find({ state: state, year: year })
-
-        let valueOne = await AnalyzedFoodProductionData.aggregate(
-            [{
-                $match:
-                {
-                    commodity: commodityOne,
-                    unit: unitOne,
-                    state: state,
-                    year: year
-                }
-            }
-            ]);
-
-        let valueTwo = await AnalyzedFoodProductionData.aggregate(
-            [{
-                $match:
-                {
-                    commodity: commodityTwo,
-                    unit: unitTwo,
-                    state: state,
-                    year: year
-                }
-            }
-            ]);
-
-        let valueThree = await AnalyzedFoodProductionData.aggregate(
-            [{
-                $match:
-                {
-                    commodity: commodityThree,
-                    unit: unitThree,
-                    state: state,
-                    year: year
-                }
-            }
-            ]);
-
-        if (valueOne && valueOne.length > 0) {
-            for (let i = 0; i < valueOne.length; i++) {
-                if (valueOne[i].disasterType.length > 0) {
-                    response.disasters[valueOne[i].month] = []
-                    response.disasters[valueOne[i].month].push.apply(response.disasters[valueOne[i].month], valueOne[i].disasterType)
+        if (valuesOne && valuesOne.length > 0) {
+            for (let i = 0; i < valuesOne.length; i++) {
+                if (valuesOne[i].disasterType.length > 0) {
+                    response.disasters[valuesOne[i].month] = []
+                    response.disasters[valuesOne[i].month].push.apply(response.disasters[valuesOne[i].month], valuesOne[i].disasterType)
                 }
             }
         }

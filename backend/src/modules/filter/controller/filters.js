@@ -107,11 +107,13 @@ exports.getStatesByCommodityAndUnit = async (req, res) => {
 				$gte: startYear, $lte: endYear
 			}
 		}).distinct('state')
+
 		let valuesTwo = await AnalyzedFoodProductionData.find({
 			commodity: commodityTwo, unit: unitTwo, year: {
 				$gte: startYear, $lte: endYear
 			}
 		}).distinct('state')
+
 		let valuesThree = await AnalyzedFoodProductionData.find({
 			commodity: commodityThree, unit: unitThree, year: {
 				$gte: startYear, $lte: endYear
@@ -120,12 +122,16 @@ exports.getStatesByCommodityAndUnit = async (req, res) => {
 
 		let intersection = valuesOne
 
-		if (valuesTwo && valuesTwo.length) {
-			intersection = intersection.filter(x => valuesTwo.includes(x))
+		if(commodityTwo) {
+			if (valuesTwo && valuesTwo.length >=0 ) {
+				intersection = intersection.filter(x => valuesTwo.includes(x))
 			}
+		}
 
-		if (valuesThree && valuesThree.length) {
-			intersection = intersection.filter(x => valuesThree.includes(x))
+		if(commodityThree) {
+			if (valuesThree && valuesThree.length >=0 ) {
+				intersection = intersection.filter(x => valuesThree.includes(x))
+			}
 		}
 
 		if (intersection && intersection.length > 0) {
