@@ -64,6 +64,8 @@ const StatewiseExportDetails = () => {
             case 2:
               request = request.concat(`&commodityThree=${selectedCommodity[2]}`);
               break;
+            default:
+                break;
           }
         }
       }
@@ -119,6 +121,8 @@ const StatewiseExportDetails = () => {
                     data.datasets[i].data.push(exportResponse.data[i][j].value)
                   }
                   break;
+                default:
+                    break;
               }
             }
           }
