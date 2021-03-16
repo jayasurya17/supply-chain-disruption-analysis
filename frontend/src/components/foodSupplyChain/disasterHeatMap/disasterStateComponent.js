@@ -40,7 +40,7 @@ class DisasterStateComponent extends Component {
 
 		return (
 			<div>
-				<div id="colorGradientDisasters" className="w-100">
+				<div id="redColorGradientDisasters" className="w-100">
 					<span className="text-left">Least likely</span>
 					<span id="rightAlign">Most likely</span>
 				</div>
