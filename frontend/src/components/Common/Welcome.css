@@ -1,6 +1,17 @@
-.content {
-  margin-left: 30%;
-  margin-right: 30%;
-  margin-top: 10%;
-  margin-bottom: 20%;
+.container-welcome {
+  background-color: #6c64d3;
+  height: 100%;
+}
+
+.content-welcome {
+  padding: 1% 2% 1% 2%;
+  border: 2px cur black;
+  background-color: aliceblue;
+  height: 50%;
+  width: 50%;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  border-radius: 2%;
+  box-shadow: 5px 10px;
 }

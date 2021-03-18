@@ -278,7 +278,6 @@ exports.getExportCommodities = async (req, res) => {
 		let resData = await AnalyzedFoodExportData.find().distinct('commodity')
 
 		if (resData && resData.length > 0) {
-			resData.push(constants.ALL_CATEGORIES)
 			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(resData)
 		} else {
 			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()
@@ -301,7 +300,6 @@ exports.getImportCommodities = async (req, res) => {
 		let resData = await AnalyzedFoodImportData.find().distinct('commodity')
 
 		if (resData && resData.length > 0) {
-			resData.push(constants.ALL_CATEGORIES)
 			return res.status(constants.STATUS_CODE.SUCCESS_STATUS).send(resData)
 		} else {
 			return res.status(constants.STATUS_CODE.NO_CONTENT_STATUS).json()

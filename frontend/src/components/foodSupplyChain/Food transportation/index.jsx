@@ -18,7 +18,7 @@ const FoodTransportationHome = () => {
   return (
     <div className='FoodTransportationHomeContainer'>
       <Tabs defaultActiveKey='1' onChange={callback}>
-        <TabPane tab='Statewise import dependancy' key='1'>
+        <TabPane tab='Statewise import dependency' key='1'>
           <StatewiseImportDependacy />
         </TabPane>
         <TabPane tab='Statewise exports (To other states)' key='2'>

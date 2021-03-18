@@ -56,9 +56,9 @@ const StatewiseImportDependacy = () => {
         )
         .then(statesResponse => {
           setStates(statesResponse.data)
-          setSelectedState('')
+          setSelectedState(null)
           setYears([])
-          setSelectedYear('')
+          setSelectedYear(null)
           setChartData({})
         })
     }
@@ -72,7 +72,7 @@ const StatewiseImportDependacy = () => {
         )
         .then(yearsResponse => {
           setYears(yearsResponse.data)
-          setSelectedYear('')
+          setSelectedYear(null)
 
           setChartData({})
         })
