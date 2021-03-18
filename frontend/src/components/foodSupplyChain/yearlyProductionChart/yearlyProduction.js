@@ -312,7 +312,7 @@ class FoodSupplyHoliday extends Component {
             Generate Graph
           </button>
         </div>
-        {this.state.Commodity1.length === 0 ? (
+        {this.state.Commodity1 && this.state.Commodity1.length === 0 ? (
           <p className='display-4 text-center m-5'>
             Apply filters to show graph
           </p>

@@ -3,6 +3,7 @@ import { Tabs } from 'antd'
 
 import MedicineUnitsSupplied from './medicineUnitSupply/index'
 import MedicineHeatMap from './Medicine Heat Map'
+import Articles from './Articles'
 
 //import './FoodSupplyHome.css'
 
@@ -19,11 +20,11 @@ const MedicalSupplyHome = () => {
         <TabPane tab='Units supplied' key='1'>
           <MedicineUnitsSupplied />
         </TabPane>
-        <TabPane tab='Additional' key='2'>
-          Find more requirements
-        </TabPane>
-        <TabPane tab='Heat map' key='3'>
+        <TabPane tab='Heat map' key='2'>
           <MedicineHeatMap />
+        </TabPane>
+        <TabPane tab='Articles' key='3'>
+          <Articles />
         </TabPane>
       </Tabs>
     </div>
