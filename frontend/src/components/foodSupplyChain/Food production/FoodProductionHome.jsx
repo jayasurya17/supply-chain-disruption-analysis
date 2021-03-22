@@ -16,8 +16,8 @@ const FoodProductionHome = () => {
   }
 
   return (
-    <div className='foodSupplyHomeContainer'>
-      <Tabs defaultActiveKey='1' onChange={callback}>
+    <div className='foodSupplyHomeContainer' style={{margin: '1%'}}>
+      <Tabs defaultActiveKey='1' onChange={callback} centered='true'>
         <TabPane tab='Production in a year with disasters' key='1'>
           <DisasterBasedAnalysis />
         </TabPane>

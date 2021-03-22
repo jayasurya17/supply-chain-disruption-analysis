@@ -14,7 +14,7 @@ const FoodSupplyHome = () => {
 
   return (
     <div className='foodSupplyHomeContainer'>
-      <Tabs defaultActiveKey='1' onChange={callback}>
+      <Tabs defaultActiveKey='1' onChange={callback} centered='true'>
         <TabPane tab='Food production' key='1'>
           <FoodProductionHome />
         </TabPane>
