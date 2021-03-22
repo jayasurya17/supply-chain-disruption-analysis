@@ -61,7 +61,7 @@ const Main = props => {
   }, [])
 
   return (
-    <div style={{height: '100vh'}}>
+    <div>
       {/*Render Different Component based on Route*/}
       <Navbar user={user} location={props.location.pathname} />
       {/* <Route path="/" component={Landing} /> */}

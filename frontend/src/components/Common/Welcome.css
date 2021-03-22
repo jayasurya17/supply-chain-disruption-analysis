@@ -1,6 +1,6 @@
 .container-welcome {
   background-color: #6c64d3;
-  height: 100%;
+  height: 95vh; /* https://stackoverflow.com/questions/27612931/styling-html-and-body-selector-to-height-100-vs-using-100vh 100% height means that the child divs height is set as 100% of parent. 100vh means it is 100vh of viewing area */
 }
 
 .content-welcome {

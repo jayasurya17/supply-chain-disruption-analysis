@@ -82,8 +82,8 @@ const Welcome = (props) => {
             </div>
             }
           </Col>
-          <Col span={16} style={{paddingLeft: '2%'}}>
-            <Tabs defaultActiveKey={currentTab} onChange={onTabChange}>
+          <Col span={16} style={{paddingLeft: '10%'}}>
+            <Tabs defaultActiveKey={currentTab} onChange={onTabChange} centered='true' size='large'>
               <TabPane tab="Sign Up" key="1">
                 <Form
                   {...layout}
@@ -177,7 +177,7 @@ const Welcome = (props) => {
                     <Input.Password />
                   </Form.Item>
 
-                  <Form.Item>
+                  <Form.Item style={{justifyContent: 'center'}}>
                     <Button type="primary" htmlType="submit">
                       Sign Up
                     </Button>
@@ -220,7 +220,7 @@ const Welcome = (props) => {
                       <Input.Password />
                     </Form.Item>
 
-                    <Form.Item>
+                    <Form.Item style={{justifyContent: 'center'}}>
                       <Button type="primary" htmlType="submit">
                         Log In
                       </Button>
