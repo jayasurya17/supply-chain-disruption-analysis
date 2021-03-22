@@ -47,20 +47,20 @@ const Navbar = (props) => {
     );
 
     return (
-      <Row >
-        <Col span='4' style={{display: 'flex', justifyContent: 'center'}}>
+      <Row className='stickyNavBar'>
+        <Col span='4' style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
           <span>
             <HomeOutlined onClick={onDashboardClick} />
           </span>
         </Col>
-        <Col offset='16' span='4' style={{display: 'flex', justifyContent: 'center'}}>
+        <Col offset='16' span='4' style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
           {
             (props.user && 
             props.user.name) ? 
             (<Dropdown.Button icon={<UserOutlined />} overlay={menu}>
                 {`Hi ${props.user.name} !`}
             </Dropdown.Button>)  :
-            (<Button onClick={onLoginClick}>
+            (<Button onClick={onLoginClick} type='primary'>
                 Login
             </Button>)
           }

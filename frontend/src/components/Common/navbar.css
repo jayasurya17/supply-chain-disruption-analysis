@@ -3,4 +3,6 @@
     margin-top: 0px !important;
     z-index: 10;
     height: 5vh; /* 5vh for navbar and you can use 95vh for any other content if you want. */
+    background-color: #343644;
+    color: #efe9d6;
 }
