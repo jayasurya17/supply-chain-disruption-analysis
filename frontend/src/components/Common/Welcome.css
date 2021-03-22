@@ -22,6 +22,6 @@
   font-size: 20px;
   color: white;
   align-items: center;
-  justify-content: center; /* This two properties justifies the content to the center height and width of left bar */
+  justify-content: center; /* This two properties justifies the content to the center height and width of left bar . It has to be used with display flex */
   display: flex;
 }

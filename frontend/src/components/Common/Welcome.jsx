@@ -12,10 +12,10 @@ const { TabPane } = Tabs;
 
 const layout = {
   labelCol: {
-    span: 4,
+    span: 8,
   },
   wrapperCol: {
-    span: 12,
+    span: 16,
   },
 };
 
@@ -82,7 +82,7 @@ const Welcome = (props) => {
             </div>
             }
           </Col>
-          <Col span={16} style={{paddingLeft: '10%'}}>
+          <Col span={16} style={{paddingLeft: '5%', paddingRight: '5%'}}>
             <Tabs defaultActiveKey={currentTab} onChange={onTabChange} centered='true' size='large'>
               <TabPane tab="Sign Up" key="1">
                 <Form
@@ -92,6 +92,7 @@ const Welcome = (props) => {
                     remember: true,
                   }}
                   onFinish={onSignUpClick}
+                  style={{labelAlign: 'left'}}
                 >
                   <Form.Item
                     label="First Name"
@@ -102,7 +103,6 @@ const Welcome = (props) => {
                         message: 'Please input your First Name!',
                       },
                     ]}
-                    
                   >
                     <Input />
                   </Form.Item>

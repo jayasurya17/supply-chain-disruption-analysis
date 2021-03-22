@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Dropdown, Menu } from 'antd';
+import { Button, Col, Dropdown, Menu, Row } from 'antd';
 
 import ProfileOperations from '../../store/features/profile/operations';
 import './navbar.css';
@@ -47,26 +47,25 @@ const Navbar = (props) => {
     );
 
     return (
-        <div className='row text-center border-bottom pt-4 pb-2 stickyNavBar bg-light'>
-            <div className='col-md-2'>
-                <span>
-                    <HomeOutlined onClick={onDashboardClick} />
-                </span>
-            </div>
-            <div className='col-md-2 offset-md-8'>
-                {
-                    (props.user && 
-                    props.user.name) ? 
-                    (<Dropdown.Button icon={<UserOutlined />} overlay={menu}>
-                        {`Hi ${props.user.name} !`}
-                    </Dropdown.Button>)  :
-                    (<Button onClick={onLoginClick}>
-                        Login
-                    </Button>)
-
-                }
-            </div>
-        </div>
+      <Row >
+        <Col span='4' style={{display: 'flex', justifyContent: 'center'}}>
+          <span>
+            <HomeOutlined onClick={onDashboardClick} />
+          </span>
+        </Col>
+        <Col offset='16' span='4' style={{display: 'flex', justifyContent: 'center'}}>
+          {
+            (props.user && 
+            props.user.name) ? 
+            (<Dropdown.Button icon={<UserOutlined />} overlay={menu}>
+                {`Hi ${props.user.name} !`}
+            </Dropdown.Button>)  :
+            (<Button onClick={onLoginClick}>
+                Login
+            </Button>)
+          }
+        </Col>  
+      </Row>  
     );
 }
 //export Navbar Component
