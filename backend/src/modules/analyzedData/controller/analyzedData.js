@@ -854,7 +854,7 @@ exports.getFoodExportByCommodity = async (req, res) => {
         for (let row of result) {
             let obj = {}
             obj['label'] = row._id
-            obj['value'] = row.count
+            obj['value'] = Math.round(row.count * 100) / 100
             commodities.push(obj)
         }
 
