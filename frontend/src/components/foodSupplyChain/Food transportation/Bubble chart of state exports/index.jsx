@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
-import { Row, Col, Select, Button, message, Timeline, Collapse } from 'antd'
+import { Row, Col, Select, Button, notification, Timeline, Collapse } from 'antd'
 import BubbleChart from '@weknow/react-bubble-chart-d3';
 
 const { Option } = Select
@@ -13,7 +13,10 @@ const StatewiseExportBubbleChart = () => {
   const [chartData, setChartData] = useState({})
 
   const bubbleClick = (lbl) =>{
-    message.info(lbl + ': ' + chartData.find( ({ label }) => label === lbl ).value);
+    notification.open({
+      message: lbl,
+      description: chartData.find( ({ label }) => label === lbl ).value,
+    });
   }
 
   const legendClick = (label) =>{
