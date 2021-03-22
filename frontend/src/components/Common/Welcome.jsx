@@ -177,7 +177,7 @@ const Welcome = (props) => {
                     <Input.Password />
                   </Form.Item>
 
-                  <Form.Item style={{justifyContent: 'center'}}>
+                  <Form.Item style={{justifyContent: 'flex-end'}}>
                     <Button type="primary" htmlType="submit">
                       Sign Up
                     </Button>
@@ -220,7 +220,7 @@ const Welcome = (props) => {
                       <Input.Password />
                     </Form.Item>
 
-                    <Form.Item style={{justifyContent: 'center'}}>
+                    <Form.Item style={{justifyContent: 'flex-end'}}>
                       <Button type="primary" htmlType="submit">
                         Log In
                       </Button>
