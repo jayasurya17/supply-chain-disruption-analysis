@@ -4,14 +4,24 @@
 }
 
 .content-welcome {
-  padding: 1% 2% 1% 2%;
-  border: 2px cur black;
+  /* padding: 1% 2% 1% 2%; */
+  border: 2px black;
   background-color: aliceblue;
-  height: 50%;
+  height: 70%;
   width: 50%;
   position: absolute;
   top: 25%;
   left: 25%;
   border-radius: 2%;
   box-shadow: 5px 10px;
+  overflow: hidden; /* https://stackoverflow.com/questions/21904239/border-radius-hidden-by-inner-div */
+}
+
+#left-bar{
+  background-image: url('Image.jpeg');
+  font-size: 20px;
+  color: white;
+  align-items: center;
+  justify-content: center; /* This two properties justifies the content to the center height and width of left bar */
+  display: flex;
 }

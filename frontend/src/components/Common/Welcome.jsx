@@ -66,21 +66,21 @@ const Welcome = (props) => {
   return (
     <div className='container-welcome'>
       <div className='content-welcome'>
-        <Row align="middle">
-          <Col span={8}>
-            <div style={{backgroundImage: 'linear-gradient(253deg,#3ba5b4 0,#38ba8a 100%)', textAlign: 'center', padding: '70% 0% 70% 0%', fontSize: '20px', color: 'white'}}>
-              {currentTab == '1'?
-                <div>
-                  New here?
-                  <br />
-                  Sign up!
-                </div>:
-                <div>
-                  Old user?
-                  <br />
-                  Login to your account.
-                </div>}
-            </div>  
+        <Row style={{height: '100%'}}>
+          <Col span={8} id='left-bar'>
+            {
+            currentTab == '1'?
+            <div>
+              New here?
+              <br />
+              Sign up!
+            </div>:
+            <div>
+              Old user?
+              <br />
+              Login to your account.
+            </div>
+            }
           </Col>
           <Col span={16} style={{paddingLeft: '2%'}}>
             <Tabs defaultActiveKey={currentTab} onChange={onTabChange}>
