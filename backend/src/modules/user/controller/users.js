@@ -84,21 +84,17 @@ exports.loginUser = async (req, res) => {
 			if (isValidUser) {
 				const token = user.generateToken()
 				user = user.toJSON()
-				delete user.password
-				//user.token = token
-				let tokenObj = {
-					token : token,
-					date: Date.now()
-                }
+				delete user.password // Delete password from the User object retrieved from the DB.
+
 				await Users.findByIdAndUpdate(user._id, {
 						jwtToken: token,
 						isActive: true,
 				});
-                isAuth = true
+        isAuth = true
 
-                res.cookie('access_token', token);
-                res.status(constants.STATUS_CODE.SUCCESS_STATUS)
-                return res.send(user);
+        res.cookie('access_token', token); // Setting the Access token in the cookie, as other API call's can use the access token to authenticate themselves.
+        res.status(constants.STATUS_CODE.SUCCESS_STATUS)
+        return res.send(user);
 			}
 		}
 		if (!isAuth) {
