@@ -13,3 +13,5 @@
 1. JMeter helps in performing perforamce testing for API's.
 
 2. In mac, JMeter can be installed using HomeBrew package manager.
+
+3. JMeter can be opened using 'open /usr/local/bin/jmeter'.
