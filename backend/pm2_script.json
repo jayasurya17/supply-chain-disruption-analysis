@@ -1,0 +1,12 @@
+{
+  "apps" : [{
+    "name"      : "API",
+    "script"    : "npm",
+    "instances" : 4,          
+    "exec_mode" : "cluster",
+    "args"      : "start",
+    "__comment1__": "https://futurestud.io/tutorials/pm2-use-npm-to-start-your-app",
+    "__comment2__": "'pm2 start pm2_script.json' for starting the program with this script. script has 'npm' and args should have 'start",
+    "__comment3__": "https://medium.com/@AbderrahimSE/run-your-node-js-app-on-the-cluster-mode-4cc89db86883"
+  }]
+}
