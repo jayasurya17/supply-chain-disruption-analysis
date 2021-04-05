@@ -5,7 +5,7 @@ import MedicineUnitsSupplied from './medicineUnitSupply/index'
 import MedicineHeatMap from './Medicine Heat Map'
 import Articles from './Articles'
 
-//import './FoodSupplyHome.css'
+import './MedicalSupplyChainHome.css'
 
 const { TabPane } = Tabs
 
@@ -16,7 +16,7 @@ const MedicalSupplyHome = () => {
 
   return (
     <div className='medicineSupplyHomeContainer'>
-      <Tabs defaultActiveKey='1' onChange={callback}>
+      <Tabs defaultActiveKey='1' onChange={callback} centered='true'>
         <TabPane tab='Units supplied' key='1'>
           <MedicineUnitsSupplied />
         </TabPane>

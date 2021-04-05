@@ -8,4 +8,7 @@
 .eslintignore
 
 # datasets
-# datasets/
+# datasets
+
+# Ignore package lock
+package-lock.json

@@ -38,9 +38,6 @@ const Navbar = (props) => {
     const menu = (
         <Menu onClick={handleMenuClick}>
           <Menu.Item key="1" icon={<UserOutlined />}>
-            Update Profile
-          </Menu.Item>
-          <Menu.Item key="2" icon={<UserOutlined />}>
             Log Out
           </Menu.Item>
         </Menu>
