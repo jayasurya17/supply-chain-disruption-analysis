@@ -103,15 +103,15 @@ const StatewiseExportBubbleChart = () => {
           <h5>Bubble chart of state exports from 2000 - 2020.</h5>
         </Col>
       </Row>
-      <div style = {{ margin: '2% 5% 2% 5%', border: '1px dashed black', maxHeight: '80vh' }}>
+      <div style = {{ margin: '1% 5% 1% 5%', border: '1px dashed black', maxHeight: '90vh' }}>
         <BubbleChart
           graph= {{
-            zoom: 0.8,
-            offsetX: -0.05,
-            offsetY: -0.01,
+            zoom: 0.6,
+            offsetX: 0.05,
+            offsetY: 0.05,
           }}
-          width={1000}
-          height={1000}
+          width={1300}
+          height={800}
           padding={0} // optional value, number that set the padding between bubbles
           showLegend={true} // optional value, pass false to disable the legend.
           legendPercentage={20} // number that represent the % of with that legend going to use.
