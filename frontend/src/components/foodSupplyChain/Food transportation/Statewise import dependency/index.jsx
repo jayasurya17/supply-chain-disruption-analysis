@@ -191,7 +191,6 @@ const StatewiseImportDependacy = () => {
               position: 'right'
             },
           }}
-          height='100%'
         />
       </div>
     </div>
