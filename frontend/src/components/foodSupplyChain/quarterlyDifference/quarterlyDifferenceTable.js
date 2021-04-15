@@ -31,7 +31,7 @@ class QuarterlyDifferenceTable extends Component {
 
         return (
             <div className="mt-2">
-                <p id="heading">* All the figures are in tonnes</p>
+                <p id="heading">* All the figures are in tons</p>
                 <div className="row mt-2 p-2 text-white bg-secondary text-center" id="heading">
                     <div className="col-md-10 offset-md-2">
                         <div className="row">
