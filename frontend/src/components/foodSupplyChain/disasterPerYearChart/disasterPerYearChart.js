@@ -26,6 +26,8 @@ class DisasterChartComponent extends Component {
                 }
                 dataPoints.push(dataPoint)
             }
+            dataPoints.sort((a, b) => (a.x > b.x) ? 1 : -1)
+            // console.log(dataPoints)
             isDisasterMarked = true
             graphData.push(
                 {
